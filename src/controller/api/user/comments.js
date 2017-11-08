@@ -12,6 +12,6 @@ module.exports = class extends Base {
     const {status} = 1;
     await this.model('comments').add({
       userid, staffid, content, star, status
-    })
+    });
   }
 };
