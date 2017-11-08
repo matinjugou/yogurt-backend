@@ -6,6 +6,6 @@ module.exports = class extends think.Mongoose {
       lastActivate: { type: Date },
       status: Number, // 0 on, 1 waiting, 2 down
       messages: []
-    }
+    };
   }
 };
