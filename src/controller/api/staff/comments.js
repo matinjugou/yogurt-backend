@@ -5,9 +5,9 @@ module.exports = class extends Base {
     this.modelInstance = this.model('user');
   }
   async getAction() {
-    //TODO: staff get action
+    // TODO: staff get action
   }
   async postAction() {
-    //TODO: staff post remark
+    // TODO: staff post remark
   }
 };
