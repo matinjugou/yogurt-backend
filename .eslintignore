@@ -1,0 +1,13 @@
+# Created by .ignore support plugin (hsz.mobi)
+.eslintignore
+.gitignore
+development.js
+development.wc.js
+nginx.conf
+package.json
+package.wc.json
+pm2.json
+production.js
+README.md
+src/controller/rest.js
+src/controller/restIndex.js
