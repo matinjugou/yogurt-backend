@@ -118,9 +118,9 @@ exports.websocket = {
   common: {
 
   },
-  socketio:{
+  socketio: {
     handle: socketio,
-    allowOrigin: "*",
+    allowOrigin: '*',
     path: '/socket.io',
     adapter: null,
     messages: [{

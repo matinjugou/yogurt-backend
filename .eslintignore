@@ -11,3 +11,4 @@ production.js
 README.md
 src/controller/rest.js
 src/controller/restIndex.js
+src/controller/websocket.js
