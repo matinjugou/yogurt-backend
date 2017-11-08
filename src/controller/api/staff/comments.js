@@ -2,7 +2,7 @@ const Base = require('../rest.js');
 module.exports = class extends Base {
   constructor(...args) {
     super(...args);
-    this.modelInstance = this.model('user');
+    this.modelInstance = this.model('comments');
   }
   async getAction() {
     const {staffid} = this.get();
@@ -10,17 +10,11 @@ module.exports = class extends Base {
     const {startTime} = this.get();
     const {endTime} = this.get();
 
-    const comments = await this.modelInstance.join({
-      table: 'comment',
-      join: 'inner',
-      on: ['id', 'userid']
-    }).field('staffid, userid, date, name, content, star')
-      .where({
-        staffid: staffid,
-        userid: userid,
-        date: ['BETWEEN', startTime, endTime]
-      })
-      .select();
+    const comments = await this.modelInstance.where({
+      staffid: staffid,
+      userid: userid,
+      date: ['BETWEEN', startTime, endTime]
+    }).select();
 
     return this.success(comments);
   }
@@ -28,7 +22,7 @@ module.exports = class extends Base {
     const {commentid} = this.get();
     const {remark} = this.get();
 
-    await this.model('comment').where({
+    await this.modelInstance.where({
       id: commentid
     }).update({remark: remark});
   }
