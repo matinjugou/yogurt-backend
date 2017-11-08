@@ -3,6 +3,7 @@ const nunjucks = require('think-view-nunjucks');
 const fileSession = require('think-session-file');
 const mysql = require('think-model-mysql');
 const {Console, File, DateFile} = require('think-logger3');
+const socketio = require('think-websocket-socket.io');
 const path = require('path');
 const isDev = think.env === 'development';
 
@@ -105,5 +106,27 @@ exports.logger = {
     pattern: '-yyyy-MM-dd',
     alwaysIncludePattern: true,
     filename: path.join(think.ROOT_PATH, 'logs/app.log')
+  }
+};
+
+/**
+ * websocket adapter config
+ * @type {Object}
+ **/
+exports.websocket = {
+  type: 'socketio',
+  common: {
+
+  },
+  socketio:{
+    handle: socketio,
+    allowOrigin: "*",
+    path: '/socket.io',
+    adapter: null,
+    messages: [{
+      open: '/websocket/open',
+      close: '/websocket/close',
+      textMsg: '/websocket/textMsg'
+    }]
   }
 };
