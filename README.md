@@ -1,5 +1,4 @@
 # Client-Service-Platform
-===
 [![Build Status](https://travis-ci.com/matinjugou/yogurt-backend.svg?token=YWXDqp5MTARNnQYDB4E8&branch=master)](https://travis-ci.com/matinjugou/yogurt-backend)
 #### 项目概括
 ###### 工作目标
