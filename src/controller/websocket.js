@@ -4,11 +4,18 @@ module.exports = class extends think.Controller {
   }
 
   openAction() {
+    console.log(this.websocket);
     this.emit('opend', 'This client opend successfully!');
-    this.broadcase('joined', 'There is a new client joined');
+    this.broadcast('joined', 'There is a new client joined');
   }
 
-  textMsg() {
+  authAction() {
+    let data = this.wsData;
+
+  }
+
+  textMsgAction() {
+    let data = this.wsData;
 
   }
 };
