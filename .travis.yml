@@ -1,0 +1,16 @@
+sudo: false
+language: node_js
+node_js:
+  - node
+services:
+  - mongodb
+  - redis-server
+  - mysql
+cache:
+  directories:
+    - yogurt-backend/node_modules
+before_script:
+  - npm prune
+script:
+  - cd yogurt-backend && npm run lint
+  - cd yogurt-backend && npm run test
