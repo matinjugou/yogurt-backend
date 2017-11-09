@@ -3,7 +3,6 @@ const nunjucks = require('think-view-nunjucks');
 const fileSession = require('think-session-file');
 const mysql = require('think-model-mysql');
 const {Console, File, DateFile} = require('think-logger3');
-const JWTSession = require('think-session-jwt');
 const socketio = require('think-websocket-socket.io');
 const path = require('path');
 const isDev = think.env === 'development';
@@ -74,7 +73,7 @@ exports.session = {
   file: {
     handle: fileSession,
     sessionPath: path.join(think.ROOT_PATH, 'runtime/session')
-  },
+  }
 };
 
 /**

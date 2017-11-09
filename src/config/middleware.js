@@ -1,6 +1,6 @@
 const path = require('path');
 const isDev = think.env === 'development';
-const verify = require('')
+const verify = require('token-verify');
 
 module.exports = [
   {
