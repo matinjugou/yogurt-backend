@@ -1,6 +1,5 @@
 const path = require('path');
 const isDev = think.env === 'development';
-const verify = require('token-verify');
 
 module.exports = [
   {
@@ -34,7 +33,7 @@ module.exports = [
     options: {}
   },
   {
-    handle: 'tokenVerify',
+    handle: 'token-verify',
     options: {
       secretID: 'asf12ea!@#12213'
     }

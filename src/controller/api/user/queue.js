@@ -1,5 +1,5 @@
 const Base = require('../../rest.js');
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 module.exports = class extends Base {
   constructor(...args) {
     super(...args);
@@ -15,7 +15,7 @@ module.exports = class extends Base {
       queueCount: ['<', this.config('maxClient')]
     }).select();
     let staffArray = [];
-    for (let staff of stuff) {
+    for (const staff of stuff) {
       for (const tag of tagList) {
         if (tag in staff.role.split(' ')) {
           staffArray.push(staff);
@@ -35,20 +35,17 @@ module.exports = class extends Base {
         const lessCount = staffArray[0].queueCount;
         const tmpList = [];
         for (const staff of staffArray) {
-          if (staff.queueCount === lessCount) {
-            tmpList.push(staff);}
-          else break;
-        }
-        staffArray = tmpList;}
+          if (staff.queueCount === lessCount) tmpList.push(staff); else break;
+        staffArray = tmpList;
+      }
       else if (strategy.name === 'oldClient') {
         const pairs = this.mongo('session-pair');
         const tmpList = [];
         for (const staff of staffArray) {
-          if (pairs.where({userId: userId, staffId: staff.id}).select() !== []) {
-            tmpList.push(staff);
-          }
+          if (pairs.where({userId: userId, staffId: staff.id}).select() !== []) tmpList.push(staff);
         }
-        staffArray = tmpList;}
+        staffArray = tmpList;
+      }
       else if (strategy.name === 'tagAccuracy') {
         for (const staff of staffArray) {
           staff.score = 0;
