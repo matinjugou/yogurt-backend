@@ -6,16 +6,24 @@ module.exports = class extends Base {
   }
   async getAction() {
     const {commentid} = this.get();
-    if (commentid !== null && commentid !== undefined) {
+    if (commentid === null || commentid === undefined) {
       const {staffid} = this.get();
       const {startTime} = this.get();
       const {endTime} = this.get();
-      const comments = this.modelInstance.where({
-        staffid: staffid,
-        date: ['BETWEEN', startTime, endTime]
-      }).select();
+      if (startTime !== null && endTime !== null) {
+        const comments = this.modelInstance.where({
+          staffid: staffid,
+          date: ['BETWEEN', startTime, endTime]
+        }).select();
 
-      return this.success(comments);
+        return this.success(comments);
+      } else {
+        const comments = this.modelInstance.where({
+          staffid: staffid
+        }).select();
+
+        return this.success(comments);
+      }
     }
     const comment = this.modelInstance.where({id: commentid}).find();
     return this.success(comment);
