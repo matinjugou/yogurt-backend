@@ -1,6 +1,6 @@
 const Base = require('../rest.js');
 module.exports = class extends Base {
-  constructor(...args){
+  constructor(...args) {
     super(...args);
     this.modelInstance = this.model('quickReply');
   }
