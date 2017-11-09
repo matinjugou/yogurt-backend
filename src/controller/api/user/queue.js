@@ -34,18 +34,17 @@ module.exports = class extends Base {
         });
         const lessCount = staffArray[0].queueCount;
         const tmpList = [];
-        for (const staff of staffArray)
+        for (const staff of staffArray) {
           if (staff.queueCount === lessCount) tmpList.push(staff); else break;
-        staffArray = tmpList;
-      }
+        }
+        staffArray = tmpList; }
       else if (strategy.name === 'oldClient') {
         const pairs = this.mongo('session-pair');
         const tmpList = [];
         for (const staff of staffArray) {
           if (pairs.where({userId: userId, staffId: staff.id}).select() !== []) tmpList.push(staff);
         }
-        staffArray = tmpList;
-      }
+        staffArray = tmpList; }
       else if (strategy.name === 'tagAccuracy') {
         for (const staff of staffArray) {
           staff.score = 0;
