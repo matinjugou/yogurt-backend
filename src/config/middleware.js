@@ -1,5 +1,6 @@
 const path = require('path');
 const isDev = think.env === 'development';
+const verify = require('')
 
 module.exports = [
   {
@@ -31,6 +32,12 @@ module.exports = [
   {
     handle: 'router',
     options: {}
+  },
+  {
+    handle: 'tokenVerify',
+    options: {
+      secretID: 'asf12ea!@#12213'
+    }
   },
   'logic',
   'controller'
