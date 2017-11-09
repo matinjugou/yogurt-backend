@@ -9,9 +9,11 @@ module.exports = class extends Base {
     const {staffid} = this.get();
     const {content} = this.get();
     const {star} = this.get();
-    const {status} = 1;
-    await this.model('comments').add({
-      userid, staffid, content, star, status
+    await this.model('comments').addComment({
+      userid: userid,
+      staffid: staffid,
+      content: content,
+      star: star
     });
   }
 };
