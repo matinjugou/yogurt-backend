@@ -9,9 +9,11 @@ module.exports = class extends think.Controller {
     this.broadcast('joined', 'There is a new client joined');
   }
 
-  authAction() {
+  regAction() {
     let data = this.wsData;
-
+    let socket = this.ctx.req.io;
+    socket.token = data.token;
+    
   }
 
   textMsgAction() {

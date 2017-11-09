@@ -45,6 +45,15 @@ exports.model = {
     user: 'root',
     password: 'root',
     dateStrings: true
+  },
+
+  mongo: {
+    host: ['127.0.0.1', '60.205.178.28'],
+    port: [27017, 27018],
+    user: '',
+    password: '',
+    database: 'yogurt',
+    options: ''
   }
 };
 
@@ -124,24 +133,8 @@ exports.websocket = {
     messages: [{
       open: '/websocket/open',
       close: '/websocket/close',
-      auth: '/websocket/auth',
+      reg: '/websocket/reg',
       textMsg: '/websocket/textMsg'
     }]
-  }
-};
-
-/**
- * mongoose adapter config
- * @type {Object}
- **/
-exports.model = {
-  type: 'mongoose',
-  mongoose: {
-    host: '60.205.178.28:27017',
-    user: '',
-    password: '',
-    database: 'yogurt',
-    userCollectionPlural: false,
-    options: {}
   }
 };
