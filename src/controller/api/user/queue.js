@@ -34,7 +34,7 @@ module.exports = class extends Base {
         });
         const lessCount = staffArray[0].queueCount;
         const tmpList = [];
-        for (const staff of staffArray) {
+        for (const staff of staffArray)
           if (staff.queueCount === lessCount) tmpList.push(staff); else break;
         staffArray = tmpList;
       }
