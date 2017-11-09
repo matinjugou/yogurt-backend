@@ -7,8 +7,8 @@ module.exports = class extends think.Model {
       date: date
     }).thenAdd({
       userid: data.userid,
-      staffid: data.userid,
-      content: data.userid,
+      staffid: data.staffid,
+      content: data.content,
       star: data.star,
       date: date
     });
