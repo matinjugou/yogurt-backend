@@ -5,16 +5,16 @@ module.exports = class extends Base {
     this.modelInstance = this.model('quickReply');
   }
   async getAction() {
-    const {staffid} = this.get();
+    const {staffId} = this.get();
 
     const replies = this.modelInstance.where({
-      staffid: staffid,
+      staffId: staffId,
       isPublic: false
     }).select();
     return this.success(replies);
   }
   async putAction() {
-    const {staffid} = this.get();
+    const {staffId} = this.get();
     const {contents} = this.get();
     const isPublic = false;
 
@@ -23,18 +23,18 @@ module.exports = class extends Base {
       const sentence = content.sentence;
       await this.modelInstance.addQuickReply({
         isPublic: isPublic,
-        staffid: staffid,
+        staffId: staffId,
         phrase: phrase,
         sentence: sentence
       });
     }
   }
   async deleteAction() {
-    const {staffid} = this.get();
+    const {staffId} = this.get();
     const {phrases} = this.get();
 
     await this.modelInstance.where({
-      staffid: staffid,
+      staffId: staffId,
       phrase: ['IN', phrases]
     }).delete();
   }

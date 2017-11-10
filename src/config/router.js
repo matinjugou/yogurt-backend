@@ -4,5 +4,6 @@ module.exports = [
   ['/api/manager/comments', 'api/staff/comments', 'rest'],
   ['/api/staff/quick-reply/public', 'api/staff/quick-reply/public', 'rest'],
   ['/api/staff/quick-reply/private', 'api/staff/quick-reply/private', 'rest'],
-  ['/api/manager/quick-reply/public', 'api/manager/quick-reply/public', 'rest']
+  ['/api/manager/quick-reply/public', 'api/manager/quick-reply/public', 'rest'],
+  ['/api/staff/account-info', 'api/staff/account-info', 'rest']
 ];

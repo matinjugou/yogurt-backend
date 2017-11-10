@@ -5,13 +5,13 @@ module.exports = class extends Base {
     this.modelInstance = this.model('user');
   }
   async postAction() {
-    const {userid} = this.get();
-    const {staffid} = this.get();
+    const {userId} = this.get();
+    const {staffId} = this.get();
     const {content} = this.get();
     const {star} = this.get();
     await this.model('comments').addComment({
-      userid: userid,
-      staffid: staffid,
+      userId: userId,
+      staffId: staffId,
       content: content,
       star: star
     });
