@@ -18,5 +18,6 @@ module.exports = {
       enable: true,
       level: 5
     }
-  }
+  },
+  secreteKey: '1!@#$Fff56GSG1oaiohf13r;./,adaf,asdf,f1[4'
 };

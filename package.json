@@ -49,5 +49,10 @@
     "templateName": "D:\\SoftWares\\nodejs\\node_global\\node_modules\\think-cli\\default_template",
     "defaultModule": "manager",
     "isMultiModule": true
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

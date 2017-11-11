@@ -13,6 +13,12 @@ module.exports = class extends Base {
       onlineStatus: 1,
       queueCount: ['<', this.config('maxClient')]
     }).select();
+    if (stuff.length === 0) {
+      return this.success({
+        msg: 4,
+        staff: "No staff online."
+      })
+    }
     let staffArray = [];
     for (const staff of stuff) {
       for (const tag of tagList) {
@@ -59,5 +65,16 @@ module.exports = class extends Base {
         }
       }
     }
+    if (staffArray.length === 0) {
+      return this.success({
+        code: 3,
+        msg: "All staff are busy."
+      })
+    }
+    const staff = staffArray[0];
+    return this.success({
+      code: 1,
+      msg: staff.id
+    })
   }
 };
