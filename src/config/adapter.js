@@ -1,4 +1,5 @@
 const fileCache = require('think-cache-file');
+const redisCache = require('think-cache-redis');
 const nunjucks = require('think-view-nunjucks');
 const fileSession = require('think-session-file');
 const mysql = require('think-model-mysql');
@@ -21,6 +22,12 @@ exports.cache = {
     cachePath: path.join(think.ROOT_PATH, 'runtime/cache'), // absoulte path is necessarily required
     pathDepth: 1,
     gcInterval: 24 * 60 * 60 * 1000 // gc interval
+  },
+  redis: {
+    handle: redisCache,
+    port: 6379,
+    host: '127.0.0.1',
+    password: ''
   }
 };
 
@@ -133,7 +140,8 @@ exports.websocket = {
     messages: [{
       open: '/websocket/open',
       close: '/websocket/close',
-      reg: '/websocket/reg',
+      userReg: '/websocket/userReg',
+      staffReg: '/websocket/staffReg',
       textMsg: '/websocket/textMsg'
     }]
   }
