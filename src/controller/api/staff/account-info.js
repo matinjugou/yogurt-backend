@@ -31,7 +31,6 @@ module.exports = class extends Base {
       tel = staff.tel;
     }
     if (password === null) {
-      // todo: authentication step
       password = staff.password;
     }
     if (picUrl === null) {
