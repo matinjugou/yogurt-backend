@@ -5,43 +5,43 @@ module.exports = class extends Base {
     this.modelInstance = this.model('comments');
   }
   async getAction() {
-    const {staffid} = this.get();
-    const {userid} = this.get();
+    const {staffId} = this.get();
+    const {userId} = this.get();
     const {startTime} = this.get();
     const {endTime} = this.get();
 
-    if (startTime !== null && endTime !== null && userid !== null) {
+    if (startTime !== null && endTime !== null && userId !== null) {
       const comments = await this.modelInstance.where({
-        staffid: staffid,
-        userid: userid,
+        staffId: staffId,
+        userId: userId,
         date: ['BETWEEN', startTime, endTime]
       }).select();
       return this.success(comments);
-    } else if (userid === null && startTime !== null && endTime !== null) {
+    } else if (userId === null && startTime !== null && endTime !== null) {
       const comments = await this.modelInstance.where({
-        staffid: staffid,
+        staffId: staffId,
         date: ['BETWEEN', startTime, endTime]
       }).select();
       return this.success(comments);
-    } else if (userid !== null) {
+    } else if (userId !== null) {
       const comments = await this.modelInstance.where({
-        staffid: staffid,
-        userid: userid
+        staffId: staffId,
+        userId: userId
       }).select();
       return this.success(comments);
     } else {
       const comments = await this.modelInstance.where({
-        staffid: staffid
+        staffId: staffId
       }).select();
       return this.success(comments);
     }
   }
   async putAction() {
-    const {commentid} = this.get();
+    const {commentId} = this.get();
     const {remark} = this.get();
 
     await this.modelInstance.where({
-      id: commentid
+      id: commentId
     }).update({remark: remark});
   }
 };

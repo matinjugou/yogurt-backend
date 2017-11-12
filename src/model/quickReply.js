@@ -2,11 +2,11 @@ module.exports = class extends think.Model {
   addQuickReply(data) {
     return this.where({
       isPublic: data.isPublic,
-      staffid: data.staffid,
+      staffId: data.staffId,
       phrase: data.phrase
     }).thenUpdate({
       isPublic: data.isPublic,
-      staffid: data.staffid,
+      staffId: data.staffId,
       phrase: data.phrase,
       sentence: data.sentence
     });
