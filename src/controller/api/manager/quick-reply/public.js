@@ -11,7 +11,7 @@ module.exports = class extends Base {
     return this.success(replies);
   }
   async putAction() {
-    const {contents} = this.get();
+    const contents = this.get();
     const isPublic = true;
     const staffId = -1;
     for (const content of contents) {
@@ -26,7 +26,7 @@ module.exports = class extends Base {
     }
   }
   async deleteAction() {
-    const {phrases} = this.get();
+    const phrases = this.get();
     const isPublic = true;
 
     await this.modelInstance.where({

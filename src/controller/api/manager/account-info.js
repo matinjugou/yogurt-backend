@@ -5,20 +5,20 @@ module.exports = class extends Base {
     this.modelInstance = this.model('manager');
   }
   async getAction() {
-    const {managerId} = this.get();
+    const managerId = this.get();
     const manager = this.modelInstance.where({
       id: managerId
     });
     await this.success(manager);
   }
   async putAction() {
-    const {managerId} = this.get();
-    let {name} = this.get();
-    let {nickname} = this.get();
-    let {password} = this.get();
-    let {email} = this.get();
-    let {tel} = this.get();
-    let {picUrl} = this.get();
+    const managerId = this.get();
+    let name = this.get();
+    let nickname = this.get();
+    let password = this.get();
+    let email = this.get();
+    let tel = this.get();
+    let picUrl = this.get();
     const manager = this.modelInstance.where({
       id: managerId
     }).find();

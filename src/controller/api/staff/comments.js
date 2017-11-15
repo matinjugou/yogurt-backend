@@ -5,10 +5,10 @@ module.exports = class extends Base {
     this.modelInstance = this.model('comments');
   }
   async getAction() {
-    const {staffId} = this.get();
-    const {userId} = this.get();
-    const {startTime} = this.get();
-    const {endTime} = this.get();
+    const staffId = this.get();
+    const userId = this.get();
+    const startTime = this.get();
+    const endTime = this.get();
 
     if (startTime !== null && endTime !== null && userId !== null) {
       const comments = await this.modelInstance.where({
@@ -37,8 +37,8 @@ module.exports = class extends Base {
     }
   }
   async putAction() {
-    const {commentId} = this.get();
-    const {remark} = this.get();
+    const commentId = this.get();
+    const remark = this.get();
 
     await this.modelInstance.where({
       id: commentId
