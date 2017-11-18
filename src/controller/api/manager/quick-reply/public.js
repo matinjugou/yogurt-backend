@@ -11,9 +11,9 @@ module.exports = class extends Base {
     return this.success(replies);
   }
   async putAction() {
-    const {contents} = this.get();
+    const contents = this.get();
     const isPublic = true;
-    const staffid = -1;
+    const staffId = -1;
     for (const content of contents) {
       const phrase = content.phrase;
       const sentence = content.sentence;
@@ -21,12 +21,12 @@ module.exports = class extends Base {
         isPublic: isPublic,
         phrase: phrase,
         sentence: sentence,
-        staffid: staffid
+        staffId: staffId
       });
     }
   }
   async deleteAction() {
-    const {phrases} = this.get();
+    const phrases = this.get();
     const isPublic = true;
 
     await this.modelInstance.where({
