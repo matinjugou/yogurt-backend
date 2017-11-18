@@ -7,10 +7,4 @@ module.exports = class extends Base {
   async getAction() {
     // todo: get statistics of staff
   }
-  async postAction() {
-    const number = this.get();
-    const companyId = this.get();
-    const list = await this.modelInstance.addStaff(number, companyId);
-    return this.success(list);
-  }
 };
