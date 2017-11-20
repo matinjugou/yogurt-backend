@@ -1,8 +1,10 @@
 const fileCache = require('think-cache-file');
+const redisCache = require('think-cache-redis');
 const nunjucks = require('think-view-nunjucks');
 const fileSession = require('think-session-file');
 const mysql = require('think-model-mysql');
 const {Console, File, DateFile} = require('think-logger3');
+const socketio = require('think-websocket-socket.io');
 const path = require('path');
 const isDev = think.env === 'development';
 
@@ -20,6 +22,12 @@ exports.cache = {
     cachePath: path.join(think.ROOT_PATH, 'runtime/cache'), // absoulte path is necessarily required
     pathDepth: 1,
     gcInterval: 24 * 60 * 60 * 1000 // gc interval
+  },
+  redis: {
+    handle: redisCache,
+    port: 6379,
+    host: '127.0.0.1',
+    password: ''
   }
 };
 
@@ -44,6 +52,15 @@ exports.model = {
     user: 'root',
     password: 'root',
     dateStrings: true
+  },
+
+  mongo: {
+    host: ['127.0.0.1', '60.205.178.28'],
+    port: [27017, 27018],
+    user: '',
+    password: '',
+    database: 'yogurt',
+    options: ''
   }
 };
 
@@ -105,5 +122,27 @@ exports.logger = {
     pattern: '-yyyy-MM-dd',
     alwaysIncludePattern: true,
     filename: path.join(think.ROOT_PATH, 'logs/app.log')
+  }
+};
+
+/**
+ * websocket adapter config
+ * @type {Object}
+ **/
+exports.websocket = {
+  type: 'socketio',
+  common: {
+  },
+  socketio: {
+    handle: socketio,
+    path: '/socket.io',
+    adapter: null,
+    messages: [{
+      open: '/websocket/open',
+      close: '/websocket/close',
+      userReg: '/websocket/userReg',
+      staffReg: '/websocket/staffReg',
+      textMsg: '/websocket/textMsg'
+    }]
   }
 };

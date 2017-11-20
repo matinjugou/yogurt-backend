@@ -32,6 +32,12 @@ module.exports = [
     handle: 'router',
     options: {}
   },
+  {
+    handle: 'token-verify',
+    options: {
+      secretID: 'asf12ea!@#12213'
+    }
+  },
   'logic',
   'controller'
 ];
