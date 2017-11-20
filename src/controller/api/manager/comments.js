@@ -5,32 +5,31 @@ module.exports = class extends Base {
     this.modelInstance = this.model('comments');
   }
   async getAction() {
-    const {commentid} = this.get();
-    if (commentid === null || commentid === undefined) {
-      const {staffid} = this.get();
-      const {startTime} = this.get();
-      const {endTime} = this.get();
+    const commentId = this.get();
+    if (commentId === null || commentId === undefined) {
+      const staffId = this.get();
+      const startTime = this.get();
+      const endTime = this.get();
       if (startTime !== null && endTime !== null) {
         const comments = this.modelInstance.where({
-          staffid: staffid,
+          staffId: staffId,
           date: ['BETWEEN', startTime, endTime]
         }).select();
 
         return this.success(comments);
       } else {
         const comments = this.modelInstance.where({
-          staffid: staffid
+          staffId: staffId
         }).select();
 
         return this.success(comments);
       }
     }
-    const comment = this.modelInstance.where({id: commentid}).find();
+    const comment = this.modelInstance.where({id: commentId}).find();
     return this.success(comment);
   }
-
   async deleteAction() {
-    const {commentids} = this.get();
-    await this.modelInstance.where({id: ['IN', commentids]}).delete();
+    const commentIds = this.get();
+    await this.modelInstance.where({id: ['IN', commentIds]}).delete();
   }
 };
