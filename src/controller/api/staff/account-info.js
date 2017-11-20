@@ -18,6 +18,7 @@ module.exports = class extends Base {
     let tel = this.get();
     let password = this.get();
     let picUrl = this.get();
+    let role = this.get();
     const staff = this.modelInstance.where({
       id: staffId
     }).find();
@@ -36,12 +37,16 @@ module.exports = class extends Base {
     if (picUrl === null) {
       picUrl = staff.picUrl;
     }
+    if (role === null) {
+      role = staff.role;
+    }
     await this.modelInstance.where({id: staffId}).update({
       nickname: nickname,
       email: email,
       tel: tel,
       password: password,
-      picUrl: picUrl
+      picUrl: picUrl,
+      role: role
     });
   }
 };
