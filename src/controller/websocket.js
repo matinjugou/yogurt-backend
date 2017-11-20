@@ -55,4 +55,24 @@ module.exports = class extends think.Controller {
         msg: data.msg
       });
   }
+
+  async transUserAction() {
+    let data = this.wsData;
+    let socket = this.ctx.req.io;
+    let userId = data.userId;
+    let staffAId = data.staffAId;
+    let staffBId = data.staffBId;
+    let messages = data.messages;
+    await this.cache('transInfo:' + userId, messages, {
+      type: 'redis',
+      redis: {
+        timeout: 10 * 60 * 1000
+      }
+    });
+    socket.to('staffRoom ' + staffBId).emit('transMsg',
+      {
+        from: staffAId,
+        userId: userId
+      });
+  }
 };
