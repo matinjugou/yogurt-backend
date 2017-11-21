@@ -4,32 +4,44 @@ module.exports = class extends think.Controller {
     super(...arg);
   }
 
+  indexAction() {
+    return this.display('websocket_index');
+  }
+
   openAction() {
-    console.log(this.websocket);
+    //console.log(this.websocket);
     this.emit('opend', 'This client opend successfully!');
     this.broadcast('joined', 'There is a new client joined');
+  }
+
+  closeAction() {
+    //console.log(this);
   }
 
   /**
   * User Controller
   **/
-  userregAction() {
+  userRegAction() {
     let data = this.wsData;
-    let socket = this.ctx.req.io;
     let userId = data.userId;
-    socket.token = data.token;
-    socket.join('userRoom ' + userId);
+    this.websocket.token = data.token;
+    this.websocket.join('userRoom ' + userId);
+    this.emit('regResult', {code:1, msg:'reg success'});
   }
 
   userTextMsgAction() {
     let data = this.wsData;
-    let socket = this.ctx.req.io;
     let staffId = data.staffId;
     let userId = data.userId;
-    socket.to('staffRoom ' + staffId).emit('userTextMsg',
+    this.websocket.to('staffRoom ' + staffId).emit('userTextMsg',
       {
         from: userId,
         msg: data.msg
+      });
+    this.emit('sendResult',
+      {
+        code: 1,
+        msg: 'Message send successfully.'
       });
   }
 
@@ -38,21 +50,26 @@ module.exports = class extends think.Controller {
    **/
   staffRegAction() {
     let data = this.wsData;
-    let socket = this.ctx.req.io;
     let staffId = data.staffId;
-    socket.token = data.token;
-    socket.join('staffRoom ' + staffId);
+    this.websocket.token = data.token;
+    this.websocket.join('staffRoom ' + staffId);
+    this.emit('regResult', {code:1, msg:'reg success'});
   }
 
   staffTextMsgAction() {
     let data = this.wsData;
-    let socket = this.ctx.req.io;
     let staffId = data.staffId;
     let userId = data.userId;
-    socket.to('userRoom ' + userId).emit('staffTextMsg',
+    console.log('Msg one sent');
+    this.websocket.to('userRoom ' + userId).emit('staffTextMsg',
       {
         from: staffId,
         msg: data.msg
+      });
+    this.emit('sendResult',
+      {
+        code: 1,
+        msg: 'Message send successfully.'
       });
   }
 
