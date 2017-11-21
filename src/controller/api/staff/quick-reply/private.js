@@ -1,4 +1,4 @@
-const Base = require('../rest.js');
+const Base = require('../../../rest.js');
 module.exports = class extends Base {
   constructor(...args) {
     super(...args);
