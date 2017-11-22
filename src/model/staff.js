@@ -21,4 +21,11 @@ module.exports = class extends think.Model {
     }
     return list;
   }
+  insertUser(staffId) {
+    return this.where({staffId: staffId})
+      .update({
+        waitingCount: ['exp', 'waitingCount+1'],
+        queueCount: ['exp', 'queueCount+1']
+      });
+  }
 };

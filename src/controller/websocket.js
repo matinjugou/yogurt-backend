@@ -46,6 +46,17 @@ module.exports = class extends think.Controller {
       });
   }
 
+  userServiceStopAction() {
+    let staffId = this.get('staffId');
+    let userId = this.get('userId');
+    let msg = this.get('msg');
+    this.websocket.to('staffRoom ' + staffId).emit('userServiceStop',
+      {
+        from: userId,
+        msg: msg
+      });
+  }
+
   /**
    * Staff Controller
    **/
@@ -73,6 +84,26 @@ module.exports = class extends think.Controller {
         code: 1,
         msg: 'Message send successfully.'
       });
+  }
+
+  serviceStartAction() {
+    let staffId = this.get('staffId');
+    let userId = this.get('userId');
+    let msg = this.get('msg');
+    this.websocket.to('userRoom ' + userId).emit('serviceStart', {
+      from: staffId,
+      msg: msg
+    });
+  }
+
+  staffServiceStopAction() {
+    let staffId = this.get('staffId');
+    let userId = this.get('userId');
+    let msg = this.get('msg');
+    this.websocket.to('userRoom ' + userId).emit('staffServiceStop', {
+      from: staffId,
+      msg: msg
+    });
   }
 
   async transUserAction() {
