@@ -10,6 +10,7 @@
     "test": "mocha"
   },
   "dependencies": {
+    "@koa/cors": "^2.2.1",
     "mocha": "^4.0.1",
     "think-cache": "^1.0.0",
     "think-cache-file": "^1.0.8",
