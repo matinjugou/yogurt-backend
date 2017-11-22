@@ -1,4 +1,4 @@
-const Base = require('../../rest.js');
+const Base = require('../../restIndex.js');
 module.exports = class extends Base {
   constructor(...args) {
     super(...args);
@@ -6,7 +6,7 @@ module.exports = class extends Base {
   }
   async getAction() {
     const companyId = this.get('companyId');
-    const staffs = this.modelInstance.where({
+    const staffs = await this.modelInstance.where({
       companyId: companyId
     }).select();
     this.success(staffs);

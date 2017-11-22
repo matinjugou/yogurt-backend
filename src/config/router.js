@@ -11,5 +11,6 @@ module.exports = [
   ['/api/manager/account-info', 'api/manager/account-info', 'rest'],
   ['/api/manager/company-info', 'api/manager/company-info', 'rest'],
   ['/api/manager/user/list', 'api/manager/user/list', 'rest'],
-  ['/api/manager/staff/list', 'api/manager/staff/list', 'rest']
+  ['/api/manager/staff/list', 'api/manager/staff/list', 'rest'],
+  ['/api/manager/staff', 'api/manager/staff', 'rest']
 ];

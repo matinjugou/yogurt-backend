@@ -33,7 +33,8 @@ module.exports = [
     options: {}
   },
   {
-    handle: 'token-verify'
+    handle: 'token-verify',
+    enable: false
   },
   'logic',
   'controller'
