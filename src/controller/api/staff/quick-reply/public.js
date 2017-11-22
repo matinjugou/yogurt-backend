@@ -5,7 +5,9 @@ module.exports = class extends Base {
     this.modelInstance = this.model('quickReply');
   }
   async getAction() {
+    const companyId = this.get('companyId');
     const replies = await this.modelInstance.where({
+      companyId: companyId,
       isPublic: true
     }).select();
     return this.success(replies);

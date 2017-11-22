@@ -5,7 +5,10 @@ module.exports = class extends Base {
     this.modelInstance = this.model('user');
   }
   async getAction() {
-    const users = this.modelInstance.select();
+    const companyId = this.get('companyId');
+    const users = this.modelInstance.where({
+      companyId: companyId
+    }).select();
     return this.success(users);
   }
 };
