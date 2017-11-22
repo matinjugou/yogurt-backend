@@ -142,7 +142,11 @@ exports.websocket = {
       close: '/websocket/close',
       userReg: '/websocket/userReg',
       staffReg: '/websocket/staffReg',
-      textMsg: '/websocket/textMsg'
+      userTextMsg: '/websocket/userTextMsg',
+      staffTextMsg: '/websocket/staffTextMsg',
+      transUser: '/websocket/transUser',
+      transAccept: '/websocket/transAccept',
+      transReject: '/websocket/transReject'
     }]
   }
 };
