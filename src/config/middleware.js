@@ -33,10 +33,7 @@ module.exports = [
     options: {}
   },
   {
-    handle: 'token-verify',
-    options: {
-      secretID: 'asf12ea!@#12213'
-    }
+    handle: 'token-verify'
   },
   {
     handle: 'koa2-file-server',
