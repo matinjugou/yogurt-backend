@@ -5,23 +5,21 @@ module.exports = class extends Base {
     this.modelInstance = this.model('staff');
   }
   async getAction() {
-    const companyId = this.get();
-    const role = this.get();
+    const companyId = this.get('companyId');
     const staffs = this.modelInstance.where({
-      companyId: companyId,
-      role: role
+      companyId: companyId
     }).select();
     this.success(staffs);
   }
   async postAction() {
-    const number = this.get();
-    const companyId = this.get();
+    const number = this.get('number');
+    const companyId = this.get('companyId');
     const list = await this.modelInstance.addStaff(number, companyId);
     return this.success(list);
   }
   async putAction() {
-    const staffId = this.get();
-    const role = this.get();
+    const staffId = this.get('staffId');
+    const role = this.get('role');
     await this.modelInstance.where({id: staffId}).update({role: role});
   }
 };

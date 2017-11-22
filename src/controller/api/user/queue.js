@@ -6,8 +6,8 @@ module.exports = class extends Base {
   }
 
   async getAction() {
-    const userId = this.get();
-    const tags = this.get();
+    const userId = this.get('userId');
+    const tags = this.get('tags');
     const tagList = tags.split(' ');
     const stuff = this.model('staff').where({
       onlineStatus: 1,

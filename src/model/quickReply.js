@@ -3,7 +3,8 @@ module.exports = class extends think.Model {
     return this.where({
       isPublic: data.isPublic,
       staffId: data.staffId,
-      phrase: data.phrase
+      phrase: data.phrase,
+      companyId: data.companyId
     }).thenUpdate({
       isPublic: data.isPublic,
       staffId: data.staffId,

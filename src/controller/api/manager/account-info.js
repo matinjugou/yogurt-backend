@@ -5,39 +5,39 @@ module.exports = class extends Base {
     this.modelInstance = this.model('manager');
   }
   async getAction() {
-    const managerId = this.get();
+    const managerId = this.get('managerId');
     const manager = this.modelInstance.where({
       id: managerId
     }).find();
     await this.success(manager);
   }
   async putAction() {
-    const managerId = this.get();
-    let name = this.get();
-    let nickname = this.get();
-    let password = this.get();
-    let email = this.get();
-    let tel = this.get();
-    let picUrl = this.get();
+    const managerId = this.get('managerId');
+    let name = this.get('name');
+    let nickname = this.get('nickname');
+    let password = this.get('password');
+    let email = this.get('email');
+    let tel = this.get('tel');
+    let picUrl = this.get('picUrl');
     const manager = this.modelInstance.where({
       id: managerId
     }).find();
-    if (name === null) {
+    if (name === null || name === undefined) {
       name = manager.name;
     }
-    if (nickname === null) {
+    if (nickname === null || nickname === undefined) {
       nickname = manager.nickname;
     }
-    if (password === null) {
+    if (password === null || password === undefined) {
       password = manager.password;
     }
-    if (email === null) {
+    if (email === null || email === undefined) {
       email = manager.email;
     }
-    if (tel === null) {
+    if (tel === null || tel === undefined) {
       tel = manager.tel;
     }
-    if (picUrl === null) {
+    if (picUrl === null || picUrl === undefined) {
       picUrl = manager.picUrl;
     }
     await this.modelInstance.where({id: managerId}).update({

@@ -5,7 +5,7 @@ module.exports = class extends Base {
     // const staffId = this.get();
     // const startTime = this.get();
     // const endTime = this.get();
-    const index = this.get();
+    const index = this.get('index');
     // const recordNum = this.get();
     if (index) {
       // const model = this.mongo('session-pair');

@@ -5,19 +5,23 @@ module.exports = class extends Base {
     this.modelInstance = this.model('quickReply');
   }
   async getAction() {
+    const companyId = this.get('companyId');
     const replies = await this.modelInstance.where({
+      companyId: companyId,
       isPublic: true
     }).select();
     return this.success(replies);
   }
   async putAction() {
-    const contents = this.get();
+    const contents = this.get('contents');
+    const companyId = this.get('companyId');
     const isPublic = true;
     const staffId = -1;
     for (const content of contents) {
       const phrase = content.phrase;
       const sentence = content.sentence;
       await this.modelInstance.addQuickReply({
+        companyId: companyId,
         isPublic: isPublic,
         phrase: phrase,
         sentence: sentence,
@@ -26,7 +30,7 @@ module.exports = class extends Base {
     }
   }
   async deleteAction() {
-    const phrases = this.get();
+    const phrases = this.get('phrases');
     const isPublic = true;
 
     await this.modelInstance.where({
