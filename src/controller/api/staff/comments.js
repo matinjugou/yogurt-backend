@@ -5,25 +5,25 @@ module.exports = class extends Base {
     this.modelInstance = this.model('comments');
   }
   async getAction() {
-    const staffId = this.get();
-    const userId = this.get();
-    const startTime = this.get();
-    const endTime = this.get();
+    const staffId = this.get('staffId');
+    const userId = this.get('userId');
+    const startTime = this.get('startTime');
+    const endTime = this.get('endTime');
 
-    if (startTime !== null && endTime !== null && userId !== null) {
+    if (startTime !== undefined && endTime !== undefined && userId !== undefined) {
       const comments = await this.modelInstance.where({
         staffId: staffId,
         userId: userId,
         date: ['BETWEEN', startTime, endTime]
       }).select();
       return this.success(comments);
-    } else if (userId === null && startTime !== null && endTime !== null) {
+    } else if (userId === undefined && startTime !== undefined && endTime !== undefined) {
       const comments = await this.modelInstance.where({
         staffId: staffId,
         date: ['BETWEEN', startTime, endTime]
       }).select();
       return this.success(comments);
-    } else if (userId !== null) {
+    } else if (userId !== undefined) {
       const comments = await this.modelInstance.where({
         staffId: staffId,
         userId: userId
@@ -37,8 +37,8 @@ module.exports = class extends Base {
     }
   }
   async putAction() {
-    const commentId = this.get();
-    const remark = this.get();
+    const commentId = this.get('commentId');
+    const remark = this.get('remark');
 
     await this.modelInstance.where({
       id: commentId
