@@ -36,6 +36,7 @@ module.exports = class extends think.Controller {
     this.websocket.to('staffRoom ' + staffId).emit('userTextMsg',
       {
         from: userId,
+        type: 'text',
         msg: data.msg
       });
     this.emit('sendResult',
@@ -64,6 +65,7 @@ module.exports = class extends think.Controller {
     this.websocket.to('userRoom ' + userId).emit('staffTextMsg',
       {
         from: staffId,
+        type: 'text',
         msg: data.msg
       });
     this.emit('sendResult',
