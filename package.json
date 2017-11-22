@@ -10,6 +10,7 @@
     "test": "mocha"
   },
   "dependencies": {
+    "koa2-file-server": "0.0.3",
     "mocha": "^4.0.1",
     "think-cache": "^1.0.0",
     "think-cache-file": "^1.0.8",

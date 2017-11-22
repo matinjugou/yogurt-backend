@@ -38,6 +38,14 @@ module.exports = [
       secretID: 'asf12ea!@#12213'
     }
   },
+  {
+    handle: 'koa2-file-server',
+    options: {
+      root: path.join(think.ROOT_PATH, 'media'),
+      webp: true,
+      identifier: '??'
+    }
+  },
   'logic',
   'controller'
 ];
