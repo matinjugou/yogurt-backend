@@ -26,12 +26,13 @@ module.exports = class extends think.Controller {
     let userId = data.userId;
     this.websocket.token = data.token;
     this.websocket.join('userRoom ' + userId);
-    this.emit('regResult', {code:1, msg:'reg success'});
+    this.emit('regResult', {code: 0, msg:'reg success'});
   }
 
   userTextMsgAction() {
     let data = this.wsData;
     let staffId = data.staffId;
+    console.log('userTextMsg:staffId=', data.staffId);
     let userId = data.userId;
     this.websocket.to('staffRoom ' + staffId).emit('userTextMsg',
       {
@@ -41,8 +42,19 @@ module.exports = class extends think.Controller {
       });
     this.emit('sendResult',
       {
-        code: 1,
+        code: 0,
         msg: 'Message send successfully.'
+      });
+  }
+
+  userServiceStopAction() {
+    let staffId = this.get('staffId');
+    let userId = this.get('userId');
+    let msg = this.get('msg');
+    this.websocket.to('staffRoom ' + staffId).emit('userServiceStop',
+      {
+        from: userId,
+        msg: msg
       });
   }
 
@@ -54,7 +66,7 @@ module.exports = class extends think.Controller {
     let staffId = data.staffId;
     this.websocket.token = data.token;
     this.websocket.join('staffRoom ' + staffId);
-    this.emit('regResult', {code:1, msg:'reg success'});
+    this.emit('regResult', {code: 0, msg:'reg success'});
   }
 
   staffTextMsgAction() {
@@ -70,9 +82,29 @@ module.exports = class extends think.Controller {
       });
     this.emit('sendResult',
       {
-        code: 1,
+        code: 0,
         msg: 'Message send successfully.'
       });
+  }
+
+  serviceStartAction() {
+    let staffId = this.get('staffId');
+    let userId = this.get('userId');
+    let msg = this.get('msg');
+    this.websocket.to('userRoom ' + userId).emit('serviceStart', {
+      from: staffId,
+      msg: msg
+    });
+  }
+
+  staffServiceStopAction() {
+    let staffId = this.get('staffId');
+    let userId = this.get('userId');
+    let msg = this.get('msg');
+    this.websocket.to('userRoom ' + userId).emit('staffServiceStop', {
+      from: staffId,
+      msg: msg
+    });
   }
 
   async transUserAction() {

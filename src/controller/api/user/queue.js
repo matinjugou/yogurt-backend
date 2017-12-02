@@ -44,7 +44,7 @@ module.exports = class extends Base {
         }
         staffArray = tmpList;
       } else if (strategy.name === 'oldClient') {
-        const pairs = this.mongo('session-pair');
+        const pairs = this.mongo('sessionPair');
         const tmpList = [];
         for (const staff of staffArray) {
           if (pairs.where({userId: userId, staffId: staff.id}).select() !== []) tmpList.push(staff);
@@ -72,9 +72,26 @@ module.exports = class extends Base {
       });
     }
     const staff = staffArray[0];
-    return this.success({
-      code: 1,
-      msg: staff.id
-    });
+    let returnCode = await this.model('staff').insertUser(staff.id);
+    if (returnCode === 0) {
+      return this.success({
+        code: 1,
+        msg: 'Unexpected error happened'
+      });
+    }
+    const sessionPair = this.mongo('sessionPair');
+    returnCode = sessionPair.initSession(staff.id, userId);
+    if (returnCode === 0) {
+      this.websocket.to('staffRoom ' + staff.id).emit('newUser', {userId: userId});
+      return this.success({
+        code: 0,
+        msg: staff.id
+      });
+    } else {
+      return this.success({
+        code: 1,
+        msg: 'Unexpected error happened'
+      });
+    }
   }
 };
