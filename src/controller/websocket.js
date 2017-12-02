@@ -26,12 +26,13 @@ module.exports = class extends think.Controller {
     let userId = data.userId;
     this.websocket.token = data.token;
     this.websocket.join('userRoom ' + userId);
-    this.emit('regResult', {code:1, msg:'reg success'});
+    this.emit('regResult', {code: 0, msg:'reg success'});
   }
 
   userTextMsgAction() {
     let data = this.wsData;
     let staffId = data.staffId;
+    console.log('userTextMsg:staffId=', data.staffId);
     let userId = data.userId;
     this.websocket.to('staffRoom ' + staffId).emit('userTextMsg',
       {
@@ -41,7 +42,7 @@ module.exports = class extends think.Controller {
       });
     this.emit('sendResult',
       {
-        code: 1,
+        code: 0,
         msg: 'Message send successfully.'
       });
   }
@@ -65,7 +66,7 @@ module.exports = class extends think.Controller {
     let staffId = data.staffId;
     this.websocket.token = data.token;
     this.websocket.join('staffRoom ' + staffId);
-    this.emit('regResult', {code:1, msg:'reg success'});
+    this.emit('regResult', {code: 0, msg:'reg success'});
   }
 
   staffTextMsgAction() {
@@ -81,7 +82,7 @@ module.exports = class extends think.Controller {
       });
     this.emit('sendResult',
       {
-        code: 1,
+        code: 0,
         msg: 'Message send successfully.'
       });
   }

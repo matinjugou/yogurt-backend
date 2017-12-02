@@ -9,11 +9,14 @@ module.exports = class extends Base {
     const staffs = await this.modelInstance.where({
       companyId: companyId
     }).select();
-    this.success(staffs);
+    return this.success(staffs);
   }
   async postAction() {
-    const number = this.get('number');
-    const companyId = this.get('companyId');
+    // const post = this.ctx.request.body.post;
+    // const number = post.number;
+    const number = this.post('number');
+    const companyId = this.post('companyId');
+    // const companyId = post.companyId;
     const list = await this.modelInstance.addStaff(number, companyId);
     return this.success(list);
   }

@@ -9,8 +9,8 @@ module.exports = class extends think.Mongo {
     };
   }
 
-  initSession(staffId, userId) {
-    const pair = this.where({staffId: staffId, userId: userId}).find();
+  async initSession(staffId, userId) {
+    const pair = await this.where({staffId: staffId, userId: userId}).find();
     if (pair) {
       return this.where({staffId: staffId, userId: userId}).update({
         lastActivate: ['exp', 'CURRENT_TIMESTAMP()'],
@@ -34,5 +34,19 @@ module.exports = class extends think.Mongo {
     return this.where({staffId: staffId, userId: userId}).update({
       messages: oldMsg
     });
+  }
+
+  async getQueue(staffId) {
+    const servingPart = [];
+    const waitingPart = [];
+    const serving = await this.where({staffId: staffId, status: 1}).select();
+    const waiting = await this.where({staffId: staffId, status: 2}).select();
+    for (const pair of serving) {
+      servingPart.push(pair.userId);
+    }
+    for (const pair of waiting) {
+      waitingPart.push(pair.userId);
+    }
+    return { serving: servingPart, waiting: waitingPart };
   }
 };
