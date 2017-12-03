@@ -32,4 +32,32 @@ module.exports = class extends think.Model {
         queueCount: ['exp', 'queueCount+1']
       });
   }
+  awakeStaff(staffId) {
+    this.where({staffId: staffId, onlineStatus: 2})
+      .update({
+        onlineStatus: 1
+      });
+    return 0;
+  }
+  restStaff(staffId) {
+    this.where({staffId: staffId, onlineStatus: 1})
+      .update({
+        onlineStatus: 2
+      });
+    return 0;
+  }
+  async onlineStaff(staffId) {
+    const result = await this.where({staffId: staffId, onlineStatus: 0})
+      .update({
+        onlineStatus: 1
+      });
+    return result;
+  }
+  offlineStaff(staffId) {
+    this.where({staffId: staffId, onlineStatus: 1})
+      .update({
+        onlineStatus: 0
+      });
+    return 0;
+  }
 };
