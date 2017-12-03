@@ -5,6 +5,7 @@ module.exports = class extends think.Mongo {
       staffId: Number,
       lastActivate: { type: Date },
       status: Number, // 1 on, 2 waiting, 0 down
+      messagesCount: Number,
       messages: []
     };
   }
@@ -27,12 +28,21 @@ module.exports = class extends think.Mongo {
     }
   }
 
-  insertMessage(staffId, userId, msg) {
-    const pair = this.where({staffId: staffId, userId: userId}).find();
-    const oldMsg = pair.messages;
-    oldMsg.push(msg);
+  async insertMessage(staffId, userId, direction, type, msg) {
+    const msgCount = await this.where({staffId: staffId, userId: userId})
+      .field('messagesCount').find();
+    const msgitem = {};
+    msgitem.msg = msg;
+    msgitem.index = msgCount.messagesCount;
+    const CurrentDate = new Date();
+    msgitem.date = CurrentDate.toLocaleDateString();
+    msgitem.type = type;
+    msgitem.staffId = staffId;
+    msgitem.userId = userId;
+    msgitem.direction = direction;
     return this.where({staffId: staffId, userId: userId}).update({
-      messages: oldMsg
+      '$push': { 'messages': msgitem },
+      '$inc': { 'messagesCount': 1 }
     });
   }
 
