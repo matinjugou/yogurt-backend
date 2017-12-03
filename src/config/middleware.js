@@ -1,5 +1,6 @@
 const path = require('path');
 const isDev = think.env === 'development';
+const cors = require('@koa/cors');
 
 module.exports = [
   {
@@ -8,6 +9,10 @@ module.exports = [
       logRequest: isDev,
       sendResponseTime: isDev
     }
+  },
+  {
+    handle: cors,
+    options: {}
   },
   {
     handle: 'resource',
@@ -33,7 +38,8 @@ module.exports = [
     options: {}
   },
   {
-    handle: 'token-verify'
+    handle: 'token-verify',
+    enable: false
   },
   {
     handle: 'koa2-file-server',

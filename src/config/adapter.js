@@ -146,7 +146,11 @@ exports.websocket = {
       staffTextMsg: '/websocket/staffTextMsg',
       transUser: '/websocket/transUser',
       transAccept: '/websocket/transAccept',
-      transReject: '/websocket/transReject'
+      transReject: '/websocket/transReject',
+      staffServiceStop: 'websocket/staffServiceStop',
+      userServiceStop: 'websocket/userServiceStop',
+      serviceStart: 'websocket/serviceStart',
+      newUser: 'websocket/newUser'
     }]
   }
 };
