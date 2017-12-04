@@ -2,42 +2,28 @@ const Base = require('../../../rest.js');
 module.exports = class extends Base {
   constructor(...args) {
     super(...args);
-    this.modelInstance = this.model('quickReply');
+    this.modelInstance = this.mongo('quickReplyPrivate', 'mongo');
   }
   async getAction() {
     const staffId = this.get('staffId');
-
-    const replies = this.modelInstance.where({
-      staffId: staffId,
-      isPublic: false
-    }).select();
+    const replies = await this.modelInstance.getItem(staffId);
     return this.success(replies);
   }
-  async putAction() {
-    const staffId = this.get('staffId');
-    const contents = this.get('contents');
-    const companyId = this.get('companyId');
-    const isPublic = false;
 
+  async putAction() {
+    const contents = this.get('contents');
+    const staffId = this.get('staffId');
     for (const content of contents) {
       const phrase = content.phrase;
       const sentence = content.sentence;
-      await this.modelInstance.addQuickReply({
-        isPublic: isPublic,
-        staffId: staffId,
-        phrase: phrase,
-        sentence: sentence,
-        companyId: companyId
-      });
+      await this.modelInstance.insertItem(staffId, phrase, sentence);
     }
   }
-  async deleteAction() {
-    const staffId = this.get('staffId');
-    const phrases = this.get('phrases');
 
-    await this.modelInstance.where({
-      staffId: staffId,
-      phrase: ['IN', phrases]
-    }).delete();
+  async deleteAction() {
+    const phrases = this.get('phrases');
+    const sentence = this.get('sentence');
+    const staffId = this.get('staffId');
+    await this.modelInstance.deleteItem(staffId, phrases, sentence);
   }
 };
