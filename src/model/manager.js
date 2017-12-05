@@ -14,11 +14,12 @@ module.exports = class extends think.Model {
       picUrl: picUrl
     });
   }
-  async onlineManager(managerId) {
-    const result = await this.where({managerId: managerId, onlineStatus: 0})
+  async onlineManager(managerId, password) {
+    const result = await this.where({managerId: managerId, password: password})
       .update({
         onlineStatus: 1
       });
+    console.log(result);
     return result;
   }
   offlineStaff(managerId) {
