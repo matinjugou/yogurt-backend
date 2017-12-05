@@ -16,9 +16,9 @@ module.exports = class extends think.Controller {
 
   async closeAction() {
     //console.log(this);
-    if (this.websocket.type === 'staff') {
-      await this.model('staff').offlineStaff(this.websocket.staffId);
-    }
+    //if (this.websocket.type === 'staff') {
+    //  await this.model('staff').offlineStaff(this.websocket.staffId);
+    //}
   }
 
   /**
@@ -36,6 +36,7 @@ module.exports = class extends think.Controller {
 
   async userMsgAction() {
     let data = this.wsData;
+    console.log("data=",data);
     let staffId = data.staffId;
     let userId = data.userId;
     let token = data.token;
@@ -109,6 +110,7 @@ module.exports = class extends think.Controller {
 
   async staffMsgAction() {
     let data = this.wsData;
+    console.log("data=",data);
     let staffId = data.staffId;
     let userId = data.userId;
     let token = data.token;

@@ -139,7 +139,6 @@ exports.websocket = {
     adapter: null,
     messages: [{
       open: '/websocket/open',
-      close: '/websocket/close',
       userReg: '/websocket/userReg',
       staffReg: '/websocket/staffReg',
       userMsg: '/websocket/userMsg',
@@ -150,7 +149,8 @@ exports.websocket = {
       staffServiceStop: 'websocket/staffServiceStop',
       userServiceStop: 'websocket/userServiceStop',
       serviceStart: 'websocket/serviceStart',
-      newUser: 'websocket/newUser'
+      newUser: 'websocket/newUser',
+      close: '/websocket/close'
     }]
   }
 };

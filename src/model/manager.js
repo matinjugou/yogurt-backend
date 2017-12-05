@@ -19,7 +19,6 @@ module.exports = class extends think.Model {
       .update({
         onlineStatus: 1
       });
-    console.log(result);
     return result;
   }
   offlineStaff(managerId) {

@@ -9,7 +9,7 @@ module.exports = class extends Base {
     const userId = this.get('userId');
     const tags = this.get('tags');
     const tagList = tags.split(' ');
-    const stuff = this.model('staff').where({
+    const stuff = await this.model('staff').where({
       onlineStatus: 1,
       queueCount: ['<', this.config('maxClient')]
     }).select();
@@ -19,7 +19,7 @@ module.exports = class extends Base {
         staff: 'No staff online.'
       });
     }
-    let staffArray = [];
+    const staffArray = [];
     for (const staff of stuff) {
       for (const tag of tagList) {
         if (tag in staff.role.split(' ')) {
@@ -28,6 +28,7 @@ module.exports = class extends Base {
         }
       }
     }
+    /*
     const strategies = this.config('strategies')
       .order('level DESC')
       .where({enable: true})
@@ -44,7 +45,7 @@ module.exports = class extends Base {
         }
         staffArray = tmpList;
       } else if (strategy.name === 'oldClient') {
-        const pairs = this.mongo('sessionPair');
+        const pairs = this.mongo('sessionPair', 'mongo');
         const tmpList = [];
         for (const staff of staffArray) {
           if (pairs.where({userId: userId, staffId: staff.id}).select() !== []) tmpList.push(staff);
@@ -65,6 +66,7 @@ module.exports = class extends Base {
         }
       }
     }
+    */
     if (staffArray.length === 0) {
       return this.success({
         code: 3,
@@ -72,20 +74,20 @@ module.exports = class extends Base {
       });
     }
     const staff = staffArray[0];
-    let returnCode = await this.model('staff').insertUser(staff.id);
+    let returnCode = await this.model('staff').insertUser(staff.staffId);
     if (returnCode === 0) {
       return this.success({
         code: 1,
         msg: 'Unexpected error happened'
       });
     }
-    const sessionPair = this.mongo('sessionPair');
-    returnCode = sessionPair.initSession(staff.id, userId);
+    const sessionPair = this.mongo('sessionPair', 'mongo');
+    returnCode = await sessionPair.initSession(staff.staffId, userId);
     if (returnCode === 0) {
-      this.websocket.to('staffRoom ' + staff.id).emit('newUser', {userId: userId});
+      // think.websocket.to('staffRoom ' + staff.staffId).emit('newUser', {userId: userId});
       return this.success({
         code: 0,
-        msg: staff.id
+        msg: staff.staffId
       });
     } else {
       return this.success({
