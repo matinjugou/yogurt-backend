@@ -43,9 +43,12 @@ module.exports = class extends Base {
   }
 
   async deleteAction() {
-    const phrases = this.post('phrases');
-    const sentence = this.post('sentence');
+    const pairs = this.post('pairs');
+    console.log(pairs);
     const companyId = this.post('companyId');
-    await this.modelInstance.deleteItem(companyId, phrases, sentence);
+    console.log(companyId);
+    for (let pair of pairs) {
+      await this.modelInstance.deleteItem(companyId, pair.phrase, pair.sentence);
+    }
   }
 };

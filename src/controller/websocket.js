@@ -38,15 +38,43 @@ module.exports = class extends think.Controller {
     let data = this.wsData;
     let staffId = data.staffId;
     let userId = data.userId;
+    let token = data.token;
+    let type = data.type;
+    let url = data.url;
+    let compressedUrl = data.compressedUrl;
+    let name = data.name;
+    let size = data.size;
+    let mimeType = data.mimeType;
+    let msg = data.msg;
     const myDate = new Date();
     this.websocket.to('staffRoom ' + staffId).emit('userMsg',
       {
-        from: userId,
-        type: data.type,
-        msg: data.msg,
+        staffId: staffId,
+        userId: userId,
+        token: token,
+        type: type,
+        url: url,
+        compressedUrl: compressedUrl,
+        name: name,
+        size: size,
+        mimeTypes: mimeType,
+        msg: msg,
         time: myDate.toLocaleDateString()
       });
-    await this.mongo('sessionPair', 'mongo').insertMessage(staffId, userId, 'u_s', data.type, data.msg);
+    const content = {
+      staffId: staffId,
+      userId: userId,
+      token: token,
+      type: type,
+      url: url,
+      compressedUrl: compressedUrl,
+      name: name,
+      size: size,
+      mimeTypes: mimeType,
+      msg: msg,
+      time: myDate.toLocaleDateString()
+    };
+    await this.mongo('sessionPair', 'mongo').insertMessage(staffId, userId, 'u_s', content);
     this.emit('sendResult',
       {
         code: 0,
@@ -83,16 +111,43 @@ module.exports = class extends think.Controller {
     let data = this.wsData;
     let staffId = data.staffId;
     let userId = data.userId;
+    let token = data.token;
+    let type = data.type;
+    let url = data.url;
+    let compressedUrl = data.compressedUrl;
+    let name = data.name;
+    let size = data.size;
+    let mimeType = data.mimeType;
+    let msg = data.msg;
     const myDate = new Date();
     this.websocket.to('userRoom ' + userId).emit('staffMsg',
       {
-        from: staffId,
-        type: data.type,
-        msg: data.msg,
+        staffId: staffId,
+        userId: userId,
+        token: token,
+        type: type,
+        url: url,
+        compressedUrl: compressedUrl,
+        name: name,
+        size: size,
+        mimeTypes: mimeType,
+        msg: msg,
         time: myDate.toLocaleDateString()
       });
-    const result = await this.mongo('sessionPair', 'mongo').insertMessage(staffId, userId, 's_u', data.type, data.msg);
-    console.log(result);
+    const content = {
+      staffId: staffId,
+      userId: userId,
+      token: token,
+      type: type,
+      url: url,
+      compressedUrl: compressedUrl,
+      name: name,
+      size: size,
+      mimeTypes: mimeType,
+      msg: msg,
+      time: myDate.toLocaleDateString()
+    };
+    await this.mongo('sessionPair', 'mongo').insertMessage(staffId, userId, 's_u', content);
     this.emit('sendResult',
       {
         code: 0,

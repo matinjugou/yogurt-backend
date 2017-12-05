@@ -13,13 +13,13 @@ module.exports = class extends Base {
     jwt.verify(token, this.config('secretKey'), function(err, decode) {
       if (err) {
         return self.success({
-          code: -1,
+          code: 1,
           msg: 'Invalid token'
         });
       } else {
         if (decode.userId !== userId) {
           return self.success({
-            code: -2,
+            code: 2,
             msg: 'Info mismatch!'
           });
         }

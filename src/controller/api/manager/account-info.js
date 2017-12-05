@@ -6,22 +6,20 @@ module.exports = class extends Base {
   }
   async getAction() {
     const managerId = this.get('managerId');
-    const manager = this.modelInstance.where({
-      id: managerId
+    const manager = await this.modelInstance.where({
+      managerId: managerId
     }).find();
     await this.success(manager);
   }
   async putAction() {
-    const managerId = this.get('managerId');
-    let name = this.get('name');
-    let nickname = this.get('nickname');
-    let password = this.get('password');
-    let email = this.get('email');
-    let tel = this.get('tel');
-    let picUrl = this.get('picUrl');
-    const manager = this.modelInstance.where({
-      id: managerId
-    }).find();
+    const managerId = this.post('managerId');
+    let name = this.post('name');
+    let nickname = this.post('nickname');
+    let password = this.post('password');
+    let email = this.post('email');
+    let tel = this.post('tel');
+    let picUrl = this.post('picUrl');
+    const manager = await this.modelInstance.getManager(managerId);
     if (name === null || name === undefined) {
       name = manager.name;
     }
@@ -40,13 +38,6 @@ module.exports = class extends Base {
     if (picUrl === null || picUrl === undefined) {
       picUrl = manager.picUrl;
     }
-    await this.modelInstance.where({id: managerId}).update({
-      name: name,
-      nickname: nickname,
-      password: password,
-      email: email,
-      tel: tel,
-      picUrl: picUrl
-    });
+    await this.modelInstance.updateManager(managerId, name, nickname, password, email, tel, picUrl);
   }
 };
