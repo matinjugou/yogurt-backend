@@ -48,6 +48,5 @@ module.exports = class extends Base {
         token: token
       });
     }
-
   }
 };

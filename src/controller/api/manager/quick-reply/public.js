@@ -44,10 +44,8 @@ module.exports = class extends Base {
 
   async deleteAction() {
     const pairs = this.post('pairs');
-    console.log(pairs);
     const companyId = this.post('companyId');
-    console.log(companyId);
-    for (let pair of pairs) {
+    for (const pair of pairs) {
       await this.modelInstance.deleteItem(companyId, pair.phrase, pair.sentence);
     }
   }
