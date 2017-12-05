@@ -2,40 +2,51 @@ const Base = require('../../../rest.js');
 module.exports = class extends Base {
   constructor(...args) {
     super(...args);
-    this.modelInstance = this.model('quickReply');
+    this.modelInstance = this.mongo('quickReplyPublic', 'mongo');
   }
   async getAction() {
     const companyId = this.get('companyId');
-    const replies = await this.modelInstance.where({
-      companyId: companyId,
-      isPublic: true
-    }).select();
-    return this.success(replies);
+    const replies = await this.modelInstance.getItem(companyId);
+    return this.success(replies.pairs);
   }
+
+  async postAction() {
+    const companyId = this.post('companyId');
+    const phrase = this.post('phrase');
+    const sentence = this.post('sentence');
+    await this.modelInstance.insertItem(companyId, phrase, sentence);
+  }
+
   async putAction() {
-    const contents = this.get('contents');
-    const companyId = this.get('companyId');
-    const isPublic = true;
-    const staffId = -1;
-    for (const content of contents) {
-      const phrase = content.phrase;
-      const sentence = content.sentence;
-      await this.modelInstance.addQuickReply({
-        companyId: companyId,
-        isPublic: isPublic,
-        phrase: phrase,
-        sentence: sentence,
-        staffId: staffId
+    const companyId = this.post('companyId');
+    const oldPhrase = this.post('oldPhrase');
+    const oldSentence = this.post('oldSentence');
+    const newPhrase = this.post('newPhrase');
+    const newSentence = this.post('newSentence');
+    const result = await this.modelInstance.changeItem(companyId, oldPhrase, oldSentence, newPhrase, newSentence);
+    if (result === 0) {
+      return this.success({
+        code: 0,
+        msg: 'success'
+      });
+    } else if (result === -1) {
+      return this.success({
+        code: 1,
+        msg: 'value doesn\'t exist'
+      });
+    } else if (result === -2) {
+      return this.success({
+        code: 2,
+        msg: 'duplicated value'
       });
     }
   }
-  async deleteAction() {
-    const phrases = this.get('phrases');
-    const isPublic = true;
 
-    await this.modelInstance.where({
-      isPublic: isPublic,
-      phrase: ['IN', phrases]
-    }).delete();
+  async deleteAction() {
+    const pairs = this.post('pairs');
+    const companyId = this.post('companyId');
+    for (const pair of pairs) {
+      await this.modelInstance.deleteItem(companyId, pair.phrase, pair.sentence);
+    }
   }
 };

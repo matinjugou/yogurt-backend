@@ -7,7 +7,7 @@ module.exports = class extends Base {
   }
 
   getAction() {
-    const staffId = this.get('staffId');
+    const userId = this.get('userId');
     const token = this.get('token');
     const self = this;
     jwt.verify(token, this.config('secretKey'), function(err, decode) {
@@ -17,7 +17,7 @@ module.exports = class extends Base {
           msg: 'Invalid token'
         });
       } else {
-        if (decode.staffId !== staffId) {
+        if (decode.userId !== userId) {
           return self.success({
             code: 2,
             msg: 'Info mismatch!'
@@ -32,26 +32,12 @@ module.exports = class extends Base {
   }
 
   async postAction() {
-    const staffId = this.post('staffId');
-    const password = this.post('password');
-    const staff = await this.modelInstance.validateStaff(staffId, password);
-    if (Object.keys(staff).length === 0) {
-      return this.success({
-        code: 1,
-        msg: 'Staff does not exist!'
-      });
-    } else if (!staff.isInit) {
-      return this.success({
-        code: 2,
-        msg: 'Need init!'
-      });
-    } else {
-      const token = jwt.sign({staffId: staffId}, this.config('secretKey'));
-      return this.success({
-        code: 0,
-        msg: 'Login successful!',
-        token: token
-      });
-    }
+    const userId = this.post('userId');
+    const token = jwt.sign({userId: userId}, this.config('secretKey'));
+    return this.success({
+      code: 0,
+      msg: 'Login successful!',
+      token: token
+    });
   }
 };

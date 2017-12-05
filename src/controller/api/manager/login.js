@@ -3,11 +3,11 @@ const jwt = require('jsonwebtoken');
 module.exports = class extends Base {
   constructor(...args) {
     super(...args);
-    this.modelInstance = this.model('staff');
+    this.modelInstance = this.model('manager');
   }
 
   getAction() {
-    const staffId = this.get('staffId');
+    const managerId = this.get('managerId');
     const token = this.get('token');
     const self = this;
     jwt.verify(token, this.config('secretKey'), function(err, decode) {
@@ -17,7 +17,7 @@ module.exports = class extends Base {
           msg: 'Invalid token'
         });
       } else {
-        if (decode.staffId !== staffId) {
+        if (decode.managerId !== managerId) {
           return self.success({
             code: 2,
             msg: 'Info mismatch!'
@@ -32,21 +32,16 @@ module.exports = class extends Base {
   }
 
   async postAction() {
-    const staffId = this.post('staffId');
+    const managerId = this.post('managerId');
     const password = this.post('password');
-    const staff = await this.modelInstance.validateStaff(staffId, password);
-    if (Object.keys(staff).length === 0) {
+    const result = await this.modelInstance.onlineManager(managerId, password);
+    if (result === 0) {
       return this.success({
         code: 1,
-        msg: 'Staff does not exist!'
-      });
-    } else if (!staff.isInit) {
-      return this.success({
-        code: 2,
-        msg: 'Need init!'
+        msg: 'Wrong Manager Info!'
       });
     } else {
-      const token = jwt.sign({staffId: staffId}, this.config('secretKey'));
+      const token = jwt.sign({managerId: managerId}, this.config('secretKey'));
       return this.success({
         code: 0,
         msg: 'Login successful!',
