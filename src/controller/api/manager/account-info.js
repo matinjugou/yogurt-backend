@@ -6,10 +6,8 @@ module.exports = class extends Base {
   }
   async getAction() {
     const managerId = this.get('managerId');
-    const manager = await this.modelInstance.where({
-      managerId: managerId
-    }).find();
-    await this.success(manager);
+    const manager = await this.modelInstance.getManager(managerId);
+    return this.success(manager);
   }
   async putAction() {
     const managerId = this.post('managerId');
