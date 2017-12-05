@@ -6,23 +6,24 @@ module.exports = class extends Base {
   }
   async getAction() {
     const companyId = this.get('companyId');
-    const company = this.modelInstance.where({id: companyId}).find();
+    const company = await this.modelInstance.getCompany(companyId);
     return this.success(company);
   }
   async putAction() {
-    const companyId = this.get('companyId');
-    let name = this.get('name');
-    let picUrl = this.get('picUrl');
-    const company = this.modelInstance.where({id: companyId}).find();
+    const companyId = this.post('companyId');
+    let name = this.post('name');
+    let picUrl = this.post('picUrl');
+    let robotAvatar = this.post('robotAvatar');
+    const company = await this.modelInstance.getCompany(companyId);
     if (name === null) {
       name = company.name;
     }
     if (picUrl === null) {
       picUrl = company.picUrl;
     }
-    await this.modelInstance.where({id: companyId}).update({
-      name: name,
-      picUrl: picUrl
-    });
+    if (robotAvatar === null) {
+      robotAvatar = company.robotAvatar;
+    }
+    await this.modelInstance.updateCompany(companyId, name, picUrl, robotAvatar);
   }
 };
