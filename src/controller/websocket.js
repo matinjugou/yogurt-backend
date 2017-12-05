@@ -14,8 +14,11 @@ module.exports = class extends think.Controller {
     this.broadcast('joined', 'There is a new client joined');
   }
 
-  closeAction() {
+  async closeAction() {
     //console.log(this);
+    if (this.websocket.type === 'staff') {
+      await this.model('staff').offlineStaff(this.websocket.staffId);
+    }
   }
 
   /**
@@ -25,21 +28,53 @@ module.exports = class extends think.Controller {
     let data = this.wsData;
     let userId = data.userId;
     this.websocket.token = data.token;
+    this.websocket.type = 'user';
+    this.websocket.userId = data.userId;
     this.websocket.join('userRoom ' + userId);
     this.emit('regResult', {code: 0, msg:'reg success'});
   }
 
-  userTextMsgAction() {
+  async userMsgAction() {
     let data = this.wsData;
     let staffId = data.staffId;
-    console.log('userTextMsg:staffId=', data.staffId);
     let userId = data.userId;
-    this.websocket.to('staffRoom ' + staffId).emit('userTextMsg',
+    let token = data.token;
+    let type = data.type;
+    let url = data.url;
+    let compressedUrl = data.compressedUrl;
+    let name = data.name;
+    let size = data.size;
+    let mimeType = data.mimeType;
+    let msg = data.msg;
+    const myDate = new Date();
+    this.websocket.to('staffRoom ' + staffId).emit('userMsg',
       {
-        from: userId,
-        type: 'text',
-        msg: data.msg
+        staffId: staffId,
+        userId: userId,
+        token: token,
+        type: type,
+        url: url,
+        compressedUrl: compressedUrl,
+        name: name,
+        size: size,
+        mimeTypes: mimeType,
+        msg: msg,
+        time: myDate.toLocaleDateString()
       });
+    const content = {
+      staffId: staffId,
+      userId: userId,
+      token: token,
+      type: type,
+      url: url,
+      compressedUrl: compressedUrl,
+      name: name,
+      size: size,
+      mimeTypes: mimeType,
+      msg: msg,
+      time: myDate.toLocaleDateString()
+    };
+    await this.mongo('sessionPair', 'mongo').insertMessage(staffId, userId, 'u_s', content);
     this.emit('sendResult',
       {
         code: 0,
@@ -61,25 +96,58 @@ module.exports = class extends think.Controller {
   /**
    * Staff Controller
    **/
-  staffRegAction() {
+  async staffRegAction() {
     let data = this.wsData;
     let staffId = data.staffId;
     this.websocket.token = data.token;
+    this.websocket.type = 'staff';
+    this.websocket.staffId = data.staffId;
     this.websocket.join('staffRoom ' + staffId);
     this.emit('regResult', {code: 0, msg:'reg success'});
+    await this.model('staff').onlineStaff(staffId);
   }
 
-  staffTextMsgAction() {
+  async staffMsgAction() {
     let data = this.wsData;
     let staffId = data.staffId;
     let userId = data.userId;
-    console.log('Msg one sent');
-    this.websocket.to('userRoom ' + userId).emit('staffTextMsg',
+    let token = data.token;
+    let type = data.type;
+    let url = data.url;
+    let compressedUrl = data.compressedUrl;
+    let name = data.name;
+    let size = data.size;
+    let mimeType = data.mimeType;
+    let msg = data.msg;
+    const myDate = new Date();
+    this.websocket.to('userRoom ' + userId).emit('staffMsg',
       {
-        from: staffId,
-        type: 'text',
-        msg: data.msg
+        staffId: staffId,
+        userId: userId,
+        token: token,
+        type: type,
+        url: url,
+        compressedUrl: compressedUrl,
+        name: name,
+        size: size,
+        mimeTypes: mimeType,
+        msg: msg,
+        time: myDate.toLocaleDateString()
       });
+    const content = {
+      staffId: staffId,
+      userId: userId,
+      token: token,
+      type: type,
+      url: url,
+      compressedUrl: compressedUrl,
+      name: name,
+      size: size,
+      mimeTypes: mimeType,
+      msg: msg,
+      time: myDate.toLocaleDateString()
+    };
+    await this.mongo('sessionPair', 'mongo').insertMessage(staffId, userId, 's_u', content);
     this.emit('sendResult',
       {
         code: 0,
