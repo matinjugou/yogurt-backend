@@ -7,7 +7,7 @@ module.exports = class extends Base {
   async getAction() {
     const managerId = this.get('managerId');
     const manager = this.modelInstance.where({
-      id: managerId
+      managerId: managerId
     }).find();
     await this.success(manager);
   }
@@ -20,7 +20,7 @@ module.exports = class extends Base {
     let tel = this.get('tel');
     let picUrl = this.get('picUrl');
     const manager = this.modelInstance.where({
-      id: managerId
+      managerId: managerId
     }).find();
     if (name === null || name === undefined) {
       name = manager.name;
@@ -40,7 +40,7 @@ module.exports = class extends Base {
     if (picUrl === null || picUrl === undefined) {
       picUrl = manager.picUrl;
     }
-    await this.modelInstance.where({id: managerId}).update({
+    await this.modelInstance.where({managerId: managerId}).update({
       name: name,
       nickname: nickname,
       password: password,
