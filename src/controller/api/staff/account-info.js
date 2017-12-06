@@ -14,7 +14,6 @@ module.exports = class extends Base {
   async putAction() {
     const staffId = this.post('staffId');
     let nickname = this.post('nickname');
-    let name = this.post('name');
     let email = this.post('email');
     let tel = this.post('tel');
     let password = this.post('password');
@@ -25,9 +24,6 @@ module.exports = class extends Base {
     }).find();
     if (nickname === null || nickname === undefined) {
       nickname = staff.nickname;
-    }
-    if (name === null || name === undefined) {
-      name = staff.name;
     }
     if (email === null || email === undefined) {
       email = staff.email;
@@ -46,12 +42,31 @@ module.exports = class extends Base {
     }
     await this.modelInstance.where({staffId: staffId}).update({
       nickname: nickname,
-      name: name,
       email: email,
       tel: tel,
       password: password,
       picUrl: picUrl,
       role: role
+    });
+  }
+  async postAction() {
+    const staffId = this.post('staffId');
+    const nickname = this.post('nickname');
+    const name = this.post('name');
+    const email = this.post('email');
+    const tel = this.post('tel');
+    const password = this.post('password');
+    const picUrl = this.post('picUrl');
+    const role = this.post('role');
+    await this.modelInstance.where({staffId: staffId}).update({
+      nickname: nickname,
+      name: name,
+      email: email,
+      tel: tel,
+      password: password,
+      picUrl: picUrl,
+      role: role,
+      isInit: true
     });
   }
 };
