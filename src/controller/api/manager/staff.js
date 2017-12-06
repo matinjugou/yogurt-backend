@@ -17,7 +17,7 @@ module.exports = class extends Base {
     const number = this.post('number');
     const companyId = this.post('companyId');
     // const companyId = post.companyId;
-    const list = await this.modelInstance.addStaff(number, companyId);
+    const list = this.modelInstance.addStaff(number, companyId);
     return this.success(list);
   }
   async putAction() {
