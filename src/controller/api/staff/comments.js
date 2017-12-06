@@ -10,38 +10,13 @@ module.exports = class extends Base {
     const startTime = this.get('startTime');
     const endTime = this.get('endTime');
 
-    if (startTime !== undefined && endTime !== undefined && userId !== undefined) {
-      const comments = await this.modelInstance.where({
-        staffId: staffId,
-        userId: userId,
-        date: ['BETWEEN', startTime, endTime]
-      }).select();
-      return this.success(comments);
-    } else if (userId === undefined && startTime !== undefined && endTime !== undefined) {
-      const comments = await this.modelInstance.where({
-        staffId: staffId,
-        date: ['BETWEEN', startTime, endTime]
-      }).select();
-      return this.success(comments);
-    } else if (userId !== undefined) {
-      const comments = await this.modelInstance.where({
-        staffId: staffId,
-        userId: userId
-      }).select();
-      return this.success(comments);
-    } else {
-      const comments = await this.modelInstance.where({
-        staffId: staffId
-      }).select();
-      return this.success(comments);
-    }
+    const comments = await this.modelInstance.getStaffUserComments(staffId, userId, startTime, endTime);
+    return this.success(comments);
   }
   async putAction() {
-    const commentId = this.get('commentId');
-    const remark = this.get('remark');
+    const commentId = this.post('commentId');
+    const remark = this.post('remark');
 
-    await this.modelInstance.where({
-      id: commentId
-    }).update({remark: remark});
+    await this.modelInstance.updateRemark(commentId, remark);
   }
 };

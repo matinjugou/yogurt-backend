@@ -15,13 +15,13 @@ module.exports = class extends Base {
     let picUrl = this.post('picUrl');
     let robotAvatar = this.post('robotAvatar');
     const company = await this.modelInstance.getCompany(companyId);
-    if (name === null) {
+    if (name === null || name === undefined) {
       name = company.name;
     }
-    if (picUrl === null) {
+    if (picUrl === null || picUrl === undefined) {
       picUrl = company.picUrl;
     }
-    if (robotAvatar === null) {
+    if (robotAvatar === null || robotAvatar === undefined) {
       robotAvatar = company.robotAvatar;
     }
     await this.modelInstance.updateCompany(companyId, name, picUrl, robotAvatar);
