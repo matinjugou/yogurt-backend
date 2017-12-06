@@ -41,6 +41,14 @@ module.exports = [
     handle: 'token-verify',
     enable: false
   },
+  {
+    handle: 'koa2-file-server',
+    options: {
+      root: path.join(think.ROOT_PATH, 'media'),
+      webp: true,
+      identifier: '??'
+    }
+  },
   'logic',
   'controller'
 ];
