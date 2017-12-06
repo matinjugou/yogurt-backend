@@ -6,7 +6,7 @@ module.exports = [
   ['/api/manager/comments', 'api/staff/comments', 'rest'],
   ['/api/staff/login', 'api/staff/login', 'rest'],
   ['/api/staff/validation/validate', 'api/staff/validation/validate', 'get'],
-    ['/api/staff/validation/validateCode', 'api/staff/validation/validateCode', 'post'],
+  ['/api/staff/validation/validateCode', 'api/staff/validation/validateCode', 'post'],
   ['/api/staff/quick-reply/public', 'api/staff/quick-reply/public', 'rest'],
   ['/api/staff/quick-reply/private', 'api/staff/quick-reply/private', 'rest'],
   ['/api/staff/account-info', 'api/staff/account-info', 'rest'],
