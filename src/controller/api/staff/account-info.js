@@ -12,18 +12,22 @@ module.exports = class extends Base {
     return this.success(staff);
   }
   async putAction() {
-    const staffId = this.get('staffId');
-    let nickname = this.get('nickname');
-    let email = this.get('email');
-    let tel = this.get('tel');
-    let password = this.get('password');
-    let picUrl = this.get('picUrl');
-    let role = this.get();
+    const staffId = this.post('staffId');
+    let nickname = this.post('nickname');
+    let name = this.post('name');
+    let email = this.post('email');
+    let tel = this.post('tel');
+    let password = this.post('password');
+    let picUrl = this.post('picUrl');
+    let role = this.post('role');
     const staff = this.modelInstance.where({
-      id: staffId
+      staffId: staffId
     }).find();
     if (nickname === null || nickname === undefined) {
       nickname = staff.nickname;
+    }
+    if (name === null || name === undefined) {
+      name = staff.name;
     }
     if (email === null || email === undefined) {
       email = staff.email;
@@ -40,8 +44,9 @@ module.exports = class extends Base {
     if (role === null || role === undefined) {
       role = staff.role;
     }
-    await this.modelInstance.where({id: staffId}).update({
+    await this.modelInstance.where({staffId: staffId}).update({
       nickname: nickname,
+      name: name,
       email: email,
       tel: tel,
       password: password,
