@@ -6,9 +6,7 @@ module.exports = class extends Base {
   }
   async getAction() {
     const companyId = this.get('companyId');
-    const users = this.modelInstance.where({
-      companyId: companyId
-    }).select();
+    const users = await this.modelInstance.getAllUsers(companyId);
     return this.success(users);
   }
 };

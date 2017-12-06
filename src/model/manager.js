@@ -5,27 +5,25 @@ module.exports = class extends think.Model {
     }).field('companyId,name,email,nickname,picUrl,managerId').find();
   }
   updateManager(managerId, name, nickname, password, email, tel, picUrl) {
-    return this.where({managerId: managerId}).update({
+    return this.thenUpdate({
       name: name,
       nickname: nickname,
       password: password,
       email: email,
       tel: tel,
       picUrl: picUrl
-    });
+    }, {managerId: managerId});
   }
   async onlineManager(managerId, password) {
-    const result = await this.where({managerId: managerId, password: password})
-      .update({
-        onlineStatus: 1
-      });
+    const result = await this.thenUpdate({
+      onlineStatus: 1
+    }, {managerId: managerId, password: password});
     return result;
   }
   offlineStaff(managerId) {
-    this.where({managerId: managerId, onlineStatus: 1})
-      .update({
-        onlineStatus: 0
-      });
+    this.thenUpdate({
+      onlineStatus: 0
+    }, {managerId: managerId, onlineStatus: 1});
     return 0;
   }
 };

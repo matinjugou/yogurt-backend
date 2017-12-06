@@ -10,26 +10,14 @@ module.exports = class extends Base {
       const staffId = this.get('staffId');
       const startTime = this.get('startTime');
       const endTime = this.get('endTime');
-      if (startTime !== null && endTime !== null) {
-        const comments = this.modelInstance.where({
-          staffId: staffId,
-          date: ['BETWEEN', startTime, endTime]
-        }).select();
-
-        return this.success(comments);
-      } else {
-        const comments = this.modelInstance.where({
-          staffId: staffId
-        }).select();
-
-        return this.success(comments);
-      }
+      const comments = await this.modelInstance.getStaffComments(staffId, startTime, endTime);
+      return this.success(comments);
     }
-    const comment = this.modelInstance.where({id: commentId}).find();
+    const comment = await this.modelInstance.getCommentById(commentId);
     return this.success(comment);
   }
   async deleteAction() {
-    const commentIds = this.get('commentIds');
-    await this.modelInstance.where({id: ['IN', commentIds]}).delete();
+    const commentIds = this.post('commentIds');
+    await this.modelInstance.deleteComments(commentIds);
   }
 };
