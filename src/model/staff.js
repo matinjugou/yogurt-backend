@@ -1,11 +1,11 @@
 module.exports = class extends think.Model {
-  addStaff(number, companyId) {
+  async addStaff(number, companyId) {
     const list = [];
     let i = 0;
     for (i = 0; i < number; i++) {
-      list[i] = this.add({
+      const id = await this.add({
         companyId: companyId,
-        isInit: false,
+        isInit: 0,
         name: '',
         email: '',
         tel: '',
@@ -18,6 +18,9 @@ module.exports = class extends think.Model {
         waitingCount: 0,
         queueCount: 0
       });
+      const staffId = String(companyId) + '_s' + String(id);
+      await this.thenUpdate({staffId: staffId, password: staffId}, {id: id});
+      list.push(staffId);
     }
     return list;
   }

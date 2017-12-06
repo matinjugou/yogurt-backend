@@ -1,3 +1,4 @@
+/**
 const test = require('ava');
 const request = require('supertest');
 const path = require('path');
@@ -20,9 +21,8 @@ function createServer() {
 
   return instance.run();
 }
-*/
-require(path.join(process.cwd(), 'production.js'));
 
+require(path.join(process.cwd(), 'production.js'));
 test('postAction', t => {
   const body = {
     staffId: '1_s1',
@@ -55,7 +55,7 @@ test('postAction', t => {
       }
       done();
     })
-   */
+   *
   fetch('/api/staff/login', {
     method:'POST',
     body: {
@@ -70,3 +70,4 @@ test('postAction', t => {
   });
   t.pass();
 });
+**/

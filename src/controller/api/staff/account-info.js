@@ -58,7 +58,7 @@ module.exports = class extends Base {
     const password = this.post('password');
     const picUrl = this.post('picUrl');
     const role = this.post('role');
-    await this.modelInstance.where({staffId: staffId}).update({
+    const result = await this.modelInstance.thenUpdate({
       nickname: nickname,
       name: name,
       email: email,
@@ -66,7 +66,18 @@ module.exports = class extends Base {
       password: password,
       picUrl: picUrl,
       role: role,
-      isInit: true
-    });
+      isInit: 1
+    }, {staffId: staffId});
+    if (result > 0) {
+      return this.success({
+        code: 0,
+        msg: 'Init succeed'
+      });
+    } else {
+      return this.success({
+        code: 1,
+        msg: 'Init failed'
+      });
+    }
   }
 };

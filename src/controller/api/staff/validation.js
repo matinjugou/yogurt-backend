@@ -29,7 +29,7 @@ module.exports = class extends Base {
       this.cache('emailValidate.' + staffId + '.' + emailAddress, Num, {
         type: 'redis',
         redis: {
-          timeout: 30 * 1000
+          timeout: 10 * 60 * 1000
         }
       });
     });
