@@ -31,7 +31,7 @@ module.exports = class extends think.Model {
   insertUser(staffId) {
     return this.where({staffId: staffId})
       .update({
-        waitingCount: ['exp', 'waitingCount+1'],
+        servingCount: ['exp', 'servingCount+1'],
         queueCount: ['exp', 'queueCount+1']
       });
   }

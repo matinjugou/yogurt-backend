@@ -83,7 +83,8 @@ module.exports = class extends Base {
     }
     const sessionPair = this.mongo('sessionPair', 'mongo');
     returnCode = await sessionPair.initSession(staff.staffId, userId);
-    if (returnCode === 0) {
+    // console.log("returnCode=", returnCode);
+    if (returnCode !== 0) {
       // think.websocket.to('staffRoom ' + staff.staffId).emit('newUser', {userId: userId});
       return this.success({
         code: 0,

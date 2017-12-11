@@ -26,6 +26,7 @@ module.exports = class extends think.Controller {
   **/
   userRegAction() {
     let data = this.wsData;
+    console.log("userRegData=", data);
     let userId = data.userId;
     this.websocket.token = data.token;
     this.websocket.type = 'user';
@@ -52,7 +53,6 @@ module.exports = class extends think.Controller {
       {
         staffId: staffId,
         userId: userId,
-        token: token,
         type: type,
         url: url,
         compressedUrl: compressedUrl,
@@ -81,6 +81,15 @@ module.exports = class extends think.Controller {
         code: 0,
         msg: 'Message send successfully.'
       });
+  }
+
+  updateQueueAction() {
+    let data = this.wsData;
+    let staffId = data.staffId;
+    console.log(staffId);
+    this.websocket.to('staffRoom ' + staffId).emit('updateQueue', {
+      msg: 'Please update your queue'
+    });
   }
 
   userServiceStopAction() {
@@ -126,7 +135,6 @@ module.exports = class extends think.Controller {
       {
         staffId: staffId,
         userId: userId,
-        token: token,
         type: type,
         url: url,
         compressedUrl: compressedUrl,
