@@ -12,17 +12,19 @@ module.exports = class extends think.Mongo {
 
   async initSession(staffId, userId) {
     const pair = await this.where({staffId: staffId, userId: userId}).find();
-    if (pair) {
-      return this.where({staffId: staffId, userId: userId}).update({
+    // console.log("pair=", pair);
+    if (Object.keys(pair).length !== 0) {
+      return this.thenUpdate({
         lastActivate: ['exp', 'CURRENT_TIMESTAMP()'],
         status: 1
-      });
+      }, {staffId: staffId, userId: userId});
     } else {
       return this.where({staffId: staffId, userId: userId}).thenAdd({
         userId: userId,
         staffId: staffId,
         lastActivate: ['exp', 'CURRENT_TIMESTAMP()'],
         status: 1,
+        messageCount: 0,
         messages: []
       });
     }
