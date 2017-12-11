@@ -6,9 +6,7 @@ module.exports = class extends Base {
   }
   async getAction() {
     const companyId = this.get('companyId');
-    const staffs = await this.modelInstance.where({
-      companyId: companyId
-    }).select();
+    const staffs = await this.modelInstance.getStaffs(companyId);
     return this.success(staffs);
   }
   async postAction() {
@@ -21,8 +19,8 @@ module.exports = class extends Base {
     return this.success(list);
   }
   async putAction() {
-    const staffId = this.get('staffId');
-    const role = this.get('role');
-    await this.modelInstance.where({id: staffId}).update({role: role});
+    const staffId = this.post('staffId');
+    const role = this.post('role');
+    await this.modelInstance.updateRole(staffId, role);
   }
 };

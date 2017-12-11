@@ -36,31 +36,81 @@ module.exports = class extends think.Model {
       });
   }
   awakeStaff(staffId) {
-    this.where({staffId: staffId, onlineStatus: 2})
-      .update({
-        onlineStatus: 1
-      });
+    this.thenUpdate({
+      onlineStatus: 1
+    }, {staffId: staffId, onlineStatus: 2});
     return 0;
   }
   restStaff(staffId) {
-    this.where({staffId: staffId, onlineStatus: 1})
-      .update({
-        onlineStatus: 2
-      });
+    this.thenUpdate({
+      onlineStatus: 2
+    }, {staffId: staffId, onlineStatus: 1});
     return 0;
   }
   async onlineStaff(staffId) {
-    const result = await this.where({staffId: staffId, onlineStatus: 0})
-      .update({
-        onlineStatus: 1
-      });
+    const result = await this.thenUpdate({
+      onlineStatus: 1
+    }, {staffId: staffId, onlineStatus: 0});
     return result;
   }
   offlineStaff(staffId) {
-    this.where({staffId: staffId, onlineStatus: 1})
-      .update({
-        onlineStatus: 0
-      });
+    this.thenUpdate({
+      onlineStatus: 0
+    }, {staffId: staffId, onlineStatus: 1});
     return 0;
+  }
+  updateRole(staffId, role) {
+    return this.thenUpdate({role: role}, {staffId: staffId});
+  }
+  getStaffs(companyId) {
+    return this.where({
+      companyId: companyId
+    }).field('staffId,name,nickname,email,tel,isInit,onlineStatus,role').select();
+  }
+  getSingleStaff(staffId) {
+    return this.where({
+      staffId: staffId
+    }).field('staffId,companyId,nickname,name,email,tel,picUrl,role').find();
+  }
+  updateStaff(staffId, nickname, email, tel, password, picUrl, role) {
+    const staff = this.where({staffId: staffId}).find();
+    if (nickname === null || nickname === undefined) {
+      nickname = staff.nickname;
+    }
+    if (email === null || email === undefined) {
+      email = staff.email;
+    }
+    if (tel === null || tel === undefined) {
+      tel = staff.tel;
+    }
+    if (password === null || password === undefined) {
+      password = staff.password;
+    }
+    if (picUrl === null || picUrl === undefined) {
+      picUrl = staff.picUrl;
+    }
+    if (role === null || role === undefined) {
+      role = staff.role;
+    }
+    return this.thenUpdate({
+      nickname: nickname,
+      email: email,
+      tel: tel,
+      password: password,
+      picUrl: picUrl,
+      role: role
+    }, {staffId: staffId});
+  }
+  initStaff(staffId, nickname, name, email, tel, password, picUrl, role) {
+    return this.thenUpdate({
+      nickname: nickname,
+      name: name,
+      email: email,
+      tel: tel,
+      password: password,
+      picUrl: picUrl,
+      role: role,
+      isInit: 1
+    }, {staffId: staffId});
   }
 };
