@@ -1,4 +1,4 @@
-const Base = require('../../restIndex.js');
+const Base = require('../../rest.js');
 module.exports = class extends Base {
   constructor(...args) {
     super(...args);
@@ -21,6 +21,10 @@ module.exports = class extends Base {
   async putAction() {
     const staffId = this.post('staffId');
     const role = this.post('role');
-    await this.modelInstance.updateRole(staffId, role);
+    return this.success(await this.modelInstance.updateRole(staffId, role));
+  }
+  async deleteAction() {
+    const stuff = this.post('stuff');
+    return this.success(await this.modelInstance.deleteStaff(stuff));
   }
 };

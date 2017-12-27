@@ -5,10 +5,11 @@ module.exports = class extends think.Model {
     }).find();
   }
   updateCompany(companyId, name, picUrl, robotAvatar) {
-    return this.thenUpdate({
+    this.thenUpdate({
       name: name,
       picUrl: picUrl,
       robotAvatar: robotAvatar
     }, {id: companyId});
+    return this.where({id: companyId}).find();
   }
 };

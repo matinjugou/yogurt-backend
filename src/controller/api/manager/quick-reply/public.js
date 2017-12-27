@@ -48,5 +48,9 @@ module.exports = class extends Base {
     for (const pair of pairs) {
       await this.modelInstance.deleteItem(companyId, pair.phrase, pair.sentence);
     }
+    return this.success({
+      code: 0,
+      msg: 'deleted'
+    });
   }
 };

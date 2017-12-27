@@ -35,6 +35,13 @@ module.exports = class extends think.Model {
         queueCount: ['exp', 'queueCount+1']
       });
   }
+  removeUser(staffId) {
+    return this.where({staffId: staffId})
+      .update({
+        servingCount: ['exp', 'servingCount-1'],
+        queueCount: ['exp', 'queueCount-1']
+      });
+  }
   awakeStaff(staffId) {
     this.thenUpdate({
       onlineStatus: 1
@@ -53,19 +60,19 @@ module.exports = class extends think.Model {
     }, {staffId: staffId, onlineStatus: 0});
     return result;
   }
-  offlineStaff(staffId) {
-    this.thenUpdate({
+  async offlineStaff(staffId) {
+    return this.thenUpdate({
       onlineStatus: 0
     }, {staffId: staffId, onlineStatus: 1});
-    return 0;
   }
   updateRole(staffId, role) {
     return this.thenUpdate({role: role}, {staffId: staffId});
   }
   getStaffs(companyId) {
     return this.where({
-      companyId: companyId
-    }).field('staffId,name,nickname,email,tel,isInit,onlineStatus,role').select();
+      companyId: companyId,
+      onlineStatus: ['<', 4]
+    }).field('staffId,name,nickname,email,tel,isInit,onlineStatus,role,queueCount').select();
   }
   getSingleStaff(staffId) {
     return this.where({
@@ -112,5 +119,12 @@ module.exports = class extends think.Model {
       role: role,
       isInit: 1
     }, {staffId: staffId});
+  }
+  deleteStaff(stuff) {
+    for (const staffId of stuff) {
+      this.thenUpdate({
+        onlineStatus: 4
+      }, {staffId: staffId});
+    }
   }
 };

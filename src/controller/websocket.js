@@ -35,6 +35,29 @@ module.exports = class extends think.Controller {
     this.emit('regResult', {code: 0, msg:'reg success'});
   }
 
+  async userLogOutAction() {
+    const self = this;
+    let data = this.wsData;
+    let userId = data.userId;
+    let token = data.token;
+    jwt.verify(token, this.config('secretKey'), async function(err, decode) {
+      if (err) {
+      } else {
+        if (decode.userId === userId) {
+          let stuff = await self.mongo('sessionPair', 'mongo').getStaff(userId);
+          console.log(stuff);
+          for (let staff of stuff) {
+            self.model('staff').removeUser(staff.staffId);
+            self.websocket.to('staffRoom ' + staff.staffId).emit('updateQueue', {
+              msg: 'Please update your queue'
+            });
+          }
+          self.mongo('sessionPair', 'mongo').offlineSession(userId);
+        }
+      }
+    });
+  }
+
   async userMsgAction() {
     let data = this.wsData;
     console.log("data=",data);
@@ -115,6 +138,20 @@ module.exports = class extends think.Controller {
     this.websocket.join('staffRoom ' + staffId);
     this.emit('regResult', {code: 0, msg:'reg success'});
     await this.model('staff').onlineStaff(staffId);
+  }
+
+  async staffLogOutAction() {
+    let data = this.wsData;
+    let staffId = data.staffId;
+    let token = data.token;
+    jwt.verify(token, this.config('secretKey'), function(err, decode) {
+      if (err) {
+      } else {
+        if (decode.staffId === staffId) {
+          self.model('staff').offlineStaff(staffId);
+        }
+      }
+    });
   }
 
   async staffMsgAction() {

@@ -143,6 +143,8 @@ exports.websocket = {
       staffReg: '/websocket/staffReg',
       userMsg: '/websocket/userMsg',
       staffMsg: '/websocket/staffMsg',
+      staffLogOut: '/websocket/staffLogOut',
+      userLogOut: '/websocket/userLogOut',
       transUser: '/websocket/transUser',
       transAccept: '/websocket/transAccept',
       transReject: '/websocket/transReject',

@@ -24,6 +24,6 @@ module.exports = class extends Base {
     if (robotAvatar === null || robotAvatar === undefined) {
       robotAvatar = company.robotAvatar;
     }
-    await this.modelInstance.updateCompany(companyId, name, picUrl, robotAvatar);
+    return this.success(await this.modelInstance.updateCompany(companyId, name, picUrl, robotAvatar));
   }
 };
