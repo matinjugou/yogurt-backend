@@ -55,15 +55,14 @@ module.exports = class extends think.Model {
     return 0;
   }
   async onlineStaff(staffId) {
-    const result = await this.thenUpdate({
+    return this.thenUpdate({
       onlineStatus: 1
-    }, {staffId: staffId, onlineStatus: 0});
-    return result;
+    }, {staffId: staffId});
   }
   async offlineStaff(staffId) {
     return this.thenUpdate({
       onlineStatus: 0
-    }, {staffId: staffId, onlineStatus: 1});
+    }, {staffId: staffId});
   }
   updateRole(staffId, role) {
     return this.thenUpdate({role: role}, {staffId: staffId});

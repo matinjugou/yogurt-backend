@@ -132,6 +132,7 @@ module.exports = class extends think.Controller {
   async staffRegAction() {
     let data = this.wsData;
     let staffId = data.staffId;
+    console.log("staffId=", staffId);
     this.websocket.token = data.token;
     this.websocket.type = 'staff';
     this.websocket.staffId = data.staffId;
@@ -144,9 +145,13 @@ module.exports = class extends think.Controller {
     let data = this.wsData;
     let staffId = data.staffId;
     let token = data.token;
+    const self = this;
     jwt.verify(token, this.config('secretKey'), function(err, decode) {
       if (err) {
+        console.log('token=', token, 'staffId', staffId);
+        console.log('error');
       } else {
+        console.log(decode.staffId === staffId);
         if (decode.staffId === staffId) {
           self.model('staff').offlineStaff(staffId);
         }
