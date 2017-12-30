@@ -29,11 +29,10 @@ module.exports = class extends think.Model {
     return ans;
   }
   insertUser(staffId) {
-    return this.where({staffId: staffId})
-      .update({
-        servingCount: ['exp', 'servingCount+1'],
-        queueCount: ['exp', 'queueCount+1']
-      });
+    return this.thenUpdate({
+      servingCount: ['exp', 'servingCount+1'],
+      queueCount: ['exp', 'queueCount+1']
+    }, {staffId: staffId});
   }
   awakeStaff(staffId) {
     this.thenUpdate({
