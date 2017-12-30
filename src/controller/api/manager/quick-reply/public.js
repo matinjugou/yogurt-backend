@@ -49,7 +49,7 @@ module.exports = class extends Base {
       pairs = [pairs];
     }
     for (let pair of pairs) {
-      pair = eval('(' + pair + ')');
+      pair = JSON.parse(pair);
       await this.modelInstance.deleteItem(companyId, pair['phrase'], pair['sentence']);
     }
     return this.success({
