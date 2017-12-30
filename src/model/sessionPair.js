@@ -30,6 +30,16 @@ module.exports = class extends think.Mongo {
     }
   }
 
+  async getStaff(userId) {
+    return this.where({userId: userId, status: 1}).field('staffId').select();
+  }
+
+  offlineSession(userId) {
+    return this.thenUpdate({
+      status: 0
+    }, {userId: userId, status: 1});
+  }
+
   async insertMessage(staffId, userId, direction, content) {
     const msgCount = await this.where({staffId: staffId, userId: userId})
       .field('messagesCount').find();
