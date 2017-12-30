@@ -39,11 +39,11 @@ module.exports = class extends think.Mongo {
     }
   }
 
-  deleteItem(companyId, phrase, sentence) {
+  async deleteItem(companyId, phrase, sentence) {
     const pair = {};
     pair.phrase = phrase;
     pair.sentence = sentence;
-    return this.where({companyId: companyId}).update({
+    return this.where({companyId: Number(companyId)}).update({
       '$pull': { pairs: pair }
     });
   }

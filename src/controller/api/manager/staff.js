@@ -24,7 +24,10 @@ module.exports = class extends Base {
     return this.success(await this.modelInstance.updateRole(staffId, role));
   }
   async deleteAction() {
-    const stuff = this.post('stuff');
+    let stuff = this.ctx.query['stuff[]'];
+    if (!Array.isArray(stuff)) {
+      stuff = [stuff];
+    }
     return this.success(await this.modelInstance.deleteStaff(stuff));
   }
 };

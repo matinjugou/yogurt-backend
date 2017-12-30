@@ -43,10 +43,14 @@ module.exports = class extends Base {
   }
 
   async deleteAction() {
-    const pairs = this.post('pairs');
-    const companyId = this.post('companyId');
-    for (const pair of pairs) {
-      await this.modelInstance.deleteItem(companyId, pair.phrase, pair.sentence);
+    let pairs = this.ctx.query['pairs[]'];
+    const companyId = this.ctx.query['companyId'];
+    if (!Array.isArray(pairs)) {
+      pairs = [pairs];
+    }
+    for (let pair of pairs) {
+      pair = eval('(' + pair + ')');
+      await this.modelInstance.deleteItem(companyId, pair['phrase'], pair['sentence']);
     }
     return this.success({
       code: 0,

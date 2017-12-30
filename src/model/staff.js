@@ -121,9 +121,7 @@ module.exports = class extends think.Model {
   }
   deleteStaff(stuff) {
     for (const staffId of stuff) {
-      this.thenUpdate({
-        onlineStatus: 4
-      }, {staffId: staffId});
+      this.where({staffId: staffId}).delete();
     }
   }
 };

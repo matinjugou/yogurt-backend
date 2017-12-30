@@ -1,6 +1,6 @@
 const path = require('path');
 const isDev = think.env === 'development';
-const cors = require('@koa/cors');
+const kcors = require('kcors');
 
 module.exports = [
   {
@@ -9,10 +9,6 @@ module.exports = [
       logRequest: isDev,
       sendResponseTime: isDev
     }
-  },
-  {
-    handle: cors,
-    options: {}
   },
   {
     handle: 'resource',
@@ -42,11 +38,11 @@ module.exports = [
     enable: false
   },
   {
-    handle: 'koa2-file-server',
+    handle: kcors,
     options: {
-      root: path.join(think.ROOT_PATH, 'media'),
-      webp: true,
-      identifier: '??'
+      origin: '*',
+      credentials: true,
+      allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
     }
   },
   'logic',
