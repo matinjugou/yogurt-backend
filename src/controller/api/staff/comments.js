@@ -17,6 +17,17 @@ module.exports = class extends Base {
     const commentId = this.post('commentId');
     const remark = this.post('remark');
 
-    await this.modelInstance.updateRemark(commentId, remark);
+    const result = await this.modelInstance.updateRemark(commentId, remark);
+    if (result !== null && result !== undefined) {
+      return this.success({
+        code: 0,
+        msg: 'Reply succeeded'
+      });
+    } else {
+      return this.success({
+        code: 1,
+        msg: 'Reply failed'
+      });
+    }
   }
 };

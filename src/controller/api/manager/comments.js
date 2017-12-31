@@ -18,6 +18,17 @@ module.exports = class extends Base {
   }
   async deleteAction() {
     const commentIds = this.post('commentIds');
-    await this.modelInstance.deleteComments(commentIds);
+    const result = await this.modelInstance.deleteComments(commentIds);
+    if (result !== null && result !== undefined) {
+      return this.success({
+        code: 0,
+        msg: 'Delete succeeded'
+      });
+    } else {
+      return this.success({
+        code: 1,
+        msg: 'Delete failed'
+      });
+    }
   }
 };

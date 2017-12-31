@@ -36,6 +36,17 @@ module.exports = class extends Base {
     if (picUrl === null || picUrl === undefined) {
       picUrl = manager.picUrl;
     }
-    await this.modelInstance.updateManager(managerId, name, nickname, password, email, tel, picUrl);
+    const result = await this.modelInstance.updateManager(managerId, name, nickname, password, email, tel, picUrl);
+    if (result !== null && result !== undefined) {
+      return this.success({
+        code: 0,
+        msg: 'Update succeeded'
+      });
+    } else {
+      return this.success({
+        code: 1,
+        msg: 'Update failed'
+      });
+    }
   }
 };
