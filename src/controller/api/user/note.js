@@ -10,6 +10,17 @@ module.exports = class extends Base {
     const email = this.post('email');
 
     const companyId = this.model('user').getCompany(userId);
-    await this.modelInstance.addNote(companyId, userId, content, email);
+    const result = await this.modelInstance.addNote(companyId, userId, content, email);
+    if (result !== null && result !== undefined) {
+      return this.success({
+        code: 0,
+        msg: 'Leave note succeeded'
+      });
+    } else {
+      return this.success({
+        code: 1,
+        msg: 'Leave note failed'
+      });
+    }
   }
 };

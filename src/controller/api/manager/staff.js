@@ -21,6 +21,17 @@ module.exports = class extends Base {
   async putAction() {
     const staffId = this.post('staffId');
     const role = this.post('role');
-    await this.modelInstance.updateRole(staffId, role);
+    const result = await this.modelInstance.updateRole(staffId, role);
+    if (result !== null && result !== undefined) {
+      return this.success({
+        code: 0,
+        msg: 'Update succeeded'
+      });
+    } else {
+      return this.success({
+        code: 1,
+        msg: 'Update failed'
+      });
+    }
   }
 };

@@ -9,11 +9,22 @@ module.exports = class extends Base {
     const staffId = this.post('staffId');
     const content = this.post('content');
     const star = this.post('star');
-    await this.modelInstance.addComment({
+    const result = await this.modelInstance.addComment({
       userId: userId,
       staffId: staffId,
       content: content,
       star: star
     });
+    if (result !== null && result !== undefined) {
+      return this.success({
+        code: 0,
+        msg: 'Add succeeded'
+      });
+    } else {
+      return this.success({
+        code: 1,
+        msg: 'Add failed'
+      });
+    }
   }
 };

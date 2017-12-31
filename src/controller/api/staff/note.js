@@ -34,6 +34,17 @@ module.exports = class extends Base {
       '<p>这是一封留言回复邮件，如果您不知情请忽略。</p>'
     });
 
-    await this.modelInstance.updateNote(noteId, staffId, reply);
+    const result = await this.modelInstance.updateNote(noteId, staffId, reply);
+    if (result !== null && result !== undefined) {
+      return this.success({
+        code: 0,
+        msg: 'Reply succeeded'
+      });
+    } else {
+      return this.success({
+        code: 1,
+        msg: 'Reply failed'
+      });
+    }
   }
 };
