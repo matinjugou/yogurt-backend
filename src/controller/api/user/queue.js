@@ -7,18 +7,19 @@ module.exports = class extends Base {
 
   async getAction() {
     const userId = this.get('userId');
-    const tags = this.get('tags');
-    const tagList = tags.split(' ');
+    // const tags = this.get('tags');
+    // const tagList = tags.split(' ');
     const stuff = await this.model('staff').where({
       onlineStatus: 1,
       queueCount: ['<', this.config('maxClient')]
-    }).select();
+    }).order('queueCount ASC').select();
     if (stuff.length === 0) {
       return this.success({
         msg: 4,
         staff: 'No staff online.'
       });
     }
+    /*
     const staffArray = [];
     for (const staff of stuff) {
       for (const tag of tagList) {
@@ -28,7 +29,6 @@ module.exports = class extends Base {
         }
       }
     }
-    /*
     const strategies = this.config('strategies')
       .order('level DESC')
       .where({enable: true})
@@ -66,7 +66,6 @@ module.exports = class extends Base {
         }
       }
     }
-    */
     if (staffArray.length === 0) {
       return this.success({
         code: 3,
@@ -74,6 +73,8 @@ module.exports = class extends Base {
       });
     }
     const staff = staffArray[0];
+    */
+    const staff = stuff[0];
     let returnCode = await this.model('staff').insertUser(staff.staffId);
     if (returnCode === 0) {
       return this.success({

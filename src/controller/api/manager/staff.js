@@ -1,4 +1,4 @@
-const Base = require('../../restIndex.js');
+const Base = require('../../rest.js');
 module.exports = class extends Base {
   constructor(...args) {
     super(...args);
@@ -21,17 +21,13 @@ module.exports = class extends Base {
   async putAction() {
     const staffId = this.post('staffId');
     const role = this.post('role');
-    const result = await this.modelInstance.updateRole(staffId, role);
-    if (result !== null && result !== undefined) {
-      return this.success({
-        code: 0,
-        msg: 'Update succeeded'
-      });
-    } else {
-      return this.success({
-        code: 1,
-        msg: 'Update failed'
-      });
+    return this.success(await this.modelInstance.updateRole(staffId, role));
+  }
+  async deleteAction() {
+    let stuff = this.ctx.query['stuff[]'];
+    if (!Array.isArray(stuff)) {
+      stuff = [stuff];
     }
+    return this.success(await this.modelInstance.deleteStaff(stuff));
   }
 };

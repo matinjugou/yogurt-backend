@@ -24,17 +24,6 @@ module.exports = class extends Base {
     if (robotAvatar === null || robotAvatar === undefined) {
       robotAvatar = company.robotAvatar;
     }
-    const result = await this.modelInstance.updateCompany(companyId, name, picUrl, robotAvatar);
-    if (result !== null && result !== undefined) {
-      return this.success({
-        code: 0,
-        msg: 'Update succeeded'
-      });
-    } else {
-      return this.success({
-        code: 1,
-        msg: 'Update failed'
-      });
-    }
+    return this.success(await this.modelInstance.updateCompany(companyId, name, picUrl, robotAvatar));
   }
 };
