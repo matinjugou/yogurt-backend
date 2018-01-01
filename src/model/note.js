@@ -7,13 +7,17 @@ module.exports = class extends think.Model {
     return this.where({companyId: companyId, isReplied: 0}).select();
   }
 
-  getEmail(noteId) {
-    const note = this.where({id: Number(noteId)}).find();
+  getAllItems(companyId) {
+    return this.where({companyId: companyId}).select();
+  }
+
+  async getEmail(noteId) {
+    const note = await this.where({id: Number(noteId)}).find();
     return note.email;
   }
 
-  getContent(noteId) {
-    const note = this.where({id: Number(noteId)}).find();
+  async getContent(noteId) {
+    const note = await this.where({id: Number(noteId)}).find();
     return note.content;
   }
 

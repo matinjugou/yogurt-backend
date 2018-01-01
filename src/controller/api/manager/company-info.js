@@ -14,6 +14,8 @@ module.exports = class extends Base {
     let name = this.post('name');
     let picUrl = this.post('picUrl');
     let robotAvatar = this.post('robotAvatar');
+    let corpusFile = this.post('corpusFile');
+    let robotWelcome = this.post('robotWelcome');
     const company = await this.modelInstance.getCompany(companyId);
     if (name === null || name === undefined) {
       name = company.name;
@@ -24,6 +26,12 @@ module.exports = class extends Base {
     if (robotAvatar === null || robotAvatar === undefined) {
       robotAvatar = company.robotAvatar;
     }
-    return this.success(await this.modelInstance.updateCompany(companyId, name, picUrl, robotAvatar));
+    if (corpusFile === null || corpusFile === undefined) {
+      corpusFile = company.corpusFile;
+    }
+    if (robotWelcome === null || robotWelcome === undefined) {
+      robotWelcome = company.robotWelcome;
+    }
+    return this.success(await this.modelInstance.updateCompany(companyId, name, picUrl, robotAvatar, corpusFile, robotWelcome));
   }
 };

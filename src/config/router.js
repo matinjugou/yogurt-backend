@@ -2,6 +2,7 @@ module.exports = [
   ['/api/user/comments', 'api/user/comments', 'rest'],
   ['/api/user/login', 'api/user/login', 'rest'],
   ['/api/user/queue', 'api/user/queue', 'rest'],
+  ['/api/user/note', 'api/user/note', 'rest'],
   ['/api/staff/comments', 'api/staff/comments', 'rest'],
   ['/api/manager/comments', 'api/staff/comments', 'rest'],
   ['/api/staff/login', 'api/staff/login', 'rest'],
@@ -11,6 +12,7 @@ module.exports = [
   ['/api/staff/quick-reply/private', 'api/staff/quick-reply/private', 'rest'],
   ['/api/staff/account-info', 'api/staff/account-info', 'rest'],
   ['/api/staff/user-info', 'api/staff/user-info', 'rest'],
+  ['/api/staff/note', 'api/staff/note', 'rest'],
   ['/api/staff/queue', 'api/staff/queue', 'rest'],
   ['/api/manager/login', 'api/manager/login', 'rest'],
   ['/api/manager/account-info', 'api/manager/account-info', 'rest'],
@@ -18,5 +20,6 @@ module.exports = [
   ['/api/manager/user/list', 'api/manager/user/list', 'rest'],
   ['/api/manager/staff/list', 'api/manager/staff/list', 'rest'],
   ['/api/manager/staff', 'api/manager/staff', 'rest'],
+  ['/api/manager/note', 'api/manager/note', 'rest'],
   ['/api/manager/quick-reply/public', 'api/manager/quick-reply/public', 'rest']
 ];

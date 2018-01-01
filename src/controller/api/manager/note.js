@@ -7,22 +7,16 @@ module.exports = class extends Base {
 
   async getAction() {
     const companyId = this.get('companyId');
-    const isReplied = this.get('isReplied');
-    if (Number(isReplied) === 0) {
-      const notes = await this.modelInstance.getItems(companyId);
-      return this.success(notes);
-    } else {
-      const notes = await this.modelInstance.getRepliedItems(companyId);
-      return this.success(notes);
-    }
+    const notes = await this.modelInstance.getAllItems(companyId);
+    return this.success(notes);
   }
 
   async postAction() {
     const noteId = this.post('noteId');
     const staffId = this.post('staffId');
     const reply = this.post('reply');
-    const email = this.modelInstance.getEmail(noteId);
-    const content = this.modelInstance.getContent(noteId);
+    const email = await this.modelInstance.getEmail(noteId);
+    const content = await this.modelInstance.getContent(noteId);
     this.sendEmail({
       service: '163',
       auth: {
