@@ -7,7 +7,7 @@ module.exports = class extends Base {
   async getAction() {
     const staffId = this.get('staffId');
     const staff = await this.modelInstance.getSingleStaff(staffId);
-    return this.success(staff);
+    return this.success({staff: staff});
   }
   async putAction() {
     const staffId = this.post('staffId');
@@ -18,6 +18,10 @@ module.exports = class extends Base {
     const picUrl = this.post('picUrl');
     const role = this.post('role');
     await this.modelInstance.updateStaff(staffId, nickname, email, tel, password, picUrl, role);
+    return this.success({
+      code: 0,
+      msg: 'Modify success'
+    });
   }
   async postAction() {
     const staffId = this.post('staffId');
