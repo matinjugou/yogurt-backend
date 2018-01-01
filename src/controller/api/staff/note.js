@@ -15,8 +15,8 @@ module.exports = class extends Base {
     const noteId = this.post('noteId');
     const staffId = this.post('staffId');
     const reply = this.post('reply');
-    const email = this.modelInstance.getEmail(noteId);
-    const content = this.modelInstance.getContent(noteId);
+    const email = await this.modelInstance.getEmail(noteId);
+    const content = await this.modelInstance.getContent(noteId);
     this.sendEmail({
       service: '163',
       auth: {
@@ -32,6 +32,7 @@ module.exports = class extends Base {
       '<p>已经收到回复：</p>' +
       '<p>' + reply + '</p>' +
       '<p>这是一封留言回复邮件，如果您不知情请忽略。</p>'
+    }).then(info => {
     });
 
     const result = await this.modelInstance.updateNote(noteId, staffId, reply);

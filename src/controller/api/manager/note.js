@@ -7,14 +7,8 @@ module.exports = class extends Base {
 
   async getAction() {
     const companyId = this.get('companyId');
-    const isReplied = this.get('isReplied');
-    if (Number(isReplied) === 0) {
-      const notes = await this.modelInstance.getItems(companyId);
-      return this.success(notes);
-    } else {
-      const notes = await this.modelInstance.getRepliedItems(companyId);
-      return this.success(notes);
-    }
+    const notes = await this.modelInstance.getAllItems(companyId);
+    return this.success(notes);
   }
 
   async postAction() {
