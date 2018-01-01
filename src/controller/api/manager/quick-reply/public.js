@@ -14,7 +14,18 @@ module.exports = class extends Base {
     const companyId = this.post('companyId');
     const phrase = this.post('phrase');
     const sentence = this.post('sentence');
-    await this.modelInstance.insertItem(companyId, phrase, sentence);
+    const result = await this.modelInstance.insertItem(companyId, phrase, sentence);
+    if (result !== null && result !== undefined) {
+      return this.success({
+        code: 0,
+        msg: 'Insert succeeded'
+      });
+    } else {
+      return this.success({
+        code: 1,
+        msg: 'Insert failed'
+      });
+    }
   }
 
   async putAction() {

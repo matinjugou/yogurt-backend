@@ -20,7 +20,7 @@ module.exports = class extends Base {
     await this.modelInstance.updateStaff(staffId, nickname, email, tel, password, picUrl, role);
     return this.success({
       code: 0,
-      msg: 'Modify success'
+      msg: 'Modify succeeded'
     });
   }
   async postAction() {
@@ -36,7 +36,7 @@ module.exports = class extends Base {
     if (result > 0) {
       return this.success({
         code: 0,
-        msg: 'Init succeed'
+        msg: 'Init succeeded'
       });
     } else {
       return this.success({
