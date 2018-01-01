@@ -2,6 +2,7 @@ module.exports = [
   ['/api/user/comments', 'api/user/comments', 'rest'],
   ['/api/user/login', 'api/user/login', 'rest'],
   ['/api/user/queue', 'api/user/queue', 'rest'],
+  ['/api/user/note', 'api/user/note', 'rest'],
   ['/api/staff/comments', 'api/staff/comments', 'rest'],
   ['/api/manager/comments', 'api/staff/comments', 'rest'],
   ['/api/staff/login', 'api/staff/login', 'rest'],
