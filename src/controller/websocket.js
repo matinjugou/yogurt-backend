@@ -173,6 +173,22 @@ module.exports = class extends think.Controller {
     let mimeType = data.mimeType;
     let msg = data.msg;
     const myDate = new Date();
+    /*
+    if (type === 'text') {
+      const privatePairs = this.mongo('quickReplyPrivate', 'mongo').getItem(staffId);
+      const companyId = Number(staffId.split()[0]);
+      const publicPairs = this.mongo('quickReplyPublic', 'mongo').getItem(companyId);
+      // const matches = msg.match(/#\S+\s/g);
+      for (const pair of privatePairs) {
+        let reg = new RegExp("#" + pair.phrase + " ", "g");
+        msg = msg.replace(reg, pair.sentence);
+      }
+      for (const pair of publicPairs) {
+        let reg = new RegExp("#" + pair.phrase + " ", "g");
+        msg = msg.replace(reg, pair.sentence);
+      }
+    }
+    */
     this.websocket.to('userRoom ' + userId).emit('staffMsg',
       {
         staffId: staffId,

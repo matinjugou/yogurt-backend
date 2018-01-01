@@ -9,7 +9,8 @@ module.exports = class extends Base {
     const content = this.post('content');
     const email = this.post('email');
 
-    const companyId = this.model('user').getCompany(userId);
+    // const companyId = this.model('user').getCompany(userId);
+    const companyId = Number(userId.split('_')[0]);
     const result = await this.modelInstance.addNote(companyId, userId, content, email);
     if (result !== null && result !== undefined) {
       return this.success({
