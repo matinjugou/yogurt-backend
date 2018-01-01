@@ -15,8 +15,8 @@ module.exports = class extends Base {
     const noteId = this.post('noteId');
     const staffId = this.post('staffId');
     const reply = this.post('reply');
-    const email = this.modelInstance.getEmail(noteId);
-    const content = this.modelInstance.getContent(noteId);
+    const email = await this.modelInstance.getEmail(noteId);
+    const content = await this.modelInstance.getContent(noteId);
     this.sendEmail({
       service: '163',
       auth: {
