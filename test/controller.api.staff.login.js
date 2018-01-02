@@ -6,7 +6,7 @@ require(path.join(process.cwd(), 'testing.js'));
 test('eee', t => {
   console.error("think=", think.app);
   console.error("app=", think.app);
-  const res = yield request('http://127.0.0.1:2333').post('/api/staff/login')
+  request('http://127.0.0.1:2333').post('/api/staff/login')
     .set('Content-Type', 'application/json')
     .send({
       staffId: '1_s1',
@@ -14,8 +14,10 @@ test('eee', t => {
     })
     .expect('Content-Type', /json/)
     .expect(200)
-    .end();
-  console.err("res=", res);
+    .end(function(err, res) {
+      if (err) throw err;
+      console.error("res=", res);
+    });
   const a = think.model('staff');
   console.error(a);
   t.pass();
