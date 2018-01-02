@@ -1,7 +1,7 @@
 const test = require('ava');
 const request = require('supertest');
 const path = require('path');
-require(path.join(process.cwd(), 'testing.js'));
+require(path.join(process.cwd(), 'production.js'));
 
 test('eee', t => {
   console.error("server=", think.app.server);
