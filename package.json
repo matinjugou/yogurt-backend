@@ -7,7 +7,7 @@
     "compile": "babel --no-babelrc src/ --presets think-node --out-dir app/",
     "lint": "eslint src/",
     "lint-fix": "eslint --fix src/",
-    "test": "THINK_UNIT_TEST=0 nyc ava test/ && nyc report --reporter=html"
+    "test": "node testing.js"
   },
   "dependencies": {
     "koa2-file-server": "0.0.3",

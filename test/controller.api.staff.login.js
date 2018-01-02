@@ -2,9 +2,10 @@ const test = require('ava');
 const request = require('supertest');
 const path = require('path');
 require(path.join(process.cwd(), 'testing.js'));
-
+const test = require('ava');
+const request = require('supertest');
 test('eee', t => {
-  console.error("think=", think.app);
+  console.error("think=", think);
   console.error("app=", think.app);
   request('http://127.0.0.1:2333').post('/api/staff/login')
     .set('Content-Type', 'application/json')

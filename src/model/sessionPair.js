@@ -27,6 +27,8 @@ module.exports = class extends think.Mongo {
         lastActivate: ['exp', 'CURRENT_TIMESTAMP()'],
         status: 1,
         messageCount: 0,
+        ask: 0,
+        ans: 0,
         messages: []
       });
     }
