@@ -6,14 +6,16 @@ require(path.join(process.cwd(), 'testing.js'));
 test('eee', t => {
   console.error("think=", think.app);
   console.error("app=", think.app);
-  request('http://127.0.0.1:2333').post('/api/staff/login')
+  const res = yield request('http://127.0.0.1:2333').post('/api/staff/login')
     .set('Content-Type', 'application/json')
     .send({
       staffId: '1_s1',
       password: '1_s2'
     })
     .expect('Content-Type', /json/)
-    .expect(200);
+    .expect(200)
+    .end();
+  console.err("res=", res);
   const a = think.model('staff');
   console.error(a);
   t.pass();
