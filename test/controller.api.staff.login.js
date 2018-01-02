@@ -1,11 +1,11 @@
 const test = require('ava');
-const supertest = require('supertest');
+const request = require('supertest');
 const path = require('path');
-require(path.join(process.cwd(), 'testing.js'));
-const api = supertest.agent(think.app.server);
+;
+const app = require(path.join(process.cwd(), 'testing.js'));
 
 test('eee', t => {
-  api.post('/api/staff/login')
+  request(app).post('/api/staff/login')
     .set('Content-Type', 'application/json')
     .send({
       staffId: '1_s1',
