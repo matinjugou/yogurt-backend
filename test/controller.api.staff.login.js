@@ -1,13 +1,23 @@
 const test = require('ava');
 const request = require('supertest');
 const path = require('path');
-require(path.join(process.cwd(), 'production.js'));
+// require(path.join(process.cwd(), 'production.js'));
+
+const Application = require('thinkjs');
+
+const instance = new Application({
+  ROOT_PATH: __dirname,
+  proxy: true, // use proxy
+  env: 'testing'
+});
+
+instance.run();
 
 test('eee', t => {
   console.error("think=", think);
   console.error("app=", think.app);
-  /*
-  request(think.app.server).post('/api/staff/login')
+
+  request(instance).post('/api/staff/login')
     .set('Content-Type', 'application/json')
     .send({
       staffId: '1_s1',
@@ -15,10 +25,10 @@ test('eee', t => {
     })
     .expect('Content-Type', /json/)
     .expect(200);
-  */
-  const a = think.model('staff');
 
-  console.error(a);
+  //const a = think.model('staff');
+
+  //console.error(a);
   t.pass();
 });
 /**
