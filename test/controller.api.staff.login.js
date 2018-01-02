@@ -1,27 +1,33 @@
 const test = require('ava');
 const request = require('supertest');
 const path = require('path');
-const instance = require(path.join(process.cwd(), 'production.js'));
+require(path.join(process.cwd(), 'production.js'));
 
-test('eee', t => {
-  console.error("think=", think);
-  console.error("app=", think.app);
-  console.error("ins=", instance);
-  /*
-  request(think.app.server).post('/api/staff/login')
-    .set('Content-Type', 'application/json')
-    .send({
-      staffId: '1_s1',
-      password: '1_s2'
-    })
-    .expect('Content-Type', /json/)
-    .expect(200);
-  */
-  const a = think.model('staff');
+while (true) {
+  if (think.app.server === undefined) {
+    continue;
+  }
+  test('eee', t => {
+    console.error("think=", think);
+    console.error("app=", think.app);
+    console.error("ins=", instance);
 
-  console.error(a);
-  t.pass();
-});
+    request(think.app.server).post('/api/staff/login')
+      .set('Content-Type', 'application/json')
+      .send({
+        staffId: '1_s1',
+        password: '1_s2'
+      })
+      .expect('Content-Type', /json/)
+      .expect(200);
+
+    const a = think.model('staff');
+
+    console.error(a);
+    t.pass();
+  });
+  break;
+}
 /**
 const test = require('ava');
 const request = require('supertest');
