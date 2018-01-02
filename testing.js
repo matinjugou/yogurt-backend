@@ -7,5 +7,3 @@ const instance = new Application({
 });
 
 instance.run();
-
-module.exports = instance;
