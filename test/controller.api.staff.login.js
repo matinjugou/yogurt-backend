@@ -6,7 +6,6 @@ require(path.join(process.cwd(), 'production.js'));
 test('eee', t => {
   console.error("think=", think);
   console.error("app=", think.app);
-  console.error("ins=", instance);
   /*
   request(think.app.server).post('/api/staff/login')
     .set('Content-Type', 'application/json')
