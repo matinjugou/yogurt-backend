@@ -1,7 +1,8 @@
 const test = require('ava');
-const request = require('supertest');
+const supertest = require('supertest');
 const path = require('path');
-const api = request.agent(require(path.join(process.cwd(), 'testing.js')));
+require(path.join(process.cwd(), 'testing.js'));
+const api = supertest(think.app.server);
 
 test('eee', t => {
   api.post('/api/staff/login')
