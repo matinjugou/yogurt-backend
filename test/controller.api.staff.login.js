@@ -16,6 +16,7 @@ test('eee', t => {
     .expect(200);
   */
   const a = think.model('staff');
+  console.error(a);
   t.pass();
 });
 /**
