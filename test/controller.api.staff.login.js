@@ -1,10 +1,18 @@
 const test = require('ava');
 const request = require('supertest');
 const path = require('path');
-require(path.join(process.cwd(), 'testing.js'));
+const api = request.agent(require(path.join(process.cwd(), 'testing.js')));
 
 test('eee', t => {
   const a = think.model('staff');
+  api.post('/api/staff/login')
+    .set('Content-Type', 'application/json')
+    .send({
+      staffId: '1_s1',
+      password: '1_s2'
+    })
+    .expect('Content-Type', /json/)
+    .expect(200);
   t.pass();
 });
 /**
