@@ -1,15 +1,7 @@
 const test = require('ava');
 const request = require('supertest');
 const path = require('path');
-const Application = require('thinkjs');
-const instance = new Application({
-  ROOT_PATH: __dirname,
-  proxy: true, // use proxy
-  env: 'production'
-});
-
-instance.run();
-
+const instance = require(path.join(process.cwd(), 'testing.js'));
 
 test('eee', t => {
   console.error("think=", think);
