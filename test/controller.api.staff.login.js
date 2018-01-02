@@ -6,7 +6,7 @@ require(path.join(process.cwd(), 'testing.js'));
 test('eee', t => {
   console.error("think=", think.app);
   console.error("app=", think.app);
-  request(think.app.server).post('/api/staff/login')
+  request('http://127.0.0.1:2333').post('/api/staff/login')
     .set('Content-Type', 'application/json')
     .send({
       staffId: '1_s1',
