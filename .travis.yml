@@ -6,6 +6,31 @@ services:
   - mongodb
   - redis-server
   - mysql
+before_install:
+  - mysql -e 'CREATE DATABASE yogurt_test CHARACTER SET utf8 COLLATE utf8_unicode_ci;'
+  - mysql -e 'CREATE TABLE staff
+             (
+               staffId      VARCHAR(45)  NOT NULL,
+               companyId    INT UNSIGNED NULL,
+               isInit       TINYINT      NULL,
+               name         VARCHAR(45)  NULL,
+               email        VARCHAR(45)  NULL,
+               tel          VARCHAR(45)  NULL,
+               nickname     VARCHAR(45)  NULL,
+               password     VARCHAR(45)  NULL,
+               picUrl       VARCHAR(200) NULL,
+               role         VARCHAR(45)  NULL,
+               onlineStatus TINYINT      NULL,
+               servingCount INT UNSIGNED NULL,
+               waitingCount INT UNSIGNED NULL,
+               queueCount   INT UNSIGNED NULL,
+               id           INT UNSIGNED AUTO_INCREMENT
+                 PRIMARY KEY,
+               AnsAsk       VARCHAR(200) NULL,
+               CONSTRAINT id_UNIQUE
+               UNIQUE (staffId)
+             )
+               ENGINE = InnoDB;'
 cache:
   directories:
     - node_modules

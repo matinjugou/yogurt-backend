@@ -1,3 +1,12 @@
+const test = require('ava');
+const request = require('supertest');
+const path = require('path');
+require(path.join(process.cwd(), 'testing.js'));
+
+test('eee', t => {
+  const a = think.model('staff');
+  t.pass();
+});
 /**
 const test = require('ava');
 const request = require('supertest');
