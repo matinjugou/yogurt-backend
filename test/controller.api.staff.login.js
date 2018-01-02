@@ -4,7 +4,6 @@ const path = require('path');
 const api = request.agent(require(path.join(process.cwd(), 'testing.js')));
 
 test('eee', t => {
-  const a = think.model('staff');
   api.post('/api/staff/login')
     .set('Content-Type', 'application/json')
     .send({
