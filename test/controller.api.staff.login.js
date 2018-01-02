@@ -4,6 +4,8 @@ const path = require('path');
 require(path.join(process.cwd(), 'testing.js'));
 
 test('eee', t => {
+  console.error("server=", think.app.server);
+  /*
   request(think.app.server).post('/api/staff/login')
     .set('Content-Type', 'application/json')
     .send({
@@ -12,6 +14,8 @@ test('eee', t => {
     })
     .expect('Content-Type', /json/)
     .expect(200);
+  */
+  const a = think.model('staff');
   t.pass();
 });
 /**
