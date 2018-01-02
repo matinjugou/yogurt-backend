@@ -3,6 +3,12 @@ const request = require('supertest');
 const path = require('path');
 const instance = require(path.join(process.cwd(), 'production.js'));
 
+function sleep(d){
+  for (const t = Date.now();Date.now() - t <= d;) {}
+}
+
+sleep(5000);
+
 test('eee', t => {
   console.error("think=", think);
   console.error("app=", think.app);
