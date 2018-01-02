@@ -8,4 +8,4 @@ const instance = new Application({
 
 instance.run();
 
-module.exports = instance;
+console.error("ins_origin=", instance);
