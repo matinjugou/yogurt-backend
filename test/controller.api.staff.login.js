@@ -1,7 +1,7 @@
 const test = require('ava');
 const request = require('supertest');
 const path = require('path');
-const instance = require(path.join(process.cwd(), 'development.js'));
+const instance = require(path.join(process.cwd(), 'production.js'));
 
 test('eee', t => {
   console.error("think=", think);
@@ -18,6 +18,7 @@ test('eee', t => {
     .expect(200);
   */
   const a = think.model('staff');
+
   console.error(a);
   t.pass();
 });
