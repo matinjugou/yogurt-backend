@@ -1,7 +1,7 @@
 const test = require('ava');
 const request = require('supertest');
 const path = require('path');
-const instance = require(path.join(process.cwd(), 'testing.js'));
+const instance = require(path.join(process.cwd(), 'development.js'));
 
 test('eee', t => {
   console.error("think=", think);
