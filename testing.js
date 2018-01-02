@@ -7,5 +7,5 @@ const instance = new Application({
 });
 
 instance.run();
-
 console.error("ins_origin=", instance);
+module.exports = instance;
