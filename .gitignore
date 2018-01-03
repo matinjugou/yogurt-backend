@@ -33,6 +33,7 @@ output.tar.gz
 runtime/
 app/
 assets/
+.nyc_output/
 
 config.development.js
 adapter.development.js

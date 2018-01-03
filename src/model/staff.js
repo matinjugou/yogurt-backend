@@ -70,7 +70,7 @@ module.exports = class extends think.Model {
     return this.where({
       companyId: companyId,
       onlineStatus: ['<', 4]
-    }).field('staffId,name,nickname,email,tel,isInit,onlineStatus,role,queueCount').select();
+    }).field('staffId,name,nickname,email,tel,isInit,onlineStatus,role,queueCount,AnsAsk').select();
   }
   getSingleStaff(staffId) {
     return this.where({

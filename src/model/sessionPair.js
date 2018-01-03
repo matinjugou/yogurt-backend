@@ -5,6 +5,8 @@ module.exports = class extends think.Mongo {
       staffId: Number,
       lastActivate: { type: Date },
       status: Number, // 1 on, 2 waiting, 0 down
+      ask: Number,
+      ans: Number,
       messagesCount: Number,
       messages: []
     };
@@ -24,9 +26,33 @@ module.exports = class extends think.Mongo {
         staffId: staffId,
         lastActivate: ['exp', 'CURRENT_TIMESTAMP()'],
         status: 1,
-        messageCount: 0,
+        messagesCount: 0,
+        ask: 0,
+        ans: 0,
         messages: []
       });
+    }
+  }
+
+  async getRecords(staffId, userId, index) {
+    const pair = await this.where({staffId: staffId, userId: userId}).find();
+    if (Object.keys(pair).length !== 0) {
+      const messages = pair.messages;
+      index = Number(index);
+      const ans = [];
+      if (index === -1) {
+        index = messages.length - 1;
+      }
+      for (let i = 0; i < 7; i++) {
+        if (index - i >= 0) {
+          ans.push(messages[index - i]);
+        } else {
+          break;
+        }
+      }
+      return ans;
+    } else {
+      return [];
     }
   }
 
@@ -49,10 +75,17 @@ module.exports = class extends think.Mongo {
     msgitem.userId = userId;
     msgitem.direction = direction;
     msgitem.content = content;
-    return this.where({staffId: staffId, userId: userId}).update({
-      '$push': { 'messages': msgitem },
-      '$inc': { 'messagesCount': 1 }
-    });
+    if (direction === 's_u') {
+      return this.where({staffId: staffId, userId: userId}).update({
+        '$push': {'messages': msgitem},
+        '$inc': {'messagesCount': 1, 'ans': 1}
+      });
+    } else {
+      return this.where({staffId: staffId, userId: userId}).update({
+        '$push': { 'messages': msgitem },
+        '$inc': { 'messagesCount': 1, 'ask': 1 }
+      });
+    }
   }
 
   async getQueue(staffId) {

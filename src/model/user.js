@@ -3,8 +3,8 @@ module.exports = class extends think.Model {
     return this.where({companyId: companyId}).select();
   }
 
-  getCompany(userId) {
-    const user = this.where({userId: userId}).find();
+  async getCompany(userId) {
+    const user = await this.where({userId: userId}).find();
     return user.companyId;
   }
 };

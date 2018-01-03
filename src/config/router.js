@@ -11,6 +11,7 @@ module.exports = [
   ['/api/staff/quick-reply/public', 'api/staff/quick-reply/public', 'rest'],
   ['/api/staff/quick-reply/private', 'api/staff/quick-reply/private', 'rest'],
   ['/api/staff/account-info', 'api/staff/account-info', 'rest'],
+  ['/api/staff/chat-record', 'api/staff/chat-record', 'rest'],
   ['/api/staff/user-info', 'api/staff/user-info', 'rest'],
   ['/api/staff/note', 'api/staff/note', 'rest'],
   ['/api/staff/queue', 'api/staff/queue', 'rest'],
@@ -22,5 +23,6 @@ module.exports = [
   ['/api/manager/staff', 'api/manager/staff', 'rest'],
   ['/api/manager/note', 'api/manager/note', 'rest'],
   ['/api/manager/quick-reply/public', 'api/manager/quick-reply/public', 'rest'],
+  ['/ansAsk/update', '/ansAsk/update'],
   ['/api/platform/company', 'api/platform/company', 'rest']
 ];
