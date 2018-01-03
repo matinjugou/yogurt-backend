@@ -39,4 +39,4 @@ before_script:
 script:
   - npm run lint
   - npm run compile
-  - npm run test 2333
+  - npm run test
