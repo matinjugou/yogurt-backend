@@ -47,7 +47,7 @@ exports.model = {
     database: 'yogurt_test',
     prefix: '',
     encoding: 'utf8',
-    socketPath: '~travis/.my.cnf',
+    host: '127.0.0.1',
     user: 'root',
     password: '',
     dateStrings: true
