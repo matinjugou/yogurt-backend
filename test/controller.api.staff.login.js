@@ -28,6 +28,7 @@ think.app.on('appReady', () => {
           const a = think.model('staff');
           console.error(a);
           assert.equal(1,2);
+          done();
         })
       })
     });
