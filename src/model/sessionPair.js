@@ -34,6 +34,27 @@ module.exports = class extends think.Mongo {
     }
   }
 
+  async getRecords(staffId, userId, index) {
+    const pair = await this.where({staffId: staffId, userId: userId}).find();
+    if (Object.keys(pair).length !== 0) {
+      const messages = pair.messages;
+      const ans = [];
+      if (index === -1) {
+        index = messages.length - 1;
+      }
+      for (let i = 0; i < 7; i++) {
+        if (index - i >= 0) {
+          ans.push(messages[index - i]);
+        } else {
+          break;
+        }
+      }
+      return ans;
+    } else {
+      return [];
+    }
+  }
+
   async getStaff(userId) {
     return this.where({userId: userId, status: 1}).field('staffId').select();
   }

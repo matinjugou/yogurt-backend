@@ -1,27 +1,38 @@
-const test = require('ava');
+const assert = require('assert');
 const request = require('supertest');
 const path = require('path');
 require(path.join(process.cwd(), 'testing.js'));
-const test = require('ava');
-const request = require('supertest');
-test('eee', t => {
+/*
+test('eee', async t => {
   console.error("think=", think);
   console.error("app=", think.app);
-  request('http://127.0.0.1:2333').post('/api/staff/login')
-    .set('Content-Type', 'application/json')
-    .send({
-      staffId: '1_s1',
-      password: '1_s2'
+  console.error("server=", think.app.server);
+
+});
+*/
+
+think.app.on('appReady', () => {
+  describe('staff', function() {
+    describe('login', function() {
+      it ('server should run and login should failed', function(){
+        request(think.app.server).post('/api/staff/login')
+          .set('Content-Type', 'application/json')
+          .send({
+            staffId: '1_s1',
+            password: '1_s2'
+          })
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end(function(err, res) {
+            if (err) throw err;
+            console.error("res=", res);
+          });
+        const a = think.model('staff');
+        console.error(a);
+      })
     })
-    .expect('Content-Type', /json/)
-    .expect(200)
-    .end(function(err, res) {
-      if (err) throw err;
-      console.error("res=", res);
-    });
-  const a = think.model('staff');
-  console.error(a);
-  t.pass();
+  });
+
 });
 /**
 const test = require('ava');
