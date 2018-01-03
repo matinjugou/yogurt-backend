@@ -34,4 +34,19 @@ module.exports = class extends think.Model {
       'managerId': managerId
     };
   }
+  async updateStatistic(totalServeCount, totalAnsAsk, id) {
+    return (await this.thenUpdate({totalServeCount: totalServeCount, totalAnsAsk: totalAnsAsk}, {id: id}));
+  }
+  addNote(id) {
+    return this.where({id: id})
+      .update({
+        totalNoteCount: ['exp', 'totalNoteCount+1']
+      });
+  }
+  replyNote(id) {
+    return this.where({id: id})
+      .update({
+        repliedNoteCount: ['exp', 'repliedNoteCount+1']
+      });
+  }
 };

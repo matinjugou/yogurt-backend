@@ -13,6 +13,7 @@ module.exports = class extends Base {
     const companyId = Number(userId.split('_')[0]);
     const result = await this.modelInstance.addNote(companyId, userId, content, email);
     if (result !== null && result !== undefined) {
+      await this.model('company').addNote(companyId);
       return this.success({
         code: 0,
         msg: 'Leave note succeeded'

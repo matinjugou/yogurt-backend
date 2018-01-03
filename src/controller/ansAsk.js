@@ -14,5 +14,19 @@ module.exports = class extends Base {
       const AnsAsk = String(ans) + '/' + String(ask);
       this.model('staff').thenUpdate({AnsAsk: AnsAsk}, {staffId: staff.staffId});
     }
+    const companies = await this.model('company').select();
+    for (const company of companies) {
+      let totalAns = 0;
+      let totalAsk = 0;
+      let totalServeCount = 0;
+      const id = company.id;
+      const stuff = await this.model('staff').where({companyId: id}).select();
+      for (const staff of stuff) {
+        totalAns += Number(staff.AnsAsk.split('/')[0]);
+        totalAsk += Number(staff.AnsAsk.split('/')[1]);
+        totalServeCount += staff.totalCount;
+      }
+      this.model('company').updateStatistic(totalServeCount, String(totalAns) + '/' + String(totalAsk), id);
+    }
   }
 };
