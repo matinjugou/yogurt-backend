@@ -7,7 +7,7 @@ require(path.join(process.cwd(), 'testing.js'));
 think.app.on('appReady', () => {
   console.error('appReady');
   console.error('server=', think.app.server);
-  if (server !== undefined) {
+  if (think.app.server !== undefined) {
     describe('staff', function() {
       describe('login', function() {
         it ('server should run and login should failed', function(){
