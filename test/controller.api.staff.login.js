@@ -7,28 +7,29 @@ require(path.join(process.cwd(), 'testing.js'));
 think.app.on('appReady', () => {
   console.error('appReady');
   console.error('server=', think.app.server);
-  describe('staff', function() {
-    describe('login', function() {
-      it ('server should run and login should failed', function(){
-        request(think.app.server).post('/api/staff/login')
-          .set('Content-Type', 'application/json')
-          .send({
-            staffId: '1_s1',
-            password: '1_s2'
-          })
-          .expect('Content-Type', /json/)
-          .expect(200)
-          .end(function(err, res) {
-            if (err) throw err;
-            console.error("res=", res);
-          });
-        const a = think.model('staff');
-        console.error(a);
-        assert.equal(1,2);
+  if (server !== undefined) {
+    describe('staff', function() {
+      describe('login', function() {
+        it ('server should run and login should failed', function(){
+          request(think.app.server).post('/api/staff/login')
+            .set('Content-Type', 'application/json')
+            .send({
+              staffId: '1_s1',
+              password: '1_s2'
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+              if (err) throw err;
+              console.error("res=", res);
+            });
+          const a = think.model('staff');
+          console.error(a);
+          assert.equal(1,2);
+        })
       })
-    })
-  });
-
+    });
+  }
 });
 /**
 const test = require('ava');
