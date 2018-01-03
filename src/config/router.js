@@ -23,5 +23,9 @@ module.exports = [
   ['/api/manager/staff', 'api/manager/staff', 'rest'],
   ['/api/manager/note', 'api/manager/note', 'rest'],
   ['/api/manager/quick-reply/public', 'api/manager/quick-reply/public', 'rest'],
+<<<<<<< HEAD
   ['/ansAsk/update', '/ansAsk/update']
+=======
+  ['/api/platform/company', 'api/platform/company', 'rest']
+>>>>>>> cabe1b60756fa3093e3ab2881db4b4f62714bfc7
 ];

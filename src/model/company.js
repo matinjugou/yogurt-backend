@@ -17,4 +17,21 @@ module.exports = class extends think.Model {
   getCorpus(companyId) {
     return this.where({id: companyId}).field('CorpusFile').find();
   }
+  getAllCompanies() {
+    return this.field('id,name,managerId').select();
+  }
+  async addCompany(name) {
+    const id = await this.add({
+      name: name,
+      picUrl: '',
+      robotAvatar: '',
+      managerId: ''
+    });
+    const managerId = String(id) + '_m1';
+    await this.thenUpdate({managerId: managerId}, {id: id});
+    return {
+      'id': id,
+      'managerId': managerId
+    };
+  }
 };
