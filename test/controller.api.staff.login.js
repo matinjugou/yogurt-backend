@@ -18,10 +18,8 @@ describe('staff', function() {
           .end(function(err, res) {
             if (err) throw err;
             console.error(res.body.data);
-            assert.equal(res.body.data, {
-              code: 1,
-              msg: 'Staff does not exist!'
-            });
+            assert.equal(res.body.data.code, 1);
+            assert.equal(res.body.data.msg, 'Staff does not exist!');
             done();
           });
       };
