@@ -6,7 +6,6 @@ const instance = require(path.join(process.cwd(), 'testing.js'));
 describe('staff', function() {
   describe('login', function() {
     it ('server should run and login should failed', function(done){
-      instance.runInWorker({ port: 2333 });
       const f = function() {
         request(think.app.server).post('/api/staff/login')
           .set('Content-Type', 'application/json')

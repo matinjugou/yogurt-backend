@@ -7,7 +7,7 @@
     "compile": "babel --no-babelrc src/ --presets think-node --out-dir app/",
     "lint": "eslint src/",
     "lint-fix": "eslint --fix src/",
-    "test": "set THINK_UNIT_TEST=true && mocha -t 20000"
+    "test": "THINK_UNIT_TEST=1 mocha -t 20000"
   },
   "dependencies": {
     "koa2-file-server": "0.0.3",

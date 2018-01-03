@@ -9,5 +9,6 @@ const instance = new Application({
 
 instance.run();
 
+instance.runInWorker({ port: 2333 });
 
 module.exports = instance;
