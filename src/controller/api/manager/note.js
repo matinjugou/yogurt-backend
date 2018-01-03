@@ -34,7 +34,7 @@ module.exports = class extends Base {
       '<p>这是一封留言回复邮件，如果您不知情请忽略。</p>'
     });
 
-    const companyId = Number(userId.split('_')[0]);
+    const companyId = Number(staffId.split('_')[0]);
     const result = await this.modelInstance.updateNote(noteId, staffId, reply);
     if (result !== null && result !== undefined) {
       await this.model('company').replyNote(companyId);

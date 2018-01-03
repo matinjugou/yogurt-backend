@@ -35,7 +35,7 @@ module.exports = class extends think.Model {
     };
   }
   async updateStatistic(totalServeCount, totalAnsAsk, id) {
-    return (await this.thenUpdate({totalServeCount: totalServeCount, totalAnsAsk: totalAnsAsk}, {id: id}));
+    return this.thenUpdate({totalServeCount: totalServeCount, totalAnsAsk: totalAnsAsk}, {id: id});
   }
   addNote(id) {
     return this.where({id: id})
