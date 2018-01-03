@@ -26,4 +26,18 @@ module.exports = class extends think.Model {
     }, {managerId: managerId, onlineStatus: 1});
     return 0;
   }
+  async addManager(managerId, companyId) {
+    const id = await this.add({
+      managerId: managerId,
+      companyId: companyId,
+      name: '',
+      email: '',
+      tel: '',
+      nickname: '',
+      password: managerId,
+      picUrl: '',
+      onlineStatus: 0
+    });
+    return id;
+  }
 };

@@ -21,5 +21,6 @@ module.exports = [
   ['/api/manager/staff/list', 'api/manager/staff/list', 'rest'],
   ['/api/manager/staff', 'api/manager/staff', 'rest'],
   ['/api/manager/note', 'api/manager/note', 'rest'],
-  ['/api/manager/quick-reply/public', 'api/manager/quick-reply/public', 'rest']
+  ['/api/manager/quick-reply/public', 'api/manager/quick-reply/public', 'rest'],
+  ['/api/platform/company', 'api/platform/company', 'rest']
 ];
