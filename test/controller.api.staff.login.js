@@ -2,14 +2,7 @@ const assert = require('assert');
 const request = require('supertest');
 const path = require('path');
 require(path.join(process.cwd(), 'testing.js'));
-/*
-test('eee', async t => {
-  console.error("think=", think);
-  console.error("app=", think.app);
-  console.error("server=", think.app.server);
 
-});
-*/
 
 think.app.on('appReady', () => {
   describe('staff', function() {
