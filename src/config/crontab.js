@@ -1,5 +1,5 @@
 module.exports = [{
-  interval: '1d',
+  interval: '2h',
   immediate: true,
   handle: '/ansAsk/update'
 }];

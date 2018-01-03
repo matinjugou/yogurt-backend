@@ -174,8 +174,9 @@ module.exports = class extends think.Controller {
 
   async staffMsgAction() {
     let data = this.wsData;
-    console.log("data=",data);
-    this.wsCallback(data);
+    if (this.wsCallback) {
+      this.wsCallback(data);
+    }
     let staffId = data.staffId;
     let userId = data.userId;
     let token = data.token;
@@ -264,17 +265,26 @@ module.exports = class extends think.Controller {
     let userId = data.userId;
     let staffAId = data.staffAId;
     let staffBId = data.staffBId;
-    let messages = data.messages;
+    console.log("staffAId=", staffAId);
+    console.log("staffBId=", staffBId);
+    // let messages = data.messages;
+    /*
     await this.cache('transInfo:' + userId, messages, {
       type: 'redis',
       redis: {
         timeout: 10 * 60 * 1000
       }
     });
-    socket.to('staffRoom ' + staffBId).emit('transMsg',
-      {
-        from: staffAId,
-        userId: userId
-      });
+    */
+    await this.mongo('sessionPair', 'mongo').offlineSessionPair(staffAId, userId);
+    await this.model('staff').removeUser(staffAId);
+    await this.mongo('sessionPair', 'mongo').initSession(staffBId, userId);
+    await this.model('staff').insertUser(staffBId);
+    this.emit('updateQueue', {
+      msg: 'Please update your queue'
+    });
+    this.websocket.to('staffRoom ' + staffBId).emit('updateQueue', {
+      msg: 'Please update your queue'
+    });
   }
 };

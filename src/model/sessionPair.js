@@ -35,10 +35,10 @@ module.exports = class extends think.Mongo {
   }
 
   async getRecords(staffId, userId, index) {
+    index = Number(index);
     const pair = await this.where({staffId: staffId, userId: userId}).find();
     if (Object.keys(pair).length !== 0) {
       const messages = pair.messages;
-      index = Number(index);
       const ans = [];
       if (index === -1) {
         index = messages.length - 1;
@@ -64,6 +64,12 @@ module.exports = class extends think.Mongo {
     return this.thenUpdate({
       status: 0
     }, {userId: userId, status: 1});
+  }
+
+  offlineSessionPair(staffId, userId) {
+    return this.thenUpdate({
+      status: 0
+    }, {staffId: staffId, userId: userId, status: 1});
   }
 
   async insertMessage(staffId, userId, direction, content) {

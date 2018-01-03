@@ -15,6 +15,7 @@ module.exports = [
   ['/api/staff/user-info', 'api/staff/user-info', 'rest'],
   ['/api/staff/note', 'api/staff/note', 'rest'],
   ['/api/staff/queue', 'api/staff/queue', 'rest'],
+  ['/api/staff/trans', 'api/staff/trans', 'rest'],
   ['/api/manager/login', 'api/manager/login', 'rest'],
   ['/api/manager/account-info', 'api/manager/account-info', 'rest'],
   ['/api/manager/company-info', 'api/manager/company-info', 'rest'],

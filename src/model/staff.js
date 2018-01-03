@@ -31,7 +31,8 @@ module.exports = class extends think.Model {
   insertUser(staffId) {
     return this.thenUpdate({
       servingCount: ['exp', 'servingCount+1'],
-      queueCount: ['exp', 'queueCount+1']
+      queueCount: ['exp', 'queueCount+1'],
+      totalCount: ['exp', 'totalCount+1']
     }, {staffId: staffId});
   }
   removeUser(staffId) {
@@ -71,6 +72,12 @@ module.exports = class extends think.Model {
       companyId: companyId,
       onlineStatus: ['<', 4]
     }).field('staffId,name,nickname,email,tel,isInit,onlineStatus,role,queueCount,AnsAsk').select();
+  }
+  getOnlineStaffs(companyId) {
+    return this.where({
+      companyId: companyId,
+      onlineStatus: 1
+    }).field('staffId').select();
   }
   getSingleStaff(staffId) {
     return this.where({

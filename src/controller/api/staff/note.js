@@ -35,8 +35,10 @@ module.exports = class extends Base {
     }).then(info => {
     });
 
+    const companyId = Number(staffId.split('_')[0]);
     const result = await this.modelInstance.updateNote(noteId, staffId, reply);
     if (result !== null && result !== undefined) {
+      await this.model('company').replyNote(companyId);
       return this.success({
         code: 0,
         msg: 'Reply succeeded'
