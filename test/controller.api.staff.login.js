@@ -19,7 +19,7 @@ describe('staff', function() {
             if (err) throw err;
             console.error(res.body.data);
             assert.equal(res.body.data, {
-              code: 0,
+              code: 1,
               msg: 'Staff does not exist!'
             });
             done();
