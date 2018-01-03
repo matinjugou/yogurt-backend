@@ -11,6 +11,7 @@ think.app.on('appReady', () => {
     describe('staff', function() {
       describe('login', function() {
         it ('server should run and login should failed', function(){
+          /*
           request(think.app.server).post('/api/staff/login')
             .set('Content-Type', 'application/json')
             .send({
@@ -23,6 +24,7 @@ think.app.on('appReady', () => {
               if (err) throw err;
               console.error("res=", res);
             });
+           */
           const a = think.model('staff');
           console.error(a);
           assert.equal(1,2);
