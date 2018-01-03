@@ -9,7 +9,7 @@ module.exports = class extends Base {
     const userId = this.get('userId');
     const staffId = this.get('staffId');
     const index = this.get('index');
-    const result = await this.modelInstance.getRecords(userId, staffId, index);
+    const result = await this.modelInstance.getRecords(staffId, userId, index);
     return this.success(result);
   }
 };

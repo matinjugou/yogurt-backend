@@ -26,7 +26,7 @@ module.exports = class extends think.Mongo {
         staffId: staffId,
         lastActivate: ['exp', 'CURRENT_TIMESTAMP()'],
         status: 1,
-        messageCount: 0,
+        messagesCount: 0,
         ask: 0,
         ans: 0,
         messages: []
@@ -38,6 +38,7 @@ module.exports = class extends think.Mongo {
     const pair = await this.where({staffId: staffId, userId: userId}).find();
     if (Object.keys(pair).length !== 0) {
       const messages = pair.messages;
+      index = Number(index);
       const ans = [];
       if (index === -1) {
         index = messages.length - 1;
