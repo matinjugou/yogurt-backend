@@ -1,109 +1,35 @@
 const assert = require('assert');
 const request = require('supertest');
 const path = require('path');
-require(path.join(process.cwd(), 'testing.js'));
+const instance = require(path.join(process.cwd(), 'testing.js'));
 
-
-think.app.on('appReady', () => {
-  console.error('appReady');
-  console.error('server=', think.app.server);
-  if (think.app.server !== undefined) {
-    describe('staff', function() {
-      describe('login', function() {
-        it ('server should run and login should failed', function(){
-          /*
-          request(think.app.server).post('/api/staff/login')
-            .set('Content-Type', 'application/json')
-            .send({
-              staffId: '1_s1',
-              password: '1_s2'
-            })
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-              if (err) throw err;
-              console.error("res=", res);
+describe('staff', function() {
+  describe('login', function() {
+    it ('server should run and login should failed', function(done){
+      instance.runInWorker({ port: 2333 });
+      const f = function() {
+        request(think.app.server).post('/api/staff/login')
+          .set('Content-Type', 'application/json')
+          .send({
+            staffId: '1_s1',
+            password: '1_s2'
+          })
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .end(function(err, res) {
+            if (err) throw err;
+            console.error(res.body.data);
+            assert.equal(res.body.data, {
+              code: 0,
+              msg: 'Staff does not exist!'
             });
-           */
-          const a = think.model('staff');
-          console.error(a);
-          assert.equal(1,2);
-          done();
-        })
-      })
-    });
-  }
-});
-/**
-const test = require('ava');
-const request = require('supertest');
-const path = require('path');
-const chai = require('chai');
-const should = chai.should();
-const assert = chai.assert;
-const chaiAsPromised = require('chai-as-promised');
-chai.use(chaiAsPromised);
-const sinon = require('sinon');
-const fetch = require('node-fetch');
-const Q = require('q');
-/*
-const Application = require('thinkjs');
-function createServer() {
-  const instance = new Application({
-    ROOT_PATH: __dirname,
-    proxy: true, // use proxy
-    env: 'production'
-  });
-
-  return instance.run();
-}
-
-require(path.join(process.cwd(), 'production.js'));
-test('postAction', t => {
-  const body = {
-    staffId: '1_s1',
-    password: '1_s1'
-  };
-  const staff = think.model('staff');
-  const stub =  sinon.stub(staff, "validateStaff");
-  function staffValidatePromise() {
-    return Q.fcall(function() {
-      return {
-        staffId: '1_s1',
-        companyId: 1,
-        isInit: true,
-        status: 1
+            done();
+          });
       };
-    });
-  }
-  stub.withArgs('1_s1', '1_s1').returns(staffValidatePromise());
-  /*
-  request(process.cwd())
-    .post('/api/staff/login')
-    .set('Content-Type', 'multipart/form-data')
-    .field('raw', JSON.stringify(body))
-    .end(function (err, res) {
-      if (err) {
-        console.log(err);
-      }
-      if (res) {
-        console.log(res);
-      }
-      done();
+      setTimeout(f, 4000);
     })
-   *
-  fetch('/api/staff/login', {
-    method:'POST',
-    body: {
-      staffId: '1_s1',
-      password: '1_s1'
-    }
-  }).then(function (res) {
-    return res.json();
-  }).then(function(json) {
-    console.log(json);
-    t.end();
-  });
-  t.pass();
+  })
+  after(function () {
+    process.exit();
+  })
 });
-**/
