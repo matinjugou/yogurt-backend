@@ -1,14 +1,14 @@
 module.exports = class extends think.Model {
   getRepliedItems(companyId) {
-    return this.where({companyId: companyId, isReplied: 1}).select();
+    return this.where({companyId: companyId, isReplied: 1}).order('isReplied ASC, id DESC').select();
   }
 
   getItems(companyId) {
-    return this.where({companyId: companyId, isReplied: 0}).select();
+    return this.where({companyId: companyId, isReplied: 0}).order('isReplied ASC, id DESC').select();
   }
 
   getAllItems(companyId) {
-    return this.where({companyId: companyId}).select();
+    return this.where({companyId: companyId}).order('isReplied ASC, id DESC').select();
   }
 
   async getEmail(noteId) {
