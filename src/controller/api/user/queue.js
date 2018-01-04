@@ -89,7 +89,8 @@ module.exports = class extends Base {
       // think.websocket.to('staffRoom ' + staff.staffId).emit('newUser', {userId: userId});
       return this.success({
         code: 0,
-        msg: staff.staffId
+        msg: staff.staffId,
+        data: staff
       });
     } else {
       return this.success({

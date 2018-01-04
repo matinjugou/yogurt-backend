@@ -45,6 +45,18 @@ module.exports = class extends think.Controller {
     let data = this.wsData;
     console.log("userRegData=", data);
     let userId = data.userId;
+    let additionInfo = data.data;
+    if (!additionInfo) {
+      additionInfo = '';
+    }
+    const myDate = new Date();
+    this.model('user').thenUpdate({
+      userId: userId,
+      additionInfo: additionInfo,
+      accessTime: Format(myDate, 'yyyy-MM-dd hh:mm:ss'),
+      accessWay: 1,
+      sourcePage: '',
+      companyId: Number(userId.split('_')[0])}, {userId: userId});
     this.websocket.token = data.token;
     this.websocket.type = 'user';
     this.websocket.userId = data.userId;
