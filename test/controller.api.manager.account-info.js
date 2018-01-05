@@ -41,8 +41,8 @@ setTimeout(function () {
             companyId: 1,
             name: 'hello',
             tel: '123456789',
-            password: '1_m1',
-            managerId: '1_m1'
+            password: '1_m2',
+            managerId: '1_m2'
           });
           done();
         });
@@ -50,7 +50,7 @@ setTimeout(function () {
           request(think.app.server).put('/api/manager/account-info')
             .set('Content-Type', 'application/json')
             .send({
-              managerId: '1_m1',
+              managerId: '1_m2',
               email: 'email@example.com'
             })
             .expect('Content-Type', /json/)
@@ -65,7 +65,7 @@ setTimeout(function () {
         });
         after(async function(done) {
           const model = self.model('manager');
-          await model.where({managerId: '1_m1'}).delete();
+          await model.where({managerId: '1_m2'}).delete();
           // process.exit();
           done();
         });
