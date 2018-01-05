@@ -153,11 +153,27 @@ setTimeout(function () {
 
     describe('staff', function() {
       describe('login', function() {
-        it ('server should run and login should failed', function(done){
+        const addSql = 'INSERT INTO staff (staffId,password,companyId,isInit,onlineStatus,servingCount,queueCount) VALUES (?, ?, ?, ?, ?, ?, ?)';
+        let addSqlParams = ['1_s3', '1_s3', 1, 0, 1, 29, 29];
+        before(function (done) {
+          connection.query(addSql, addSqlParams, function(err, result) {
+            if (err) {
+              throw err;
+            }
+            addSqlParams = ['1_s4', '1_s4', 0, 0, 1, 29, 29];
+            connection.query(addSql, addSqlParams, function(err, result) {
+              if (err) {
+                throw err;
+              }
+              done();
+            })
+          })
+        });
+        it ('wrong info login should failed', function(done){
           request(think.app.server).post('/api/staff/login')
             .set('Content-Type', 'application/json')
             .send({
-              staffId: '1_s1',
+              staffId: '1_s3',
               password: '1_s2'
             })
             .expect('Content-Type', /json/)
@@ -165,7 +181,36 @@ setTimeout(function () {
             .end(function(err, res) {
               if (err) throw err;
               assert.equal(res.body.data.code, 1);
-              assert.equal(res.body.data.msg, 'Staff does not exist!');
+              done();
+            });
+        })
+        it ('correct info and login should succeed', function(done){
+          request(think.app.server).post('/api/staff/login')
+            .set('Content-Type', 'application/json')
+            .send({
+              staffId: '1_s3',
+              password: '1_s3'
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+              if (err) throw err;
+              assert.equal(res.body.data.code, 0);
+              done();
+            });
+        })
+        it ('correct info and login need init', function(done){
+          request(think.app.server).post('/api/staff/login')
+            .set('Content-Type', 'application/json')
+            .send({
+              staffId: '1_s4',
+              password: '1_s4'
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+              if (err) throw err;
+              assert.equal(res.body.data.code, 2);
               done();
             });
         })
