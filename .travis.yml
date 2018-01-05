@@ -52,11 +52,11 @@ before_install:
                robotAvatar      VARCHAR(300)            NULL,
                corpusFile       VARCHAR(200) DEFAULT '' NULL,
                robotWelcome     VARCHAR(200) DEFAULT '' NULL,
-               managerId        VARCHAR(200) DEFAULT '' NOT NULL,
-               totalServeCount  INT DEFAULT '0'         NOT NULL,
-               totalAnsAsk      VARCHAR(200) DEFAULT '' NOT NULL,
-               totalNoteCount   INT DEFAULT '0'         NOT NULL,
-               repliedNoteCount INT DEFAULT '0'         NOT NULL
+               managerId        VARCHAR(200) NOT NULL   DEFAULT '',
+               totalServeCount  INT NOT NULL            DEFAULT '0',
+               totalAnsAsk      VARCHAR(200) NOT NULL   DEFAULT '',
+               totalNoteCount   INT NOT NULL            DEFAULT '0',
+               repliedNoteCount INT NOT NULL            DEFAULT '0'
              )
                ENGINE = InnoDB;'
   - mysql -e 'CREATE TABLE yogurt_test.manager
