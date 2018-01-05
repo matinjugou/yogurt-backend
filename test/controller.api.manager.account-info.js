@@ -2,21 +2,22 @@ const assert = require('assert');
 const request = require('supertest');
 const path = require('path');
 const instance = require(path.join(process.cwd(), 'testing.js'));
-
-descirbe('AllTest', function() {
-  describe('manager', function() {
-    before(async () => {
-      await this.model('manager').add({
-        companyId: 1,
-        name: 'hello',
-        tel: '123456789',
-        password: '1_m1',
-        managerId: '1_m1'
-      });
-    });
-    describe('GET account-info', function() {
-      it ('server should run and can get a manager', function(done) {
-        const f = function() {
+setTimeout(function () {
+  describe('AllTest', function() {
+    const self = global.think;
+    describe('manager', function() {
+      describe('GET account-info', function() {
+        before(async function(done) {
+          await self.model('manager').add({
+            companyId: 1,
+            name: 'hello',
+            tel: '123456789',
+            password: '1_m1',
+            managerId: '1_m1'
+          });
+          done();
+        });
+        it ('server should run and can get a manager', function(done) {
           request(think.app.server).get('/api/manager/account-info')
             .set('Content-Type', 'application/json')
             .send({
@@ -31,13 +32,16 @@ descirbe('AllTest', function() {
               assert.equal(res.body.data.name, 'hello');
               done();
             });
-        };
-        setTimeout(f, 4000);
+        });
+        after(async function(done) {
+          const model = self.model('manager');
+          await model.where({managerId: '1_m1'}).delete();
+          // process.exit();
+          done();
+        });
       });
-    });
-    describe('PUT account-info', function() {
-      it ('server should run and can update a manager', function(done) {
-        const f = function() {
+      describe('PUT account-info', function() {
+        it ('server should run and can update a manager', function(done) {
           request(think.app.server).post('/api/manager/account-info')
             .set('Content-Type', 'application/json')
             .send({
@@ -53,21 +57,13 @@ descirbe('AllTest', function() {
               assert.equal(res.body.data.msg, 'Update succeeded');
               done();
             });
-        };
-        setTimeout(f, 4000);
+        });
       });
     });
-    after(async () => {
-      const model = this.model('manager');
-      await model.where({managerId: '1_m1'}).delete();
-      // process.exit();
-    });
-  });
 
-  describe('staff', function() {
-    describe('login', function() {
-      it ('server should run and login should failed', function(done){
-        const f = function() {
+    describe('staff', function() {
+      describe('login', function() {
+        it ('server should run and login should failed', function(done){
           request(think.app.server).post('/api/staff/login')
             .set('Content-Type', 'application/json')
             .send({
@@ -83,14 +79,12 @@ descirbe('AllTest', function() {
               assert.equal(res.body.data.msg, 'Staff does not exist!');
               done();
             });
-        };
-        setTimeout(f, 4000);
-      })
+        })
+      });
     });
+    after(function () {
+      process.exit();
+    })
   });
-  after(function () {
-    process.exit();
-  })
-});
-
-
+  run();
+}, 5000);
