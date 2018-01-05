@@ -61,19 +61,18 @@ before_install:
                ENGINE = InnoDB;'
   - mysql -e 'CREATE TABLE yogurt_test.manager
              (
-               id           INT AUTO_INCREMENT
-                 PRIMARY KEY,
-               companyId    INT UNSIGNED NULL,
-               name         VARCHAR(45)  NULL,
-               email        VARCHAR(45)  NULL,
-               tel          VARCHAR(45)  NULL,
-               nickname     VARCHAR(45)  NULL,
-               password     VARCHAR(45)  NULL,
-               picUrl       VARCHAR(200) NULL,
-               onlineStatus INT UNSIGNED NULL,
-               managerId    VARCHAR(45)  NULL,
-               CONSTRAINT managerId_UNIQUE
-               UNIQUE (managerId)
+               id INT NOT NULL AUTO_INCREMENT,
+               companyId INT UNSIGNED DEFAULT NULL,
+               name VARCHAR(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+               email VARCHAR(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+               tel VARCHAR(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+               nickname VARCHAR(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+               password VARCHAR(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+               picUrl VARCHAR(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+               onlineStatus INT unsigned DEFAULT NULL,
+               managerId VARCHAR(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+               PRIMARY KEY (id),
+               UNIQUE KEY managerId_UNIQUE (managerId)
              )
                ENGINE = InnoDB;'
   - mysql -e 'CREATE TABLE yogurt_test.note
