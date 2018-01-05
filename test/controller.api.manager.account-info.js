@@ -34,7 +34,7 @@ setTimeout(function () {
             .end(function(err, res) {
               if (err) throw err;
               console.error(res.body.data);
-              expect(res.body.data).to.include.keys('id');
+              expect(res.body.data).to.include.keys('managerId');
               done();
             });
         });
