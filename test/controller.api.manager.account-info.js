@@ -34,7 +34,6 @@ describe('manager', function() {
       setTimeout(f, 4000);
     });
   });
-  des
   after(function () {
     const model = this.model('manager');
     model.where({managerId: '1_m1'}).delete();
