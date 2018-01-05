@@ -4,13 +4,7 @@ const expect = require('chai').expect;
 const path = require('path');
 const instance = require(path.join(process.cwd(), 'testing.js'));
 const self = global.think;
-self.model('manager').add({
-  companyId: 1,
-  name: 'hello',
-  tel: '123456789',
-  password: '1_m1',
-  managerId: '1_m1'
-});
+
 self.model('manager').add({
   companyId: 1,
   name: 'hello',
@@ -22,6 +16,16 @@ setTimeout(function () {
   describe('AllTest', function() {
     describe('manager', function() {
       describe('GET account-info', function() {
+        before(function (done) {
+          self.model('manager').add({
+            companyId: 1,
+            name: 'hello',
+            tel: '123456789',
+            password: '1_m1',
+            managerId: '1_m1'
+          });
+          done();
+        });
         it ('server should run and can get a manager', function(done) {
           request(think.app.server).get('/api/manager/account-info')
             .set('Content-Type', 'application/json')
@@ -81,7 +85,6 @@ setTimeout(function () {
             .expect(200)
             .end(function(err, res) {
               if (err) throw err;
-              console.error(res.body.data);
               assert.equal(res.body.data.code, 1);
               assert.equal(res.body.data.msg, 'Staff does not exist!');
               done();
@@ -89,6 +92,9 @@ setTimeout(function () {
         })
       });
     });
+
+
+
     after(function () {
       process.exit();
     })
