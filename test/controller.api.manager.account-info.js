@@ -18,21 +18,29 @@ setTimeout(function () {
           });
           done();
         });
-        it ('server should run and can get a manager', function(done) {
-          request(think.app.server).get('/api/manager/account-info')
-            .set('Content-Type', 'application/json')
-            .send({
-              managerId: '1_m1',
-              password: '1_m1'
-            })
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-              if (err) throw err;
-              console.error(res.body.data);
-              expect(res.body.data).to.include.keys('id');
-              done();
-            });
+        describe('server should run and can get a manager', function () {
+          it ('server should run and can get a manager', function(done) {
+            request(think.app.server).get('/api/manager/account-info')
+              .set('Content-Type', 'application/json')
+              .send({
+                managerId: '1_m1',
+                password: '1_m1'
+              })
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end(function(err, res) {
+                if (err) throw err;
+                console.error(res.body.data);
+                expect(res.body.data).to.include.keys('id');
+                done();
+              });
+          });
+        });
+        after(async function(done) {
+          const model = self.model('manager');
+          await model.where({managerId: '1_m1'}).delete();
+          // process.exit();
+          done();
         });
       });
       describe('PUT account-info', function() {
