@@ -154,13 +154,13 @@ setTimeout(function () {
     describe('staff', function() {
       describe('login', function() {
         const addSql = 'INSERT INTO staff (staffId,password,companyId,isInit,onlineStatus,servingCount,queueCount) VALUES (?, ?, ?, ?, ?, ?, ?)';
-        let addSqlParams = ['1_s3', '1_s3', 1, 0, 1, 29, 29];
+        let addSqlParams = ['1_s3', '1_s3', 1, 1, 1, 29, 29];
         before(function (done) {
           connection.query(addSql, addSqlParams, function(err, result) {
             if (err) {
               throw err;
             }
-            addSqlParams = ['1_s4', '1_s4', 0, 0, 1, 29, 29];
+            addSqlParams = ['1_s4', '1_s4', 1, 0, 1, 29, 29];
             connection.query(addSql, addSqlParams, function(err, result) {
               if (err) {
                 throw err;
@@ -183,7 +183,8 @@ setTimeout(function () {
               assert.equal(res.body.data.code, 1);
               done();
             });
-        })
+        });
+
         it ('correct info and login should succeed', function(done){
           request(think.app.server).post('/api/staff/login')
             .set('Content-Type', 'application/json')
@@ -198,7 +199,8 @@ setTimeout(function () {
               assert.equal(res.body.data.code, 0);
               done();
             });
-        })
+        });
+
         it ('correct info and login need init', function(done){
           request(think.app.server).post('/api/staff/login')
             .set('Content-Type', 'application/json')
