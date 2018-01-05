@@ -34,19 +34,23 @@ setTimeout(function () {
               done();
             });
         });
-        after(async function(done) {
-          const model = self.model('manager');
-          await model.where({managerId: '1_m1'}).delete();
-          // process.exit();
-          done();
-        });
       });
       describe('PUT account-info', function() {
+        before(async function(done) {
+          await self.model('manager').add({
+            companyId: 1,
+            name: 'hello',
+            tel: '123456789',
+            password: '1_m1',
+            managerId: '1_m1'
+          });
+          done();
+        });
         it ('server should run and can update a manager', function(done) {
-          request(think.app.server).post('/api/manager/account-info')
+          request(think.app.server).put('/api/manager/account-info')
             .set('Content-Type', 'application/json')
             .send({
-              managerId: '1_s1',
+              managerId: '1_m1',
               email: 'email@example.com'
             })
             .expect('Content-Type', /json/)
@@ -58,6 +62,12 @@ setTimeout(function () {
               expect(res.body.data.code).to.be.equal(0);
               done();
             });
+        });
+        after(async function(done) {
+          const model = self.model('manager');
+          await model.where({managerId: '1_m1'}).delete();
+          // process.exit();
+          done();
         });
       });
     });
