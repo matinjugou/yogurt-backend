@@ -2,15 +2,16 @@ const assert = require('assert');
 const request = require('supertest');
 const expect = require('chai').expect;
 const path = require('path');
+const mysql = require('mysql');
 const instance = require(path.join(process.cwd(), 'testing.js'));
 const self = global.think;
-self.model('manager').add({
-  companyId: 1,
-  name: 'hello',
-  tel: '123456789',
-  password: '1_m1',
-  managerId: '1_m1'
+const connection = mysql.createConnection({
+  host: '127.0.0.1',
+  user: 'root',
+  password: '',
+  database: 'yogurt_test'
 });
+connection.connect();
 self.model('manager').add({
   companyId: 1,
   name: 'hello',
@@ -19,9 +20,19 @@ self.model('manager').add({
   managerId: '1_m2'
 });
 setTimeout(function () {
-  describe('AllTest', function() {
     describe('manager', function() {
       describe('GET account-info', function() {
+        const addSql = 'INSERT INTO manager (companyId,name,tel,managerId,password) VALUES (1, ?, ?, ?, ?)';
+        const addSqlParams = ['hello', '123456789', '1_m1', '1_m1'];
+        before(function (done) {
+          connection.query(addSql, addSqlParams, function(err, result) {
+            if (err) {
+              throw err;
+            }
+            console.log(result);
+            done();
+          })
+        });
         it ('server should run and can get a manager', function(done) {
           request(think.app.server).get('/api/manager/account-info')
             .set('Content-Type', 'application/json')
@@ -89,11 +100,8 @@ setTimeout(function () {
       });
     });
 
-
-
     after(function () {
       process.exit();
     })
-  });
   run();
 }, 5000);
