@@ -90,7 +90,7 @@ before_install:
                staffId   VARCHAR(45)  NULL
              )
                ENGINE = InnoDB;'
-  - mysql -e 'CREATE TABLE user
+  - mysql -e 'CREATE TABLE yogurt_test.user
               (
                 id           INT AUTO_INCREMENT
                   PRIMARY KEY,
