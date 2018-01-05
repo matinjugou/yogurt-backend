@@ -1,5 +1,6 @@
 const assert = require('assert');
 const request = require('supertest');
+const expect = require('chai').expect;
 const path = require('path');
 const instance = require(path.join(process.cwd(), 'testing.js'));
 setTimeout(function () {
@@ -29,7 +30,7 @@ setTimeout(function () {
             .end(function(err, res) {
               if (err) throw err;
               console.error(res.body.data);
-              assert.equal(res.body.data.name, 'hello');
+              expect(res.body.data).to.include.keys('id');
               done();
             });
         });
@@ -53,8 +54,8 @@ setTimeout(function () {
             .end(function(err, res) {
               if (err) throw err;
               console.error(res.body.data);
-              assert.equal(res.body.data.code, 0);
-              assert.equal(res.body.data.msg, 'Update succeeded');
+              expect(res.body.data).to.include.keys('code');
+              expect(res.body.data.code).to.be.equal(0);
               done();
             });
         });
