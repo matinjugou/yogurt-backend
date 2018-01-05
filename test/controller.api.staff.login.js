@@ -1,7 +1,7 @@
 const assert = require('assert');
 const request = require('supertest');
 const path = require('path');
-const instance = require(path.join(process.cwd(), 'testing.js'));
+// const instance = require(path.join(process.cwd(), 'testing.js'));
 
 describe('staff', function() {
   describe('login', function() {
