@@ -13,6 +13,78 @@ const connection = mysql.createConnection({
 });
 connection.connect();
 setTimeout(function () {
+  describe('test', function () {
+    describe('user', function () {
+      describe('GET queue', function () {
+        const addSql = 'INSERT INTO staff (staffId,companyId,onlineStatus,servingCount,queueCount) VALUES (?, 1, ?, ?, ?)';
+        let addSqlParams = ['1_s1', 1, 29, 29];
+        before(function (done) {
+          connection.query(addSql, addSqlParams, function(err, result) {
+            if (err) {
+              throw err;
+            }
+            addSqlParams = ['1_s2', 1, 29, 29];
+            connection.query(addSql, addSqlParams, function(err, result) {
+              if (err) {
+                throw err;
+              }
+              done();
+            })
+          })
+        });
+        let firstStaff;
+        it('The first user should be arranged', function (done) {
+          request(think.app.server).get('/api/user/queue')
+            .set('Content-Type', 'application/json')
+            .query({
+              userId: '1_u1'
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+              if (err) throw err;
+              expect(res.body.data).to.include.keys('code');
+              expect(res.body.data.code).to.be.equal(0);
+              firstStaff = res.body.data.msg;
+              done();
+            });
+        });
+
+        it('The second user should be arranged with different user', function (done) {
+          request(think.app.server).get('/api/user/queue')
+            .set('Content-Type', 'application/json')
+            .query({
+              userId: '1_u2'
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+              if (err) throw err;
+              expect(res.body.data).to.include.keys('code');
+              expect(res.body.data.code).to.be.equal(0);
+              expect(res.body.data.msg).to.be.not.equal(firstStaff);
+              done();
+            });
+        });
+
+        it('The third user should not be arranged with different user', function (done) {
+          request(think.app.server).get('/api/user/queue')
+            .set('Content-Type', 'application/json')
+            .query({
+              userId: '1_u3'
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+              if (err) throw err;
+              expect(res.body.data).to.include.keys('code');
+              expect(res.body.data.code).to.be.equal(1);
+              done();
+            });
+        });
+      })
+    });
+
     describe('manager', function() {
       describe('GET account-info', function() {
         const addSql = 'INSERT INTO manager (companyId,name,tel,managerId,password) VALUES (1, ?, ?, ?, ?)';
@@ -101,7 +173,9 @@ setTimeout(function () {
     });
 
     after(function () {
+      connection.end();
       process.exit();
     })
+  });
   run();
 }, 5000);
