@@ -12,13 +12,6 @@ const connection = mysql.createConnection({
   database: 'yogurt_test'
 });
 connection.connect();
-self.model('manager').add({
-  companyId: 1,
-  name: 'hello',
-  tel: '123456789',
-  password: '1_m2',
-  managerId: '1_m2'
-});
 setTimeout(function () {
     describe('manager', function() {
       describe('GET account-info', function() {
@@ -51,6 +44,17 @@ setTimeout(function () {
         });
       });
       describe('PUT account-info', function() {
+        const addSql = 'INSERT INTO manager (companyId,name,tel,managerId,password) VALUES (1, ?, ?, ?, ?)';
+        const addSqlParams = ['hello', '123456789', '1_m2', '1_m2'];
+        before(function (done) {
+          connection.query(addSql, addSqlParams, function(err, result) {
+            if (err) {
+              throw err;
+            }
+            console.log(result);
+            done();
+          })
+        });
         it ('server should run and can update a manager', function(done) {
           request(think.app.server).put('/api/manager/account-info')
             .set('Content-Type', 'application/json')
