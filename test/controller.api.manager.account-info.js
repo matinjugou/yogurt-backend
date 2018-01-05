@@ -5,7 +5,7 @@ const instance = require(path.join(process.cwd(), 'testing.js'));
 
 describe('manager', function() {
   before(async () => {
-    this.model('manager').add({
+    await this.model('manager').add({
       companyId: 1,
       name: 'hello',
       tel: '123456789',
@@ -58,7 +58,7 @@ describe('manager', function() {
   });
   after(async () => {
     const model = this.model('manager');
-    model.where({managerId: '1_m1'}).delete();
+    await model.where({managerId: '1_m1'}).delete();
     // process.exit();
   });
 });
