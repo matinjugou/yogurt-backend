@@ -45,34 +45,35 @@ before_install:
                 ENGINE = InnoDB;'
   - mysql -e 'CREATE TABLE yogurt_test.company
              (
-               id               INT AUTO_INCREMENT
-                 PRIMARY KEY,
-               name             VARCHAR(45)             NULL,
-               picUrl           VARCHAR(200)            NULL,
-               robotAvatar      VARCHAR(300)            NULL,
-               corpusFile       VARCHAR(200) DEFAULT '' NULL,
-               robotWelcome     VARCHAR(200) DEFAULT '' NULL,
-               managerId        VARCHAR(200) NOT NULL   DEFAULT '',
-               totalServeCount  INT NOT NULL            DEFAULT 0,
-               totalAnsAsk      VARCHAR(200) NOT NULL   DEFAULT '',
-               totalNoteCount   INT NOT NULL            DEFAULT 0,
-               repliedNoteCount INT NOT NULL            DEFAULT 0
+               id INT NOT NULL AUTO_INCREMENT
+                PRIMARY KEY,
+               name VARCHAR(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+               picUrl VARCHAR(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+               robotAvatar VARCHAR(300) COLLATE utf8_unicode_ci DEFAULT NULL,
+               corpusFile VARCHAR(200) COLLATE utf8_unicode_ci DEFAULT '',
+               robotWelcome VARCHAR(200) COLLATE utf8_unicode_ci DEFAULT '',
+               managerId VARCHAR(200) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+               totalServeCount INT NOT NULL DEFAULT '0',
+               totalAnsAsk VARCHAR(200) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+               totalNoteCount INT NOT NULL DEFAULT '0',
+               repliedNoteCount INT NOT NULL DEFAULT '0',
              )
                ENGINE = InnoDB;'
   - mysql -e 'CREATE TABLE yogurt_test.manager
              (
-               id INT NOT NULL AUTO_INCREMENT,
-               companyId INT UNSIGNED DEFAULT NULL,
-               name VARCHAR(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-               email VARCHAR(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-               tel VARCHAR(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-               nickname VARCHAR(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-               password VARCHAR(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-               picUrl VARCHAR(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-               onlineStatus INT unsigned DEFAULT NULL,
-               managerId VARCHAR(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-               PRIMARY KEY (id),
-               UNIQUE KEY managerId_UNIQUE (managerId)
+               id           INT AUTO_INCREMENT
+                 PRIMARY KEY,
+               companyId    INT UNSIGNED NULL,
+               name         VARCHAR(45)  NULL,
+               email        VARCHAR(45)  NULL,
+               tel          VARCHAR(45)  NULL,
+               nickname     VARCHAR(45)  NULL,
+               password     VARCHAR(45)  NULL,
+               picUrl       VARCHAR(200) NULL,
+               onlineStatus INT UNSIGNED NULL,
+               managerId    VARCHAR(45)  NULL,
+               CONSTRAINT managerId_UNIQUE
+               UNIQUE (managerId)
              )
                ENGINE = InnoDB;'
   - mysql -e 'CREATE TABLE yogurt_test.note
