@@ -3,21 +3,25 @@ const request = require('supertest');
 const expect = require('chai').expect;
 const path = require('path');
 const instance = require(path.join(process.cwd(), 'testing.js'));
+const self = global.think;
+self.model('manager').add({
+  companyId: 1,
+  name: 'hello',
+  tel: '123456789',
+  password: '1_m1',
+  managerId: '1_m1'
+});
+self.model('manager').add({
+  companyId: 1,
+  name: 'hello',
+  tel: '123456789',
+  password: '1_m2',
+  managerId: '1_m2'
+});
 setTimeout(function () {
   describe('AllTest', function() {
-    const self = global.think;
     describe('manager', function() {
       describe('GET account-info', function() {
-        before(async function(done) {
-          await self.model('manager').add({
-            companyId: 1,
-            name: 'hello',
-            tel: '123456789',
-            password: '1_m1',
-            managerId: '1_m1'
-          });
-          done();
-        });
         describe('server should run and can get a manager', function () {
           it ('server should run and can get a manager', function(done) {
             request(think.app.server).get('/api/manager/account-info')
@@ -36,24 +40,16 @@ setTimeout(function () {
               });
           });
         });
+        /*
         after(async function(done) {
           const model = self.model('manager');
           await model.where({managerId: '1_m1'}).delete();
           // process.exit();
           done();
         });
+        */
       });
       describe('PUT account-info', function() {
-        before(async function(done) {
-          await self.model('manager').add({
-            companyId: 1,
-            name: 'hello',
-            tel: '123456789',
-            password: '1_m2',
-            managerId: '1_m2'
-          });
-          done();
-        });
         it ('server should run and can update a manager', function(done) {
           request(think.app.server).put('/api/manager/account-info')
             .set('Content-Type', 'application/json')
@@ -71,12 +67,14 @@ setTimeout(function () {
               done();
             });
         });
+        /*
         after(async function(done) {
           const model = self.model('manager');
           await model.where({managerId: '1_m2'}).delete();
           // process.exit();
           done();
         });
+        */
       });
     });
 
