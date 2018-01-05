@@ -1,7 +1,7 @@
 // default config
 module.exports = {
   workers: 1,
-  maxClient: 10,
+  maxClient: 30,
   strategies: {
     averageStrategy: {
       name: 'average',
