@@ -89,9 +89,11 @@ setTimeout(function () {
         })
       });
     });
+    /*
     after(function () {
       process.exit();
     })
+    */
   });
   run();
 }, 5000);
