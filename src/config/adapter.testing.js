@@ -47,9 +47,9 @@ exports.model = {
     database: 'yogurt_test',
     prefix: '',
     encoding: 'utf8',
-    host: '60.205.178.28',
+    host: '127.0.0.1',
     user: 'root',
-    password: 'bh7z7h4t',
+    password: '',
     dateStrings: true
   },
 
