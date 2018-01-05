@@ -25,7 +25,7 @@ setTimeout(function () {
         it ('server should run and can get a manager', function(done) {
           request(think.app.server).get('/api/manager/account-info')
             .set('Content-Type', 'application/json')
-            .send({
+            .query({
               managerId: '1_m1',
               password: '1_m1'
             })
