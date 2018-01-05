@@ -78,7 +78,7 @@ setTimeout(function () {
             .end(function(err, res) {
               if (err) throw err;
               expect(res.body.data).to.include.keys('code');
-              expect(res.body.data.code).to.be.equal(1);
+              expect(res.body.data.code).to.be.not.equal(0);
               done();
             });
         });
