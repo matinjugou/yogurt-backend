@@ -22,8 +22,8 @@ setTimeout(function () {
           request(think.app.server).get('/api/manager/account-info')
             .set('Content-Type', 'application/json')
             .send({
-              managerId: '1_s1',
-              password: '1_s1'
+              managerId: '1_m1',
+              password: '1_m1'
             })
             .expect('Content-Type', /json/)
             .expect(200)
