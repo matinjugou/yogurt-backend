@@ -22,7 +22,6 @@ setTimeout(function () {
             if (err) {
               throw err;
             }
-            console.log(result);
             done();
           })
         });
@@ -37,7 +36,6 @@ setTimeout(function () {
             .expect(200)
             .end(function(err, res) {
               if (err) throw err;
-              console.error(res.body.data);
               expect(res.body.data).to.include.keys('managerId');
               done();
             });
@@ -51,7 +49,6 @@ setTimeout(function () {
             if (err) {
               throw err;
             }
-            console.log(result);
             done();
           })
         });
@@ -66,7 +63,6 @@ setTimeout(function () {
             .expect(200)
             .end(function(err, res) {
               if (err) throw err;
-              console.error(res.body.data);
               expect(res.body.data).to.include.keys('code');
               expect(res.body.data.code).to.be.equal(0);
               done();
