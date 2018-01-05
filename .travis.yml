@@ -56,7 +56,7 @@ before_install:
                totalServeCount  INT           DEFAULT '0',
                totalAnsAsk      VARCHAR(200)  DEFAULT NULL,
                totalNoteCount   INT           DEFAULT '0',
-               repliedNoteCount INT           DEFAULT '0',
+               repliedNoteCount INT           DEFAULT '0'
              )
                ENGINE = InnoDB;'
   - mysql -e 'CREATE TABLE yogurt_test.manager
