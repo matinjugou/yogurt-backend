@@ -37,5 +37,5 @@ https://mrjia1997.gitbooks.io/yogurt-document/content/
 #### 开源协议
 GPL 3.0
 #### 版权信息
-作者：黄超 杨璧菲
+作者：黄超 杨璧菲  
 单位：清华大学软件学院
