@@ -16,14 +16,14 @@ setTimeout(function () {
   describe('test', function () {
     describe('user', function () {
       describe('GET queue', function () {
-        const addSql = 'INSERT INTO staff (staffId,companyId,onlineStatus,servingCount,queueCount) VALUES (?, 1, ?, ?, ?)';
-        let addSqlParams = ['1_s1', 1, 29, 29];
+        const addSql = 'INSERT INTO staff (staffId,companyId,onlineStatus,servingCount,queueCount) VALUES (?, ?, ?, ?, ?)';
+        let addSqlParams = ['1_s1', 1, 1, 29, 29];
         before(function (done) {
           connection.query(addSql, addSqlParams, function(err, result) {
             if (err) {
               throw err;
             }
-            addSqlParams = ['1_s2', 1, 29, 29];
+            addSqlParams = ['1_s2', 1, 1, 29, 29];
             connection.query(addSql, addSqlParams, function(err, result) {
               if (err) {
                 throw err;
