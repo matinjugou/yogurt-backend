@@ -10,7 +10,6 @@
     "test": "THINK_UNIT_TEST=1 mocha -t 20000"
   },
   "dependencies": {
-    "koa2-file-server": "0.0.3",
     "@koa/cors": "^2.2.1",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
