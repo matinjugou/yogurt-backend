@@ -101,14 +101,27 @@ setTimeout(function () {
           request(think.app.server).get('/api/manager/account-info')
             .set('Content-Type', 'application/json')
             .query({
-              managerId: '1_m1',
-              password: '1_m1'
+              managerId: '1_m1'
             })
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
               if (err) throw err;
               expect(res.body.data).to.include.keys('managerId');
+              done();
+            });
+        });
+        it ('server should run and cannot get a manager', function(done) {
+          request(think.app.server).get('/api/manager/account-info')
+            .set('Content-Type', 'application/json')
+            .query({
+              managerId: '1xxxx1'
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+              if (err) throw err;
+              expect(res.body.data).to.be.equal({});
               done();
             });
         });
@@ -122,7 +135,7 @@ setTimeout(function () {
               throw err;
             }
             done();
-          })
+          });
         });
         it ('server should run and can update a manager', function(done) {
           request(think.app.server).put('/api/manager/account-info')
@@ -140,14 +153,92 @@ setTimeout(function () {
               done();
             });
         });
-        /*
-        after(async function(done) {
-          const model = self.model('manager');
-          await model.where({managerId: '1_m2'}).delete();
-          // process.exit();
-          done();
+      });
+
+      describe('GET company-info', function() {
+        const addSql = 'INSERT INTO company (id,name,managerId) VALUES (2, ?, ?)';
+        const addSqlParams = ['company222', '1_m1'];
+        before(function (done) {
+          connection.query(addSql, addSqlParams, function(err, result) {
+            if (err) {
+              throw err;
+            }
+            done();
+          });
         });
-        */
+        it ('server should run and can get a company', function(done) {
+          request(think.app.server).get('/api/manager/company-info')
+            .set('Content-Type', 'application/json')
+            .query({
+              companyId: 2
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+              if (err) throw err;
+              expect(res.body.data).to.include.keys('managerId');
+              done();
+            });
+        });
+        it ('server should run and cannot get a company', function(done) {
+          request(this.app.server).get('/api/manager/company-info')
+            .set('Content-Type', 'application/json')
+            .query({
+              companyId: 4442
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+              if (err) throw err;
+              expect(res.body.data).to.be.equal({});
+              done();
+            });
+        });
+      });
+
+      describe('PUT company-info', function() {
+        const addSql = 'INSERT INTO company (id,name,managerId) VALUES (3, ?, ?)';
+        const addSqlParams = ['company333', '1_m2'];
+        before(function (done) {
+          connection.query(addSql, addSqlParams, function(err, result) {
+            if (err) {
+              throw err;
+            }
+            done();
+          });
+        });
+        it ('server should run and can update a company', function(done) {
+          request(think.app.server).put('/api/manager/company-info')
+            .set('Content-Type', 'application/json')
+            .send({
+              companyId: 3,
+              robotWelcome: 'Hello, this is robot 1'
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+              if (err) throw err;
+              expect(res.body.data).to.include.keys('code');
+              expect(res.body.data.code).to.be.equal(0);
+              done();
+            });
+        });
+        it ('server should run and cannot update a company', function(done) {
+          request(think.app.server).put('/api/manager/company-info')
+            .set('Content-Type', 'application/json')
+            .send({
+              companyId: 4443,
+              robotWelcome: 'Hello, this is robot 1'
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+              if (err) throw err;
+              expect(res.body.data).to.include.keys('code');
+              expect(res.body.data.code).to.be.equal(2);
+              done();
+            });
+        });
       });
     });
 

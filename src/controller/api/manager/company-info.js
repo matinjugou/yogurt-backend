@@ -17,6 +17,12 @@ module.exports = class extends Base {
     let corpusFile = this.post('corpusFile');
     let robotWelcome = this.post('robotWelcome');
     const company = await this.modelInstance.getCompany(companyId);
+    if (company === null || company === undefined) {
+      return this.success({
+        code: 2,
+        msg: 'Update failed, cannot get the company'
+      });
+    }
     if (name === null || name === undefined) {
       name = company.name;
     }
@@ -32,6 +38,17 @@ module.exports = class extends Base {
     if (robotWelcome === null || robotWelcome === undefined) {
       robotWelcome = company.robotWelcome;
     }
-    return this.success(await this.modelInstance.updateCompany(companyId, name, picUrl, robotAvatar, corpusFile, robotWelcome));
+    const result = await this.modelInstance.updateCompany(companyId, name, picUrl, robotAvatar, corpusFile, robotWelcome);
+    if (result !== null && result !== undefined) {
+      return this.success({
+        code: 0,
+        msg: 'Update succeeded'
+      });
+    } else {
+      return this.success({
+        code: 1,
+        msg: 'Update failed'
+      });
+    }
   }
 };
