@@ -466,21 +466,21 @@ setTimeout(function () {
 
       describe('staff', function() {
         describe('GET staff', function() {
-          const addSql = 'INSERT INTO staff (companyId,staffId,password,companyId,isInit,onlineStatus,servingCount,queueCount) VALUES (4, ?, ?, ?, ?, ?, ?, ?)';
-          let addSqlParams = ['4_s41', '4_s41', 1, 1, 1, 29, 29];
+          const addSql = 'INSERT INTO staff (staffId,password,companyId,isInit,onlineStatus,servingCount,queueCount) VALUES (?, ?, ?, ?, ?, ?, ?)';
+          let addSqlParams = ['4_s41', '4_s41', 4, 1, 1, 29, 29];
           before(function(done) {
             connection.query(addSql, addSqlParams, function(err, result) {
               if (err) {
                 throw err;
               }
             });
-            addSqlParams = ['4_s42', '4_s42', 1, 1, 1, 21, 21];
+            addSqlParams = ['4_s42', '4_s42', 4, 1, 1, 21, 21];
             connection.query(addSql, addSqlParams, function(err, result) {
               if (err) {
                 throw err;
               }
             });
-            addSqlParams = ['4_s43', '4_s43', 1, 1, 5, 0, 1];
+            addSqlParams = ['4_s43', '4_s43', 4, 1, 5, 0, 1];
             connection.query(addSql, addSqlParams, function(err, result) {
               if (err) {
                 throw err;
@@ -538,8 +538,8 @@ setTimeout(function () {
         });
 
         describe('PUT staff', function() {
-          const addSql = 'INSERT INTO staff (companyId,staffId,password,companyId,isInit,onlineStatus,servingCount,queueCount) VALUES (4, ?, ?, ?, ?, ?, ?, ?)';
-          const addSqlParams = ['4_s3', '4_s3', 1, 1, 1, 29, 29];
+          const addSql = 'INSERT INTO staff (staffId,password,companyId,isInit,onlineStatus,servingCount,queueCount) VALUES (?, ?, ?, ?, ?, ?, ?)';
+          const addSqlParams = ['4_s3', '4_s3', 4, 1, 1, 29, 29];
           before(function (done) {
             connection.query(addSql, addSqlParams, function(err, result) {
               if (err) {
@@ -583,8 +583,8 @@ setTimeout(function () {
         });
 
         describe('DELETE staff', function() {
-          const addSql = 'INSERT INTO staff (companyId,staffId,password,companyId,isInit,onlineStatus,servingCount,queueCount) VALUES (4, ?, ?, ?, ?, ?, ?, ?)';
-          let addSqlParams = ['4_s11', '4_s11', 1, 1, 1, 29, 29];
+          const addSql = 'INSERT INTO staff (staffId,password,companyId,isInit,onlineStatus,servingCount,queueCount) VALUES (?, ?, ?, ?, ?, ?, ?)';
+          let addSqlParams = ['4_s11', '4_s11', 4, 1, 1, 29, 29];
           before(function (done) {
             connection.query(addSql, addSqlParams, function(err, result) {
               if (err) {
