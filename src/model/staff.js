@@ -66,10 +66,11 @@ module.exports = class extends think.Model {
   }
   async updateRole(staffId, role) {
     const staff = await this.where({staffId: staffId}).find();
-    if (think.isEmpty(staff)) {
-      return null;
+    if (Object.keys(result).length > 0) {
+      const result = await this.where({staffId: staffId}).update({role: role});
+      return result;
     } else {
-      return this.where({staffId: staffId}).update({role: role});
+      return null;
     }
   }
   getStaffs(companyId) {
