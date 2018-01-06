@@ -6,6 +6,7 @@ module.exports = class extends Base {
   }
   async getAction() {
     const companyId = this.get('companyId');
+    console.log('companyId', companyId);
     const company = await this.modelInstance.getCompany(companyId);
     return this.success(company);
   }
