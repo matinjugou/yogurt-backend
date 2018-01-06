@@ -54,11 +54,11 @@ exports.model = {
   },
 
   mongo: {
-    host: ['127.0.0.1', '60.205.178.28'],
+    host: ['127.0.0.1'],
     port: [27017, 27018],
-    user: '',
-    password: '',
-    database: 'yogurt',
+    user: 'travis',
+    password: 'test',
+    database: 'yogurt_test',
     options: ''
   }
 };

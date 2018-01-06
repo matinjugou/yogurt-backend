@@ -1,9 +1,15 @@
 const assert = require('assert');
 const request = require('supertest');
 const expect = require('chai').expect;
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised);
+const sinon = require('sinon');
+const Q = require('q');
 const path = require('path');
 const mysql = require('mysql');
 const jwt = require('jsonwebtoken');
+const Promise = require('q');
 const instance = require(path.join(process.cwd(), 'testing.js'));
 const self = global.think;
 const connection = mysql.createConnection({
@@ -17,9 +23,16 @@ setTimeout(function () {
   describe('test', function () {
     describe('user', function () {
       describe('GET queue', function () {
+        function returnCodePromise(x) {
+          return Q.fcall(function() {
+            return x;
+          });
+        };
         const addSql = 'INSERT INTO staff (staffId,companyId,onlineStatus,servingCount,queueCount) VALUES (?, ?, ?, ?, ?)';
         let addSqlParams = ['1_s1', 1, 1, 29, 29];
+        let stub_returnCode;
         before(function (done) {
+          stub_returnCode = sinon.stub(self.mongo('sessionPair', 'mongo'), 'initSession');
           connection.query(addSql, addSqlParams, function(err, result) {
             if (err) {
               throw err;
@@ -33,20 +46,22 @@ setTimeout(function () {
             })
           })
         });
+
         let firstStaff;
         it('The first user should be arranged', function (done) {
+          stub_returnCode.returns(returnCodePromise(1));
           request(think.app.server).get('/api/user/queue')
             .set('Content-Type', 'application/json')
             .query({
               userId: '1_u1'
             })
+            .expect('Content-Type', /json/)
+            .expect(200)
             .end(function(err, res) {
               if (err) {
                 console.error(err);
                 throw err;
               }
-              console.log("body=", res.body.data);
-              console.error("body=", res.body.data);
               expect(res.body.data).to.include.keys('code');
               expect(res.body.data.code).to.be.equal(0);
               firstStaff = res.body.data.msg;
