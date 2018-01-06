@@ -363,15 +363,15 @@ setTimeout(function () {
 
       describe('note', function() {
         describe('GET note', function() {
-          const addSql = 'INSERT INTO note (companyId,userId,content,email,isReplied) VALUES(?, ?, ?, ?, 0)';
-          let addSqlParams = [1, '1_u22', 'I want detail information', 'example@example.com'];
+          const addSql = 'INSERT INTO note (companyId,userId,content,email,isReplied) VALUES(?, ?, ?, ?, ?)';
+          let addSqlParams = [1, '1_u22', 'I want detail information', 'example@example.com', 0];
           before(function (done) {
             connection.query(addSql, addSqlParams, function(err, result) {
               if (err) {
                 throw err;
               }
             });
-            addSqlParams = [1, '1_u23', 'I want to know more about your company', 'example@example.com'];
+            addSqlParams = [1, '1_u23', 'I want to know more about your company', 'example@example.com', 0];
             connection.query(addSql, addSqlParams, function(err, result) {
               if (err) {
                 throw err;
@@ -411,15 +411,15 @@ setTimeout(function () {
         });
 
         describe('POST note', function() {
-          const addSql = 'INSERT INTO note (id, companyId,userId,content,email,isReplied) VALUES(?, ?, ?, ?, ?, 0)';
-          let addSqlParams = [3, 2, '2_u22', 'I want detail information', 'thss15_yangbf@163.com'];
+          const addSql = 'INSERT INTO note (id,companyId,userId,content,email,isReplied) VALUES(?, ?, ?, ?, ?, ?)';
+          let addSqlParams = [3, 2, '2_u22', 'I want detail information', 'thss15_yangbf@163.com', 0];
           before(function (done) {
             connection.query(addSql, addSqlParams, function(err, result) {
               if (err) {
                 throw err;
               }
             });
-            addSqlParams = [4, 2, '2_u23', 'I want to know more about your company', 'thss15_yangbf@163.com'];
+            addSqlParams = [4, 2, '2_u23', 'I want to know more about your company', 'thss15_yangbf@163.com', 0];
             connection.query(addSql, addSqlParams, function(err, result) {
               if (err) {
                 throw err;
