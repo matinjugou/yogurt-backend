@@ -15,8 +15,8 @@ module.exports = class extends Base {
     }).order('queueCount ASC').select();
     if (stuff.length === 0) {
       return this.success({
-        msg: 4,
-        staff: 'No staff online.'
+        code: 4,
+        msg: 'No staff available.'
       });
     }
     /*

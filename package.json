@@ -7,10 +7,9 @@
     "compile": "babel --no-babelrc src/ --presets think-node --out-dir app/",
     "lint": "eslint src/",
     "lint-fix": "eslint --fix src/",
-    "test": "THINK_UNIT_TEST=1 mocha -t 20000"
+    "test": "THINK_UNIT_TEST=1 nyc mocha -t 20000 --delay"
   },
   "dependencies": {
-    "koa2-file-server": "0.0.3",
     "@koa/cors": "^2.2.1",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
@@ -50,6 +49,7 @@
     "cz-conventional-changelog": "^2.1.0",
     "eslint": "^4.2.0",
     "eslint-config-think": "^1.0.0",
+    "mysql": "^2.15.0",
     "node-notifier": "^5.0.2",
     "nyc": "^7.0.0",
     "supertest": "^3.0.0",

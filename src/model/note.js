@@ -13,11 +13,17 @@ module.exports = class extends think.Model {
 
   async getEmail(noteId) {
     const note = await this.where({id: Number(noteId)}).find();
+    if (think.isEmpty(note)) {
+      return 'No such note';
+    }
     return note.email;
   }
 
   async getContent(noteId) {
     const note = await this.where({id: Number(noteId)}).find();
+    if (think.isEmpty(note)) {
+      return 'No such note';
+    }
     return note.content;
   }
 

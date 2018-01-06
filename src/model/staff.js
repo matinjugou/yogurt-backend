@@ -64,8 +64,14 @@ module.exports = class extends think.Model {
       onlineStatus: 0
     }, {staffId: staffId});
   }
-  updateRole(staffId, role) {
-    return this.thenUpdate({role: role}, {staffId: staffId});
+  async updateRole(staffId, role) {
+    const staff = await this.where({staffId: staffId}).find();
+    if (Object.keys(staff).length > 0) {
+      const result = await this.where({staffId: staffId}).update({role: role});
+      return result;
+    } else {
+      return null;
+    }
   }
   getStaffs(companyId) {
     return this.where({
@@ -84,8 +90,11 @@ module.exports = class extends think.Model {
       staffId: staffId
     }).field('staffId,companyId,nickname,name,email,tel,picUrl,role').find();
   }
-  updateStaff(staffId, nickname, email, tel, password, picUrl, role) {
-    const staff = this.where({staffId: staffId}).find();
+  async updateStaff(staffId, nickname, email, tel, password, picUrl, role) {
+    const staff = await this.where({staffId: staffId}).find();
+    if (think.isEmpty(staff)) {
+      return -1;
+    }
     if (nickname === null || nickname === undefined) {
       nickname = staff.nickname;
     }
@@ -104,7 +113,7 @@ module.exports = class extends think.Model {
     if (role === null || role === undefined) {
       role = staff.role;
     }
-    return this.thenUpdate({
+    const result = await this.thenUpdate({
       nickname: nickname,
       email: email,
       tel: tel,
@@ -112,6 +121,7 @@ module.exports = class extends think.Model {
       picUrl: picUrl,
       role: role
     }, {staffId: staffId});
+    return result;
   }
   initStaff(staffId, nickname, name, email, tel, password, picUrl, role) {
     return this.thenUpdate({
@@ -125,9 +135,11 @@ module.exports = class extends think.Model {
       isInit: 1
     }, {staffId: staffId});
   }
-  deleteStaff(stuff) {
+  async deleteStaff(stuff) {
+    let row = null;
     for (const staffId of stuff) {
-      this.where({staffId: staffId}).delete();
+      row = await this.where({staffId: staffId}).delete();
     }
+    return row;
   }
 };

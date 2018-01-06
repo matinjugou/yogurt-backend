@@ -9,7 +9,7 @@ module.exports = class extends Base {
     const staff = await this.modelInstance.getSingleStaff(staffId);
     return this.success({staff: staff});
   }
-  async putAction() {
+  putAction() {
     const staffId = this.post('staffId');
     const nickname = this.post('nickname');
     const email = this.post('email');
@@ -17,11 +17,18 @@ module.exports = class extends Base {
     const password = this.post('password');
     const picUrl = this.post('picUrl');
     const role = this.post('role');
-    await this.modelInstance.updateStaff(staffId, nickname, email, tel, password, picUrl, role);
-    return this.success({
-      code: 0,
-      msg: 'Modify succeeded'
-    });
+    const result = this.modelInstance.updateStaff(staffId, nickname, email, tel, password, picUrl, role);
+    if (result >= 0) {
+      return this.success({
+        code: 0,
+        msg: 'Modify succeeded'
+      });
+    } else {
+      return this.success({
+        code: 1,
+        msg: 'Modify failed'
+      });
+    }
   }
   async postAction() {
     const staffId = this.post('staffId');
