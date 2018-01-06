@@ -47,7 +47,7 @@ module.exports = class extends Base {
       });
     } else {
       return this.success({
-        code: 0,
+        code: 1,
         msg: 'Delete failed'
       });
     }
