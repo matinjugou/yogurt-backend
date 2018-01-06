@@ -15,10 +15,15 @@ module.exports = class extends think.Model {
     }, {managerId: managerId});
   }
   async onlineManager(managerId, password) {
-    const result = await this.thenUpdate({
-      onlineStatus: 1
-    }, {managerId: managerId, password: password});
-    return result;
+    let result = await this.where({managerId: managerId, password: password}).find();
+    if (result) {
+      result = await this.where({managerId: managerId}).update({
+        onlineStatus: 1
+      });
+      return result;
+    } else {
+      return 0;
+    }
   }
   offlineStaff(managerId) {
     this.thenUpdate({
