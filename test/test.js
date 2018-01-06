@@ -740,7 +740,7 @@ setTimeout(function () {
               .expect(200)
               .end(function(err, res) {
                 if (err) throw err;
-                expect(res.body.data).to.include.keys('name');
+                expect(res.body.data.staff).to.include.keys('name');
                 done();
               });
           });
@@ -754,7 +754,7 @@ setTimeout(function () {
               .expect(200)
               .end(function(err, res) {
                 if (err) throw err;
-                expect(res.body.data).to.be.empty;
+                expect(res.body.data.staff).to.be.empty;
                 done();
               });
           });
@@ -774,7 +774,7 @@ setTimeout(function () {
           it ('server should run and can update staff', function(done) {
             request(think.app.server).put('/api/staff/account-info')
               .set('Content-Type', 'application/json')
-              .query({
+              .post({
                 staffId: '1_s6',
                 nickname: 'nickname'
               })
@@ -790,7 +790,7 @@ setTimeout(function () {
           it ('server should run and cannot update staff', function(done) {
             request(think.app.server).put('/api/staff/account-info')
               .set('Content-Type', 'application/json')
-              .query({
+              .post({
                 staffId: '111_s6',
                 nickname: 'nickname'
               })
