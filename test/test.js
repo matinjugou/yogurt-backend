@@ -360,6 +360,109 @@ setTimeout(function () {
           });
         });
       });
+
+      describe('note', function() {
+        describe('GET note', function() {
+          const addSql = 'INSERT INTO note (companyId,userId,content,email,isReplied) VALUES(?, ?, ?, ?, ?)';
+          let addSqlParams = [1, '1_u22', 'I want detail information', 'example@example.com', 0];
+          before(function (done) {
+            connection.query(addSql, addSqlParams, function(err, result) {
+              if (err) {
+                throw err;
+              }
+            });
+            addSqlParams = [1, '1_u23', 'I want to know more about your company', 'example@example.com', 0];
+            connection.query(addSql, addSqlParams, function(err, result) {
+              if (err) {
+                throw err;
+              }
+              done();
+            });
+          });
+          it ('server should run and can get 2 notes', function(done) {
+            request(think.app.server).get('/api/manager/note')
+              .set('Content-Type', 'application/json')
+              .query({
+                companyId: 1
+              })
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end(function(err, res) {
+                if (err) throw err;
+                expect(res.body.data[0]).to.include.keys('content');
+                assert.equal(res.body.data.length, 0);
+                done();
+              });
+          });
+          it ('server should run and cannot get notes', function(done) {
+            request(think.app.server).get('/api/manager/note')
+              .set('Content-Type', 'application/json')
+              .query({
+                companyId: 32
+              })
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end(function(err, res) {
+                if (err) throw err;
+                expect(res.body.data).to.be.empty;
+                done();
+              });
+          });
+        });
+
+        describe('POST note', function() {
+          const addSql = 'INSERT INTO note (id,companyId,userId,content,email,isReplied) VALUES(?, ?, ?, ?, ?, ?)';
+          let addSqlParams = [3, 2, '2_u22', 'I want detail information', 'thss15_yangbf@163.com', 0];
+          before(function (done) {
+            connection.query(addSql, addSqlParams, function(err, result) {
+              if (err) {
+                throw err;
+              }
+            });
+            addSqlParams = [4, 2, '2_u23', 'I want to know more about your company', 'thss15_yangbf@163.com', 0];
+            connection.query(addSql, addSqlParams, function(err, result) {
+              if (err) {
+                throw err;
+              }
+              done();
+            });
+          });
+          it ('server should run and can post reply', function(done) {
+            request(think.app.server).post('/api/manager/note')
+              .set('Content-Type', 'application/json')
+              .send({
+                noteId: 4,
+                staffId: '2_s2',
+                reply: 'testing note reply'
+              })
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end(function(err, res) {
+                if (err) throw err;
+                expect(res.body.data).to.include.keys('code');
+                expect(res.body.data.code).to.be.equal(0);
+                done();
+              });
+          });
+          it ('server should run and cannot post reply', function(done) {
+            request(think.app.server).post('/api/manager/note')
+              .set('Content-Type', 'application/json')
+              .send({
+                noteId: 4222,
+                staffId: '2_s2',
+                reply: 'testing note reply'
+              })
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end(function(err, res) {
+                if (err) throw err;
+                expect(res.body.data).to.include.keys('code');
+                expect(res.body.data.code).to.be.equal(2);
+                done();
+              });
+          });
+        });
+      });
     });
 
     describe('staff', function() {
