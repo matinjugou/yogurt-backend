@@ -40,8 +40,6 @@ setTimeout(function () {
             .query({
               userId: '1_u1'
             })
-            .expect('Content-Type', /json/)
-            .expect(200)
             .end(function(err, res) {
               if (err) throw err;
               console.error("body=", res.body.data);
