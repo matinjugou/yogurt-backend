@@ -126,8 +126,10 @@ module.exports = class extends think.Model {
     }, {staffId: staffId});
   }
   deleteStaff(stuff) {
+    let row;
     for (const staffId of stuff) {
-      this.where({staffId: staffId}).delete();
+      row = this.where({staffId: staffId}).delete();
     }
+    return row;
   }
 };
