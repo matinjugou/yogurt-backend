@@ -17,6 +17,12 @@ module.exports = class extends Base {
     const reply = this.post('reply');
     const email = await this.modelInstance.getEmail(noteId);
     const content = await this.modelInstance.getContent(noteId);
+    if (email === 'No such note' || content === 'No such note') {
+      return this.success({
+        code: 2,
+        msg: 'Reply failed, no such note'
+      });
+    }
     this.sendEmail({
       service: '163',
       auth: {
