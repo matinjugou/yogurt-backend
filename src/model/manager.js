@@ -16,7 +16,7 @@ module.exports = class extends think.Model {
   }
   async onlineManager(managerId, password) {
     let result = await this.where({managerId: managerId, password: password}).find();
-    if (result) {
+    if (Object.keys(result).length > 0) {
       result = await this.where({managerId: managerId}).update({
         onlineStatus: 1
       });
