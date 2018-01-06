@@ -121,7 +121,7 @@ setTimeout(function () {
             .expect(200)
             .end(function(err, res) {
               if (err) throw err;
-              expect(res.body.data.keys('code').length).to.be.equal(0);
+              expect(res.body.data).to.be.empty;
               done();
             });
         });
@@ -190,7 +190,7 @@ setTimeout(function () {
             .expect(200)
             .end(function(err, res) {
               if (err) throw err;
-              expect(res.body.data.keys('code').length).to.be.equal(0);
+              expect(res.body.data).to.be.empty;
               done();
             });
         });

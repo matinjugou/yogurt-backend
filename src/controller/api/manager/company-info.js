@@ -17,7 +17,7 @@ module.exports = class extends Base {
     let corpusFile = this.post('corpusFile');
     let robotWelcome = this.post('robotWelcome');
     const company = await this.modelInstance.getCompany(companyId);
-    if (company === null || company === undefined || company.keys('id').length === 0) {
+    if (company === null || company === undefined || company['id'].length === 0) {
       return this.success({
         code: 2,
         msg: 'Update failed, cannot get the company'
