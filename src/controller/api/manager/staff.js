@@ -21,13 +21,35 @@ module.exports = class extends Base {
   async putAction() {
     const staffId = this.post('staffId');
     const role = this.post('role');
-    return this.success(await this.modelInstance.updateRole(staffId, role));
+    const result = await this.modelInstance.updateRole(staffId, role);
+    if (result !== undefined && result !== null) {
+      return this.success({
+        code: 0,
+        msg: 'Update succeeded'
+      });
+    } else {
+      return this.success({
+        code: 1,
+        msg: 'Update failed'
+      });
+    }
   }
   async deleteAction() {
     let stuff = this.ctx.query['stuff[]'];
     if (!Array.isArray(stuff)) {
       stuff = [stuff];
     }
-    return this.success(await this.modelInstance.deleteStaff(stuff));
+    const result = await this.modelInstance.deleteStaff(stuff);
+    if (result !== null && result !== undefined && result > 0) {
+      return this.success({
+        code: 0,
+        msg: 'Delete succeeded'
+      });
+    } else {
+      return this.success({
+        code: 0,
+        msg: 'Delete failed'
+      });
+    }
   }
 };
