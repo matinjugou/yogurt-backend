@@ -542,7 +542,7 @@ setTimeout(function () {
 
         describe('PUT staff', function() {
           const addSql = 'INSERT INTO staff (staffId,password,companyId,isInit,onlineStatus,servingCount,queueCount) VALUES (?, ?, ?, ?, ?, ?, ?)';
-          const addSqlParams = ['4_s3', '4_s3', 4, 1, 1, 29, 29];
+          const addSqlParams = ['4_s333', '4_s333', 4, 1, 1, 29, 29];
           before(function (done) {
             connection.query(addSql, addSqlParams, function(err, result) {
               if (err) {
@@ -551,11 +551,11 @@ setTimeout(function () {
               done();
             });
           });
-          it ('server should start and can update role', function(done) {
+          it ('server should run and can update role', function(done) {
             request(think.app.server).put('/api/manager/staff')
               .set('Content-Type', 'application/json')
               .send({
-                staffId: '4_s3',
+                staffId: '4_s333',
                 role: '售后'
               })
               .expect('Content-Type', /json/)
@@ -567,11 +567,11 @@ setTimeout(function () {
                 done();
               });
           });
-          it ('server should start and cannot update role', function(done) {
+          it ('server should run and cannot update role', function(done) {
             request(think.app.server).put('/api/manager/staff')
               .set('Content-Type', 'application/json')
               .send({
-                staffId: '44_s23',
+                staffId: '44_s4443',
                 role: '售后'
               })
               .expect('Content-Type', /json/)
