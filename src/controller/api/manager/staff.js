@@ -16,7 +16,6 @@ module.exports = class extends Base {
     const companyId = this.post('companyId');
     // const companyId = post.companyId;
     const list = this.modelInstance.addStaff(number, companyId);
-    console.log(list);
     return this.success(list);
   }
   putAction() {
