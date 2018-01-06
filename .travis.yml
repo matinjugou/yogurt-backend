@@ -104,7 +104,7 @@ before_install:
               )
                 ENGINE = InnoDB;'
   - mongo yogurt_test --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
-  - mongo yogurt_test --eval 'db.createCollection('sessionPair');'
+  - mongo yogurt_test --eval 'db.createCollection("sessionPair");'
 cache:
   directories:
     - node_modules
