@@ -55,13 +55,13 @@ setTimeout(function () {
             .query({
               userId: '1_u1'
             })
+            .expect('Content-Type', /json/)
+            .expect(200)
             .end(function(err, res) {
               if (err) {
                 console.error(err);
                 throw err;
               }
-              console.log("body=", res.body.data);
-              console.error("body=", res.body.data);
               expect(res.body.data).to.include.keys('code');
               expect(res.body.data.code).to.be.equal(0);
               firstStaff = res.body.data.msg;
@@ -70,7 +70,6 @@ setTimeout(function () {
         });
 
         it('The second user should be arranged with different user', function (done) {
-          stub_returnCode.returns(returnCodePromise(1));
           request(think.app.server).get('/api/user/queue')
             .set('Content-Type', 'application/json')
             .query({
