@@ -64,8 +64,8 @@ module.exports = class extends think.Model {
       onlineStatus: 0
     }, {staffId: staffId});
   }
-  updateRole(staffId, role) {
-    const staff = this.where({staffId: staffId}).find();
+  async updateRole(staffId, role) {
+    const staff = await this.where({staffId: staffId}).find();
     if (think.isEmpty(staff)) {
       return null;
     }
@@ -129,10 +129,10 @@ module.exports = class extends think.Model {
       isInit: 1
     }, {staffId: staffId});
   }
-  deleteStaff(stuff) {
+  async deleteStaff(stuff) {
     let row = null;
     for (const staffId of stuff) {
-      row = this.where({staffId: staffId}).delete();
+      row = await this.where({staffId: staffId}).delete();
     }
     return row;
   }

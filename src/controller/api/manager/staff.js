@@ -18,10 +18,10 @@ module.exports = class extends Base {
     const list = this.modelInstance.addStaff(number, companyId);
     return this.success(list);
   }
-  async putAction() {
+  putAction() {
     const staffId = this.post('staffId');
     const role = this.post('role');
-    const result = await this.modelInstance.updateRole(staffId, role);
+    const result = this.modelInstance.updateRole(staffId, role);
     if (result !== undefined && result !== null) {
       return this.success({
         code: 0,
@@ -34,12 +34,12 @@ module.exports = class extends Base {
       });
     }
   }
-  async deleteAction() {
+  deleteAction() {
     let stuff = this.ctx.query['stuff[]'];
     if (!Array.isArray(stuff)) {
       stuff = [stuff];
     }
-    const result = await this.modelInstance.deleteStaff(stuff);
+    const result = this.modelInstance.deleteStaff(stuff);
     if (result !== null && result !== undefined && result > 0) {
       return this.success({
         code: 0,
