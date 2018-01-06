@@ -2,7 +2,7 @@ module.exports = class extends think.Model {
   getCompany(companyId) {
     return this.where({
       id: companyId
-    }).find();
+    }).field('id,name,picUrl,robotAvatar,corpusFile,robotWelcome,managerId,totalServeCount,totalAnsAsk,totalNoteCount,repliedNoteCount').find();
   }
   updateCompany(companyId, name, picUrl, robotAvatar, corpusFile, robotWelcome) {
     this.thenUpdate({
