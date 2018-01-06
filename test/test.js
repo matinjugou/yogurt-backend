@@ -202,33 +202,32 @@ setTimeout(function () {
       });
 
       describe('account-info', function() {
-        describe('GET account-info', function() {
+        describe('GET account-info', function () {
           const addSql = 'INSERT INTO manager (companyId,name,tel,managerId,password) VALUES (1, ?, ?, ?, ?)';
           const addSqlParams = ['hello', '123456789', '1_m1', '1_m1'];
           before(function (done) {
-            connection.query(addSql, addSqlParams, function(err, result) {
+            connection.query(addSql, addSqlParams, function (err, result) {
               if (err) {
                 throw err;
               }
               done();
             })
           });
-          it ('server should run and can get a manager', function(done) {
+          it('server should run and can get a manager', function (done) {
             request(think.app.server).get('/api/manager/account-info')
               .set('Content-Type', 'application/json')
               .query({
-                managerId: '1_m1',
+                managerId: '1_m1'
               })
               .expect('Content-Type', /json/)
               .expect(200)
-              .end(function(err, res) {
+              .end(function (err, res) {
                 if (err) throw err;
                 expect(res.body.data).to.include.keys('managerId');
                 done();
               });
           });
-
-          it ('server should run and cannot get a manager', function(done) {
+          it('server should run and cannot get a manager', function (done) {
             request(think.app.server).get('/api/manager/account-info')
               .set('Content-Type', 'application/json')
               .query({
@@ -236,26 +235,26 @@ setTimeout(function () {
               })
               .expect('Content-Type', /json/)
               .expect(200)
-              .end(function(err, res) {
+              .end(function (err, res) {
                 if (err) throw err;
-                expect(res.body.data.keys('code').length).to.be.equal(0);
+                expect(res.body.data).to.be.empty;
                 done();
               });
           });
         });
 
-        describe('PUT account-info', function() {
+        describe('PUT account-info', function () {
           const addSql = 'INSERT INTO manager (companyId,name,tel,managerId,password) VALUES (1, ?, ?, ?, ?)';
           const addSqlParams = ['hello', '123456789', '1_m2', '1_m2'];
           before(function (done) {
-            connection.query(addSql, addSqlParams, function(err, result) {
+            connection.query(addSql, addSqlParams, function (err, result) {
               if (err) {
                 throw err;
               }
               done();
             });
           });
-          it ('server should run and can update a manager', function(done) {
+          it('server should run and can update a manager', function (done) {
             request(think.app.server).put('/api/manager/account-info')
               .set('Content-Type', 'application/json')
               .send({
@@ -264,23 +263,15 @@ setTimeout(function () {
               })
               .expect('Content-Type', /json/)
               .expect(200)
-              .end(function(err, res) {
+              .end(function (err, res) {
                 if (err) throw err;
                 expect(res.body.data).to.include.keys('code');
                 expect(res.body.data.code).to.be.equal(0);
                 done();
-              })
+              });
           });
         });
       });
-          /*
-          after(async function(done) {
-            const model = self.model('manager');
-            await model.where({managerId: '1_m2'}).delete();
-            // process.exit();
-            done();
-          });
-          */
 
       describe('company-info', function () {
         describe('GET company-info', function() {
