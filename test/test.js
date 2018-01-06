@@ -485,20 +485,20 @@ setTimeout(function () {
       describe('staff', function() {
         describe('GET staff', function() {
           const addSql = 'INSERT INTO staff (staffId,password,companyId,isInit,onlineStatus,servingCount,queueCount) VALUES (?, ?, ?, ?, ?, ?, ?)';
-          let addSqlParams = ['4_s41', '4_s41', 4, 1, 1, 29, 29];
+          let addSqlParams = ['4_s1', '4_s1', 4, 1, 1, 29, 29];
           before(function(done) {
             connection.query(addSql, addSqlParams, function(err, result) {
               if (err) {
                 throw err;
               }
             });
-            addSqlParams = ['4_s42', '4_s42', 4, 1, 1, 21, 21];
+            addSqlParams = ['4_s2', '4_s2', 4, 1, 1, 21, 21];
             connection.query(addSql, addSqlParams, function(err, result) {
               if (err) {
                 throw err;
               }
             });
-            addSqlParams = ['4_s43', '4_s43', 4, 1, 5, 0, 1];
+            addSqlParams = ['4_s3', '4_s3', 4, 1, 5, 0, 1];
             connection.query(addSql, addSqlParams, function(err, result) {
               if (err) {
                 throw err;
@@ -549,7 +549,7 @@ setTimeout(function () {
               .expect(200)
               .end(function(err, res) {
                 if (err) throw err;
-                assert.equal(res.body.data.length, 3);
+                expect(res.body.data[0]).to.be.a('string');
                 done();
               });
           });

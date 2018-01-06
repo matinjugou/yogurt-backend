@@ -68,8 +68,9 @@ module.exports = class extends think.Model {
     const staff = await this.where({staffId: staffId}).find();
     if (think.isEmpty(staff)) {
       return null;
+    } else {
+      return this.where({staffId: staffId}).update({role: role});
     }
-    return this.thenUpdate({role: role}, {staffId: staffId});
   }
   getStaffs(companyId) {
     return this.where({
