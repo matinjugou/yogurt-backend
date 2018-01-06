@@ -717,6 +717,94 @@ setTimeout(function () {
             });
         })
       });
+
+      describe('account-info', function() {
+        describe('GET account-info', function() {
+          const addSql = 'INSERT INTO staff (staffId,password,name,companyId,isInit,onlineStatus,servingCount,queueCount) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+          const addSqlParams = ['1_s5', '1_s5', 'hello', 1, 1, 1, 29, 29];
+          before(function (done) {
+            connection.query(addSql, addSqlParams, function(err, result) {
+              if (err) {
+                throw err;
+              }
+              done();
+            });
+          });
+          it ('server should run and can get staff', function(done) {
+            request(think.app.server).get('/api/staff/account-info')
+              .set('Content-Type', 'application/json')
+              .query({
+                staffId: '1_s5'
+              })
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end(function(err, res) {
+                if (err) throw err;
+                expect(res.body.data).to.include.keys('name');
+                done();
+              });
+          });
+          it ('server should run and cannot get staff', function(done) {
+            request(think.app.server).get('/api/staff/account-info')
+              .set('Content-Type', 'application/json')
+              .query({
+                staffId: '55_s55'
+              })
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end(function(err, res) {
+                if (err) throw err;
+                expect(res.body.data).to.be.empty;
+                done();
+              });
+          });
+        });
+
+        describe('PUT account-info', function() {
+          const addSql = 'INSERT INTO staff (staffId,password,name,companyId,isInit,onlineStatus,servingCount,queueCount) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+          const addSqlParams = ['1_s6', '1_s6', 'hello', 1, 1, 1, 29, 29];
+          before(function (done) {
+            connection.query(addSql, addSqlParams, function(err, result) {
+              if (err) {
+                throw err;
+              }
+              done();
+            });
+          });
+          it ('server should run and can update staff', function(done) {
+            request(think.app.server).put('/api/staff/account-info')
+              .set('Content-Type', 'application/json')
+              .query({
+                staffId: '1_s6',
+                nickname: 'nickname'
+              })
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end(function(err, res) {
+                if (err) throw err;
+                expect(res.body.data).to.include.keys('code');
+                expect(res.body.data.code).to.be.equal(0);
+                done();
+              });
+          });
+          it ('server should run and cannot update staff', function(done) {
+            request(think.app.server).put('/api/staff/account-info')
+              .set('Content-Type', 'application/json')
+              .query({
+                staffId: '111_s6',
+                nickname: 'nickname'
+              })
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end(function(err, res) {
+                if (err) throw err;
+                expect(res.body.data).to.include.keys('code');
+                expect(res.body.data.code).to.be.equal(1);
+                done();
+              });
+          });
+        });
+      });
     });
 
     after(function () {
