@@ -100,11 +100,11 @@ setTimeout(function () {
             });
           });
           it('should check successfully with correct token', function (done) {
-            const token = jwt.sign({managerId: '1_m5'}, self.config('secretKey'));
+            const token = jwt.sign({managerId: '1_m6'}, self.config('secretKey'));
             request(think.app.server).get('/api/manager/login')
               .set('Content-Type', 'application/json')
               .query({
-                managerId: '1_m5',
+                managerId: '1_m6',
                 token: token
               })
               .expect('Content-Type', /json/)
@@ -118,11 +118,11 @@ setTimeout(function () {
           });
 
           it('should check failed with wrong token', function (done) {
-            const token = jwt.sign({managerId: '1_m6'}, self.config('secretKey'));
+            const token = jwt.sign({managerId: '1_m5'}, self.config('secretKey'));
             request(think.app.server).get('/api/manager/login')
               .set('Content-Type', 'application/json')
               .query({
-                managerId: '1_m5',
+                managerId: '1_m6',
                 token: token
               })
               .expect('Content-Type', /json/)
@@ -140,7 +140,7 @@ setTimeout(function () {
             request(think.app.server).get('/api/manager/login')
               .set('Content-Type', 'application/json')
               .query({
-                managerId: '1_m5',
+                managerId: '1_m6',
                 token: token
               })
               .expect('Content-Type', /json/)
