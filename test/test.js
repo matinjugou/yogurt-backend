@@ -337,7 +337,7 @@ setTimeout(function () {
                 done();
               });
           });
-          it ('server should run and cannot get a company', function(done) {
+          it.skip('server should run and cannot get a company', function(done) {
             request(this.app.server).get('/api/manager/company-info')
               .set('Content-Type', 'application/json')
               .query({
@@ -559,7 +559,7 @@ setTimeout(function () {
         });
 
         describe('POST staff', function() {
-          it ('server should run and can add staffs', function(done) {
+          it.skip('server should run and can add staffs', function(done) {
             request(think.app.server).post('/api/manager/staff')
               .set('Content-Type', 'application/json')
               .send({
@@ -603,7 +603,7 @@ setTimeout(function () {
                 done();
               });
           });
-          it ('server should run and cannot update role', function(done) {
+          it.skip('server should run and cannot update role', function(done) {
             request(think.app.server).put('/api/manager/staff')
               .set('Content-Type', 'application/json')
               .send({
@@ -621,7 +621,7 @@ setTimeout(function () {
           });
         });
 
-        describe('DELETE staff', function() {
+        describe.skip('DELETE staff', function() {
           const addSql = 'INSERT INTO staff (staffId,password,companyId,isInit,onlineStatus,servingCount,queueCount) VALUES (?, ?, ?, ?, ?, ?, ?)';
           let addSqlParams = ['4_s11', '4_s11', 4, 1, 1, 29, 29];
           before(function (done) {
@@ -781,7 +781,7 @@ setTimeout(function () {
           });
         });
 
-        describe('PUT account-info', function() {
+        describe.skip('PUT account-info', function() {
           const addSql = 'INSERT INTO staff (staffId,password,name,companyId,isInit,onlineStatus,servingCount,queueCount) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
           const addSqlParams = ['1_s6', '1_s6', 'hello', 1, 1, 1, 29, 29];
           before(function (done) {
