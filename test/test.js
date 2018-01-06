@@ -347,6 +347,7 @@ setTimeout(function () {
               .expect(200)
               .end(function(err, res) {
                 if (err) throw err;
+                console.log("res=", res);
                 expect(res.body.data).to.be.empty;
                 done();
               });
