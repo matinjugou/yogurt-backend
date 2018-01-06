@@ -382,7 +382,7 @@ setTimeout(function () {
           it ('server should run and can get 2 notes', function(done) {
             request(think.app.server).get('/api/manager/note')
               .set('Content-Type', 'application/json')
-              .send({
+              .query({
                 companyId: 1
               })
               .expect('Content-Type', /json/)
@@ -397,7 +397,7 @@ setTimeout(function () {
           it ('server should run and cannot get notes', function(done) {
             request(think.app.server).get('/api/manager/note')
               .set('Content-Type', 'application/json')
-              .send({
+              .query({
                 companyId: 32
               })
               .expect('Content-Type', /json/)
