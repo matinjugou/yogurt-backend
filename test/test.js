@@ -391,7 +391,7 @@ setTimeout(function () {
               .end(function(err, res) {
                 if (err) throw err;
                 expect(res.body.data[0]).to.include.keys('content');
-                assert.equal(res.body.data.length, 0);
+                assert.equal(res.body.data.length, 2);
                 done();
               });
           });
@@ -459,6 +459,174 @@ setTimeout(function () {
                 if (err) throw err;
                 expect(res.body.data).to.include.keys('code');
                 expect(res.body.data.code).to.be.equal(2);
+                done();
+              });
+          });
+        });
+      });
+
+      describe('staff', function() {
+        describe('GET staff', function() {
+          const addSql = 'INSERT INTO staff (staffId,password,companyId,isInit,onlineStatus,servingCount,queueCount) VALUES (?, ?, ?, ?, ?, ?, ?)';
+          let addSqlParams = ['4_s41', '4_s41', 1, 1, 1, 29, 29];
+          before(function(done) {
+            connection.query(addSql, addSqlParams, function(err, result) {
+              if (err) {
+                throw err;
+              }
+            });
+            addSqlParams = ['4_s42', '4_s42', 1, 1, 1, 21, 21];
+            connection.query(addSql, addSqlParams, function(err, result) {
+              if (err) {
+                throw err;
+              }
+            });
+            addSqlParams = ['4_s43', '4_s43', 1, 1, 5, 0, 1];
+            connection.query(addSql, addSqlParams, function(err, result) {
+              if (err) {
+                throw err;
+              }
+              done();
+            });
+          });
+          it ('server should run and can get 2 staffs', function(done) {
+            request(think.app.server).get('/api/manager/staff')
+              .set('Content-Type', 'application/json')
+              .query({
+                companyId: 4
+              })
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end(function(err, res) {
+                if (err) throw err;
+                expect(res.body.data[0]).to.include.keys('staffId');
+                assert.equal(res.body.data.length, 2);
+                done();
+              });
+          });
+          it ('server should run and cannot get staffs', function(done) {
+            request(think.app.server).get('/api/manager/staff')
+              .set('Content-Type', 'application/json')
+              .query({
+                companyId: 1222
+              })
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end(function(err, res) {
+                if (err) throw err;
+                expect(res.body.data).to.be.empty;
+                done();
+              });
+          });
+        });
+
+        describe('POST staff', function() {
+          it ('server should run and can add staffs', function(done) {
+            request(think.app.server).post('/api/manager/staff')
+              .set('Content-Type', 'application/json')
+              .send({
+                number: 3,
+                companyId: 4
+              })
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end(function(err, res) {
+                if (err) throw err;
+                expect(res.body.data.length).to.be.equal(3);
+                done();
+              });
+          });
+        });
+
+        describe('PUT staff', function() {
+          const addSql = 'INSERT INTO staff (staffId,password,companyId,isInit,onlineStatus,servingCount,queueCount) VALUES (?, ?, ?, ?, ?, ?, ?)';
+          const addSqlParams = ['4_s3', '4_s3', 1, 1, 1, 29, 29];
+          before(function (done) {
+            connection.query(addSql, addSqlParams, function(err, result) {
+              if (err) {
+                throw err;
+              }
+              done();
+            });
+          });
+          it ('server should start and can update role', function(done) {
+            request(think.app.server).put('/api/manager/staff')
+              .set('Content-Type', 'application/json')
+              .send({
+                staffId: '4_s3',
+                role: '售后'
+              })
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end(function(err, res) {
+                if (err) throw err;
+                expect(res.body.data).to.include.keys('code');
+                expect(res.body.data.code).to.be.equal(0);
+                done();
+              });
+          });
+          it ('server should start and cannot update role', function(done) {
+            request(think.app.server).put('/api/manager/staff')
+              .set('Content-Type', 'application/json')
+              .send({
+                staffId: '44_s23',
+                role: '售后'
+              })
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end(function(err, res) {
+                if (err) throw err;
+                expect(res.body.data).to.include.keys('code');
+                expect(res.body.data.code).to.be.equal(1);
+                done();
+              });
+          });
+        });
+
+        describe('DELETE staff', function() {
+          const addSql = 'INSERT INTO staff (staffId,password,companyId,isInit,onlineStatus,servingCount,queueCount) VALUES (?, ?, ?, ?, ?, ?, ?)';
+          let addSqlParams = ['4_s11', '4_s11', 1, 1, 1, 29, 29];
+          before(function (done) {
+            connection.query(addSql, addSqlParams, function(err, result) {
+              if (err) {
+                throw err;
+              }
+            });
+            addSqlParams = ['4_s12', '4_s12', 1, 1, 1, 29, 29];
+            connection.query(addSql, addSqlParams, function(err, result) {
+              if (err) {
+                throw err;
+              }
+              done();
+            });
+          });
+          it ('server should run and cannot delete staff', function(done) {
+            request(think.app.server).delete('/api/manager/staff')
+              .set('Content-Type', 'application/json')
+              .query({
+                stuff: ['11_s1', '11_s2']
+              })
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end(function(err, res) {
+                if (err) throw err;
+                expect(res.body.data).to.include.keys('code');
+                assert.equal(res.body.data.code, 1);
+                done();
+              });
+          });
+          it ('server should run and can delete staffs', function(done) {
+            request(think.app.server).delete('/api/manager/staff')
+              .set('Content-Type', 'application/json')
+              .query({
+                stuff: ['4_s11', '4_s12']
+              })
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .end(function(err, res) {
+                if (err) throw err;
+                expect(res.body.data).to.include.keys('code');
+                assert.equal(res.body.data.code, 0);
                 done();
               });
           });

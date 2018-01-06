@@ -65,6 +65,10 @@ module.exports = class extends think.Model {
     }, {staffId: staffId});
   }
   updateRole(staffId, role) {
+    const staff = this.where({staffId: staffId}).find();
+    if (think.isEmpty(staff)) {
+      return null;
+    }
     return this.thenUpdate({role: role}, {staffId: staffId});
   }
   getStaffs(companyId) {
@@ -126,7 +130,7 @@ module.exports = class extends think.Model {
     }, {staffId: staffId});
   }
   deleteStaff(stuff) {
-    let row;
+    let row = null;
     for (const staffId of stuff) {
       row = this.where({staffId: staffId}).delete();
     }
