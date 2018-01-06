@@ -101,7 +101,27 @@ setTimeout(function () {
               done();
             });
         });
-      })
+      });
+
+      describe('POST note', function() {
+        it ('server should run and can leave a note', function(done) {
+          request(think.app.server).post('/api/user/note')
+            .set('Content-Type', 'application/json')
+            .query({
+              userId: '3_u23',
+              content: 'content of a note',
+              email: 'thss15_yangbf@163.com'
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+              if (err) throw err;
+              expect(res.body.data).to.include.keys('code');
+              expect(res.body.data.code).to.be.equal(0);
+              done();
+            });
+        });
+      });
     });
 
     describe('manager', function() {
